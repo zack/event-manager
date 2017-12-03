@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171203175228) do
+ActiveRecord::Schema.define(version: 20171203210147) do
 
   create_table "events", force: :cascade do |t|
     t.integer "subscription_list_id", null: false
     t.date "date", null: false
+    t.integer "capacity"
     t.text "description", null: false
     t.time "time", null: false
     t.datetime "created_at", null: false
@@ -24,15 +25,20 @@ ActiveRecord::Schema.define(version: 20171203175228) do
   end
 
   create_table "subscribers", force: :cascade do |t|
-    t.string "email", null: false
     t.boolean "confirmed", null: false
+    t.string "email", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "uuid", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_subscribers_on_email", unique: true
+    t.index ["uuid"], name: "index_subscribers_on_uuid", unique: true
   end
 
   create_table "subscription_lists", force: :cascade do |t|
     t.string "name", null: false
+    t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -48,12 +54,12 @@ ActiveRecord::Schema.define(version: 20171203175228) do
   end
 
   create_table "syndications", force: :cascade do |t|
-    t.integer "event_id_id", null: false
-    t.integer "subscriber_id_id", null: false
+    t.integer "event_id", null: false
+    t.integer "subscriber_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id_id"], name: "index_syndications_on_event_id_id"
-    t.index ["subscriber_id_id"], name: "index_syndications_on_subscriber_id_id"
+    t.index ["event_id"], name: "index_syndications_on_event_id"
+    t.index ["subscriber_id"], name: "index_syndications_on_subscriber_id"
   end
 
 end

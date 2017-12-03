@@ -1,0 +1,5 @@
+%strong Delete membership for #{@subscriber.name} (#{@subscriber.email})?
+.explanation
+  %em This will delete all record of the above user in the database. You may recreate the account at a later date.
+  = button_to "Delete", controller: "membership", action: "destroy", uuid: @subscriber.uuid
+  = link_to "Back", controller: "membership", action: "manage", uuid: @subscriber.uuid

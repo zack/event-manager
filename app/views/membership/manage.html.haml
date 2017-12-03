@@ -1,0 +1,28 @@
+%strong Manage membership for #{@subscriber.name} (#{@subscriber.email})
+
+= form_for(@subscriber, url: update_path) do |f|
+  .option
+    = f.label :first_name
+    = f.text_field :first_name
+
+  .option
+    = f.label :last_name
+    = f.text_field :last_name
+
+  .option
+    = f.label :email
+    = f.text_field :email
+
+  .checkboxes
+    = collection_check_boxes :subscriber,
+                             :subscription_list_ids,
+                             SubscriptionList.all,
+                             :id,
+                             lambda {|l| "#{l.name} (#{l.description})"} do |b|
+      .option
+        = b.check_box
+        = b.label
+
+  = f.submit 'Submit'
+
+= link_to "Delete My Account", controller: "membership", action: "delete", uuid: @subscriber.uuid

@@ -1,0 +1,57 @@
+class MembershipController < ApplicationController
+
+  def new
+    @subscriber = Subscriber.new
+  end
+
+  def create
+    @subscriber = Subscriber.new(subscriber_params)
+    @subscriber.uuid = SecureRandom.uuid
+    @subscriber.confirmed = false
+
+    if @subscriber.save!
+      params["subscription_list"]["id"].each do |s|
+        new_subscription = SubscriptionList.where(id: s).take
+        if new_subscription
+          Subscription.create({subscriber_id: @subscriber.id,
+                               subscription_list_id: new_subscription.id})
+        end
+      end
+
+      redirect_to action: :manage, uuid: @subscriber.uuid
+    else
+      render :new
+    end
+  end
+
+  def manage
+    @subscriber = Subscriber.find_by uuid: params['uuid']
+  end
+
+  def delete
+    @subscriber = Subscriber.find_by uuid: params['uuid']
+  end
+
+  def destroy
+    @subscriber = Subscriber.find_by uuid: params['uuid']
+
+    Subscription.where({subscriber_id: @subscriber}).destroy_all
+    Syndication.where({subscriber_id: @subscriber}).destroy_all
+    @subscriber.destroy
+
+    redirect_to :deleted
+  end
+
+  def deleted
+  end
+
+  private
+
+  def subscriber_params
+    params.require(:subscriber).permit(
+      :email,
+      :first_name,
+      :last_name
+    )
+  end
+end
