@@ -23,6 +23,8 @@
         = b.check_box
         = b.label
 
+
+  = f.hidden_field :uuid, :value => @subscriber.uuid
   = f.submit 'Submit'
 
 = link_to "Delete My Account", controller: "membership", action: "delete", uuid: @subscriber.uuid

@@ -9,8 +9,8 @@ class MembershipController < ApplicationController
     @subscriber.uuid = SecureRandom.uuid
     @subscriber.confirmed = false
 
-    if @subscriber.save!
-      params["subscription_list"]["id"].each do |s|
+    if @subscriber.save
+      params['subscriber']['subscription_list_ids'].each do |s|
         new_subscription = SubscriptionList.where(id: s).take
         if new_subscription
           Subscription.create({subscriber_id: @subscriber.id,
@@ -26,6 +26,23 @@ class MembershipController < ApplicationController
 
   def manage
     @subscriber = Subscriber.find_by uuid: params['uuid']
+  end
+
+  def update
+    @subscriber = Subscriber.find_by uuid: params['subscriber']['uuid']
+    if @subscriber.update(subscriber_params)
+      Subscription.where({subscriber_id: @subscriber}).destroy_all
+      params['subscriber']['subscription_list_ids'].each do |s|
+        new_subscription = SubscriptionList.where(id: s).take
+        if new_subscription
+          Subscription.create({subscriber_id: @subscriber.id,
+                               subscription_list_id: new_subscription.id})
+        end
+      end
+      redirect_to action: :manage, uuid: @subscriber.uuid
+    else
+      render :manage
+    end
   end
 
   def delete
