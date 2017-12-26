@@ -1,0 +1,25 @@
+Testing
+=======
+* db validation tests (shouldas)
+* controller tests
+* integration tests
+
+Administration Dashboard
+========================
+* Implement event management
+* Subscriber list + confirmation
+* Send emails to subscription lists
+
+Emails
+======
+* Set up mailgun to send emails
+
+UI/UX
+=====
+* Implement error styling for forms
+* Make it pretty?
+
+Code Debt
+=========
+* Reuse forms
+* DRY up controller methods
