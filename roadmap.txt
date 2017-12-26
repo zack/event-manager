@@ -16,7 +16,6 @@ Emails
 
 UI/UX
 =====
-* Implement error styling for forms
 * Make it pretty?
 
 Code Debt

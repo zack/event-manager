@@ -1,0 +1,22 @@
+.option.text {
+  margin: 5px 0;
+
+  label {
+    display: inline-block;
+    width: 100px;
+  }
+
+  input {
+    border: 1px solid #cacaca;
+    border-radius: 3px;
+    height: 30px;
+  }
+
+  .field_with_errors {
+    display: inline-block;
+
+    input {
+      border: 1px solid red;
+    }
+  }
+}

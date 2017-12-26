@@ -6,12 +6,13 @@ git_source(:github) do |repo_name|
 end
 
 gem 'haml-rails', "~> 1.0"
-gem 'validates_email_format_of', "~> 1.6"
 gem 'jbuilder', "~> 2.7"
 gem 'puma', "~> 3.11"
 gem 'rails', "~> 5.1"
+gem 'sass-rails', "~> 5.0"
 gem 'sqlite3', "~> 1.3"
 gem 'uglifier', "~> 4.0"
+gem 'validates_email_format_of', "~> 1.6"
 
 group :development, :test do
   gem 'pry', "~> 0.11"
