@@ -1,15 +1,43 @@
+form {
+  width: 350px;
+
+  margin-top: 10px;
+
+  .actions {
+    margin-top: 10px;
+  }
+
+  input[type="submit"] {
+    width: 100px;
+  }
+}
+
+#delete-account {
+  display: inline-block;
+  float: right;
+  margin-top: 4px;
+}
+
 .option.text {
-  margin: 5px 0;
+  display: block;
+  height: 44px;
+  position: relative;
+  width: 100%;
 
   label {
-    display: inline-block;
-    width: 100px;
+    left: 0px;
+    position: absolute;
+    line-height: 27px;
+    width: 25%;
   }
 
   input {
-    border: 1px solid #cacaca;
     border-radius: 3px;
+    border: 1px solid #cacaca;
     height: 30px;
+    position: absolute;
+    right: 0px;
+    width: 70%;
   }
 
   .field_with_errors {
@@ -19,4 +47,8 @@
       border: 1px solid red;
     }
   }
+}
+
+#delete-confirm {
+  margin-bottom: 10px;
 }
