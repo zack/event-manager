@@ -1,5 +1,4 @@
 class MembershipController < ApplicationController
-
   def new
     @subscriber = Subscriber.new
   end
@@ -20,8 +19,11 @@ class MembershipController < ApplicationController
         end
       end
 
+      UserMailer.confirmation_email(@subscriber).deliver_now
+
       redirect_to action: :manage, uuid: @subscriber.uuid
     else
+      @subscriber.uuid = nil
       render :new
     end
   end
@@ -41,10 +43,18 @@ class MembershipController < ApplicationController
                                subscription_list_id: new_subscription.id})
         end
       end
+      flash[:success] = 'Profile successfully updated!'
       redirect_to action: :manage, uuid: @subscriber.uuid
     else
       render :manage
     end
+  end
+
+  def resend_confirmation_email
+    @subscriber = Subscriber.find_by uuid: params['uuid']
+    UserMailer.confirmation_email(@subscriber).deliver_now
+    flash[:success] = 'Sent!'
+    redirect_to action: :manage, uuid: @subscriber.uuid
   end
 
   def confirm_email
@@ -52,7 +62,8 @@ class MembershipController < ApplicationController
     @confirmation_code = params['code']
     if @subscriber and @subscriber.email_confirmation_code == @confirmation_code
       @subscriber.update(email_confirmed: true)
-      render :email_confirmed
+      flash[:success] = 'Email confirmed!'
+      redirect_to action: :manage, uuid: @subscriber.uuid
     else
       render :email_not_confirmed
     end
@@ -79,7 +90,7 @@ class MembershipController < ApplicationController
 
   def subscriber_params
     params.require(:subscriber).permit(
-      :email,
+      :email_address,
       :first_name,
       :last_name
     )

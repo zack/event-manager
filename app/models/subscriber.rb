@@ -1,7 +1,7 @@
 class Subscriber < ApplicationRecord
   UUID_REGEX =  /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/
 
-  before_save :downcase_email
+  before_save :downcase_email_address
 
   has_many :subscriptions
   has_many :subscription_lists, :through => :subscriptions
@@ -16,16 +16,15 @@ class Subscriber < ApplicationRecord
   validates_presence_of :last_name
   validates_presence_of :email_confirmation_code
 
-  validates_email_format_of :email
-  validates :email, :email,
-                    presence: true,
-                    uniqueness: { case_sensitive: false }
+  validates_email_format_of :email_address
+  validates :email_address, presence: true,
+                            uniqueness: { case_sensitive: false }
 
   def name
     return "#{first_name} #{last_name}"
   end
 
-  def downcase_email
-    self.email.downcase!
+  def downcase_email_address
+    self.email_address.downcase!
   end
 end

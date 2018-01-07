@@ -1,5 +1,11 @@
 #user_form
   = form_for(subscriber, url: submit_url) do |f|
+    - if @subscriber.errors.any?
+      %ul#errors
+        - @subscriber.errors.full_messages.each do |err|
+          %li
+            =err
+
     .option.text
       = f.label :first_name
       = f.text_field :first_name
@@ -9,8 +15,8 @@
       = f.text_field :last_name
 
     .option.text
-      = f.label :email
-      = f.text_field :email
+      = f.label :email_address
+      = f.text_field :email_address
 
     .checkboxes
       = collection_check_boxes :subscriber,

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   patch '/update', to: 'membership#update', as: 'update'
 
   get '/confirm/:uuid/:code', to: 'membership#confirm_email'
+  get '/member/resend_confirmation/:uuid', to: 'membership#resend_confirmation_email'
 
   get '/delete/:uuid', to: 'membership#delete'
   post '/destroy', to: 'membership#destroy'
