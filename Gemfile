@@ -7,6 +7,7 @@ end
 
 gem 'haml-rails', "~> 1.0"
 gem 'jbuilder', "~> 2.7"
+gem 'mailgun_rails', "~> 0.9"
 gem 'puma', "~> 3.11"
 gem 'rails', "~> 5.1"
 gem 'sass-rails', "~> 5.0"
