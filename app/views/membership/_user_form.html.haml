@@ -24,4 +24,7 @@
 
     - if subscriber.uuid
       = f.hidden_field :uuid, :value => subscriber.uuid
-    = f.submit 'Submit'
+    .actions
+      = f.submit 'Submit'
+      - if subscriber.uuid
+        = link_to "Delete My Account", { controller: "membership", action: "delete", uuid: subscriber.uuid }, id: "delete-account"

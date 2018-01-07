@@ -14,6 +14,22 @@
  *= require_self
  */
 
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
 h1 {
   font-size: 20px;
 }
+
+h2 {
+  font-size: 18px;
+}
+

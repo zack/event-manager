@@ -1,96 +1,66 @@
-form {
-  width: 350px;
-
-  margin-top: 10px;
-
-  .actions {
-    margin-top: 10px;
-  }
-
-  input[type="submit"] {
-    width: 100px;
-  }
-}
+$form-width: 550px;
 
 p {
+  width: $form-width;
+
+  padding: 3px;
+  border-radius: 4px;
+
   &.warning {
     border: 2px solid #DE2828;
     background-color: #FFE7E7;
-    padding: 3px;
-    width: 550px;
-    border-radius: 4px;
   }
 
   &.notice {
     border: 2px solid #e7a300;
     background-color: #FFF8C7;
-    padding: 3px;
-    width: 550px;
-    border-radius: 4px;
-  }
-}
-
-#delete-account {
-  display: inline-block;
-  float: right;
-  margin-top: 4px;
-}
-
-.option.text {
-  display: block;
-  height: 44px;
-  position: relative;
-  width: 100%;
-
-  label {
-    left: 0px;
-    position: absolute;
-    line-height: 27px;
-    width: 25%;
-  }
-
-  input {
-    border-radius: 3px;
-    border: 1px solid #cacaca;
-    height: 30px;
-    position: absolute;
-    right: 0px;
-    width: 70%;
   }
 }
 
 #user_form {
-  .option {
+  .option.text {
+    display: block;
+    height: 44px;
+    position: relative;
+    width: $form-width;
+
+    label {
+      left: 0px;
+      position: absolute;
+      line-height: 27px;
+      width: 20%;
+    }
+
+    input {
+      border-radius: 3px;
+      border: 1px solid #cacaca;
+      height: 30px;
+      position: absolute;
+      right: 0px;
+      width: 80%;
+    }
+
+    .field_with_errors {
+      input {
+        border: 1px solid red;
+      }
+    }
+
     input[type='checkbox'] {
       margin-left: 0;
     }
 
-    &.text {
-      margin: 5px 0;
-
-      label {
-        display: inline-block;
-        width: 100px;
-      }
-
-      input {
-        border: 1px solid #cacaca;
-        border-radius: 3px;
-        height: 30px;
-      }
-
-      .field_with_errors {
-        display: inline-block;
-
-        input {
-          border: 1px solid red;
-        }
-      }
-    }
   }
 
-  input[type='submit'] {
-    margin: 5px 0;
+  .actions {
+    margin-top: 10px;
+    width: $form-width;
+
+    a#delete-account {
+      display: inline-block;
+      float: right;
+      margin-top: 4px;
+    }
   }
 }
 

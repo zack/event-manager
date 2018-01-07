@@ -4,4 +4,3 @@
   %p.warning <strong>You have not confirmed your email address.</strong> In order to start getting emails, please check your inbox for a confirmation email.
 
 = render partial: 'user_form', locals: { subscriber: @subscriber, submit_url: update_path }
-= link_to "Delete My Account", controller: 'membership', action: 'delete', uuid: @subscriber.uuid
