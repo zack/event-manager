@@ -7,12 +7,14 @@ class Subscriber < ApplicationRecord
   has_many :subscription_lists, :through => :subscriptions
   has_many :syndications
 
-  validates_inclusion_of :confirmed, :in => [true, false]
+  validates_inclusion_of :email_confirmed, :in => [true, false]
+  validates_inclusion_of :admin_confirmed, :in => [true, false]
 
   validates :uuid, format: { with: UUID_REGEX }
 
   validates_presence_of :first_name
   validates_presence_of :last_name
+  validates_presence_of :email_confirmation_code
 
   validates_email_format_of :email
   validates :email, :email,

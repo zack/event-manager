@@ -7,7 +7,9 @@ class MembershipController < ApplicationController
   def create
     @subscriber = Subscriber.new(subscriber_params)
     @subscriber.uuid = SecureRandom.uuid
-    @subscriber.confirmed = false
+    @subscriber.email_confirmed = false
+    @subscriber.admin_confirmed = false
+    @subscriber.email_confirmation_code = SecureRandom.hex
 
     if @subscriber.save
       params['subscriber']['subscription_list_ids'].each do |s|

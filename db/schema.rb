@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171203210147) do
+ActiveRecord::Schema.define(version: 20180107160106) do
 
   create_table "events", force: :cascade do |t|
     t.integer "subscription_list_id", null: false
@@ -25,13 +25,15 @@ ActiveRecord::Schema.define(version: 20171203210147) do
   end
 
   create_table "subscribers", force: :cascade do |t|
-    t.boolean "confirmed", null: false
+    t.boolean "email_confirmed", null: false
     t.string "email", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "uuid", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin_confirmed", null: false
+    t.string "email_confirmation_code"
     t.index ["email"], name: "index_subscribers_on_email", unique: true
     t.index ["uuid"], name: "index_subscribers_on_uuid", unique: true
   end

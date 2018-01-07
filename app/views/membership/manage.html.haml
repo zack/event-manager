@@ -1,31 +1,7 @@
-%strong Manage membership for #{@subscriber.name} (#{@subscriber.email})
+%h1 Manage membership for #{@subscriber.name} (#{@subscriber.email})
 
-= form_for(@subscriber, url: update_path) do |f|
-  .option.text
-    = f.label :first_name
-    = f.text_field :first_name
+- if not @subscriber.email_confirmed
+  %p.warning <strong>You have not confirmed your email address.</strong> In order to start getting emails, please check your inbox for a confirmation email.
 
-  .option.text
-    = f.label :last_name
-    = f.text_field :last_name
-
-  .option.text
-    = f.label :email
-    = f.text_field :email
-
-  .checkboxes
-    = collection_check_boxes :subscriber,
-                             :subscription_list_ids,
-                             SubscriptionList.all,
-                             :id,
-                             lambda {|l| "#{l.name} (#{l.description})"} do |b|
-      .option
-        = b.check_box
-        = b.label
-
-
-  = f.hidden_field :uuid, :value => @subscriber.uuid
-  .actions
-    = f.submit 'Submit'
-    = link_to "Delete My Account", { controller: "membership", action: "delete", uuid: @subscriber.uuid }, id: "delete-account"
-
+= render partial: 'user_form', locals: { subscriber: @subscriber, submit_url: update_path }
+= link_to "Delete My Account", controller: 'membership', action: 'delete', uuid: @subscriber.uuid

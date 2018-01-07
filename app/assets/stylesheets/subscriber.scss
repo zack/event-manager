@@ -12,6 +12,24 @@ form {
   }
 }
 
+p {
+  &.warning {
+    border: 2px solid #DE2828;
+    background-color: #FFE7E7;
+    padding: 3px;
+    width: 550px;
+    border-radius: 4px;
+  }
+
+  &.notice {
+    border: 2px solid #e7a300;
+    background-color: #FFF8C7;
+    padding: 3px;
+    width: 550px;
+    border-radius: 4px;
+  }
+}
+
 #delete-account {
   display: inline-block;
   float: right;
@@ -39,13 +57,40 @@ form {
     right: 0px;
     width: 70%;
   }
+}
 
-  .field_with_errors {
-    display: inline-block;
-
-    input {
-      border: 1px solid red;
+#user_form {
+  .option {
+    input[type='checkbox'] {
+      margin-left: 0;
     }
+
+    &.text {
+      margin: 5px 0;
+
+      label {
+        display: inline-block;
+        width: 100px;
+      }
+
+      input {
+        border: 1px solid #cacaca;
+        border-radius: 3px;
+        height: 30px;
+      }
+
+      .field_with_errors {
+        display: inline-block;
+
+        input {
+          border: 1px solid red;
+        }
+      }
+    }
+  }
+
+  input[type='submit'] {
+    margin: 5px 0;
   }
 }
 

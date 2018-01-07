@@ -1,27 +1,4 @@
-%strong Subscribe to Zack's Board Game List?
+%h1 Subscribe to Saturday Night Board Games?
+%p.notice <strong>Please use a name that I'll recognize.</strong> I want to make sure I know who's getting these emails. :)
 
-= form_for(@subscriber, url: subscribe_path) do |f|
-  .option.text
-    = f.label :first_name
-    = f.text_field :first_name
-
-  .option.text
-    = f.label :last_name
-    = f.text_field :last_name
-
-  .option.text
-    = f.label :email
-    = f.text_field :email
-
-  .checkboxes
-    = collection_check_boxes :subscriber,
-                             :subscription_list_ids,
-                             SubscriptionList.all,
-                             :id,
-                             lambda {|l| "#{l.name} (#{l.description})"} do |b|
-      .option
-        = b.check_box
-        = b.label
-
-  .actions
-    = f.submit 'Submit'
+= render partial: 'user_form', locals: { subscriber: @subscriber, submit_url: subscribe_path }

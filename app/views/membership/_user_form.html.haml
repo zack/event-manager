@@ -1,0 +1,27 @@
+#user_form
+  = form_for(subscriber, url: submit_url) do |f|
+    .option.text
+      = f.label :first_name
+      = f.text_field :first_name
+
+    .option.text
+      = f.label :last_name
+      = f.text_field :last_name
+
+    .option.text
+      = f.label :email
+      = f.text_field :email
+
+    .checkboxes
+      = collection_check_boxes :subscriber,
+                               :subscription_list_ids,
+                               SubscriptionList.all,
+                               :id,
+                               lambda {|l| "#{l.name} (#{l.description})"} do |b|
+        .option
+          = b.check_box
+          = b.label
+
+    - if subscriber.uuid
+      = f.hidden_field :uuid, :value => subscriber.uuid
+    = f.submit 'Submit'
