@@ -47,6 +47,17 @@ class MembershipController < ApplicationController
     end
   end
 
+  def confirm_email
+    @subscriber = Subscriber.find_by uuid: params['uuid']
+    @confirmation_code = params['code']
+    if @subscriber and @subscriber.email_confirmation_code == @confirmation_code
+      @subscriber.update(email_confirmed: true)
+      render :email_confirmed
+    else
+      render :email_not_confirmed
+    end
+  end
+
   def delete
     @subscriber = Subscriber.find_by uuid: params['uuid']
   end
