@@ -1,0 +1,36 @@
+#event_form.form
+  = form_for(event, url: submit_url) do |f|
+    - if @event.errors.any?
+      %ul#errors
+        - @event.errors.full_messages.each do |err|
+          %li
+            =err
+
+    .option.text
+      = f.label :datetime
+      = f.text_field :datetime
+
+    .option.text
+      = f.label :capacity
+      = f.text_field :capacity
+
+    .option.text
+      = f.label :description
+      = f.text_field :description
+
+    .radios
+      = collection_radio_buttons :event,
+                                 :subscription_list_id,
+                                 SubscriptionList.all,
+                                 :id,
+                                 lambda {|l| "#{l.name} (#{l.description})"} do |b|
+        .option
+          = b.radio_button
+          = b.label
+
+    - if event.uuid
+      = f.hidden_field :uuid, :value => event.uuid
+    .actions
+      = f.submit 'Submit'
+      - if event.uuid
+        = link_to 'Delete Event', { controller: 'event', action: 'delete', uuid: event.uuid }, id: 'delete'

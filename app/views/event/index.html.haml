@@ -1,0 +1,22 @@
+%table
+  %thead
+    %tr
+      %th.date Date
+      %th.time Time
+      %th.list List
+      %th.description Description
+      %th.attendance RSVP
+
+  %tbody
+    - @events.each do |e|
+      %tr
+        %td.date
+          = link_to e.datetime.strftime('%Y-%m-%d'), { controller: 'event', action: 'manage', uuid: e.uuid }
+        %td.time
+          = e.datetime.strftime('%l:%m%p')
+        %td.list
+          = SubscriptionList.find(e.subscription_list_id).name
+        %td.description
+          = e.description
+        %td.attendance
+          #{e.attendees.count}/#{e.capacity}

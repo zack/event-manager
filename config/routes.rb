@@ -13,4 +13,14 @@ Rails.application.routes.draw do
   get '/delete/:uuid', to: 'membership#delete'
   post '/destroy', to: 'membership#destroy'
   get '/deleted', to: 'membership#deleted'
+
+  get '/events', to: 'event#index'
+  get '/event/new', to: 'event#new'
+  post '/event', to: 'event#create', as: 'create_event'
+
+  get '/event/:uuid', to: 'event#manage'
+  patch '/event/:uuid', to: 'event#update', as: 'update_event'
+
+  get '/event/delete/:uuid', to: 'event#delete'
+  post '/event/destroy', to: 'event#destroy'
 end

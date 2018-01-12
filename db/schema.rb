@@ -10,18 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180107215644) do
+ActiveRecord::Schema.define(version: 20180112133648) do
 
   create_table "events", force: :cascade do |t|
     t.integer "subscription_list_id", null: false
-    t.date "date", null: false
     t.integer "capacity"
     t.text "description", null: false
-    t.time "time", null: false
+    t.time "datetime", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["date"], name: "index_events_on_date", unique: true
+    t.string "uuid", null: false
+    t.index ["datetime"], name: "index_events_on_datetime", unique: true
     t.index ["subscription_list_id"], name: "index_events_on_subscription_list_id"
+  end
+
+  create_table "rsvps", force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "subscriber_id", null: false
+    t.boolean "response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_rsvps_on_event_id"
+    t.index ["subscriber_id"], name: "index_rsvps_on_subscriber_id"
   end
 
   create_table "subscribers", force: :cascade do |t|

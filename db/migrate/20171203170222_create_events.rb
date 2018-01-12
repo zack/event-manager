@@ -3,12 +3,11 @@ class CreateEvents < ActiveRecord::Migration[5.1]
     create_table :events do |t|
       t.references :subscription_list, null: false
 
-      t.date :date, null: false
       t.integer :capacity
       t.text :description, null: false
-      t.time :time, null: false
+      t.time :datetime, null: false
 
-      t.index :date, unique: true
+      t.index :datetime, unique: true
 
       t.timestamps
     end

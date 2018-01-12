@@ -1,0 +1,4 @@
+%h1 Delete event at #{@event.datetime.strftime('%Y-%m-%d @ %l:%m%p')}
+.explanation
+  = button_to "Delete", { controller: "event", action: "destroy", uuid: @event.uuid }, id: 'delete-confirm'
+  = link_to "Back", controller: "event", action: "manage", uuid: @event.uuid

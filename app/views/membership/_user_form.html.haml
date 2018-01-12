@@ -1,7 +1,18 @@
-#user_form
+#user_form.form
+  - if !@subscriber.uuid
+    .notice
+      <strong>Please use a name that I'll recognize.</strong> I want to make sure I know who's getting these emails. &#9786;
+
+  - elsif !@subscriber.email_confirmed
+    .notice.warning
+      <strong>You have not confirmed your email address.</strong>
+      Please check your inbox for a confirmation email.
+      = link_to 'Resend?', { controller: 'membership', action: 'resend_confirmation_email', uuid: @subscriber.uuid }
+
+
   = form_for(subscriber, url: submit_url) do |f|
     - if @subscriber.errors.any?
-      %ul#errors
+      %ul#errors.notice.warning
         - @subscriber.errors.full_messages.each do |err|
           %li
             =err
@@ -33,4 +44,4 @@
     .actions
       = f.submit 'Submit'
       - if subscriber.uuid
-        = link_to 'Delete My Account', { controller: 'membership', action: 'delete', uuid: subscriber.uuid }, id: 'delete-account'
+        = link_to 'Delete My Account', { controller: 'membership', action: 'delete', uuid: subscriber.uuid }, id: 'delete'

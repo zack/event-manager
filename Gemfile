@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'faker', "~> 1.8"
 gem 'figaro', '~> 1.1'
 gem 'haml-rails', '~> 1.0'
 gem 'jbuilder', '~> 2.7'
@@ -12,6 +13,7 @@ gem 'mailgun_rails', '~> 0.9'
 gem 'puma', '~> 3.11'
 gem 'rails', '~> 5.1'
 gem 'sass-rails', '~> 5.0'
+gem 'seed-fu', "~> 2.3"
 gem 'sqlite3', '~> 1.3'
 gem 'uglifier', '~> 4.0'
 gem 'validates_email_format_of', '~> 1.6'
