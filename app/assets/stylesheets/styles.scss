@@ -102,14 +102,19 @@ table {
   border: 1px solid black;
   border-collapse: collapse;
 
-  thead {
+  thead, .header-row {
     background-color: rgba(black, 0.09);
+    font-weight: bold;
   }
 
   tr {
     &:nth-child(even) {
       background-color: rgba(black, 0.09);
     }
+  }
+
+  th {
+    text-align: center;
   }
 
   td, th {
@@ -119,12 +124,31 @@ table {
     text-overflow: ellipsis;
     white-space: nowrap;
 
+    &.center {
+      text-align: center;
+    }
+
+    &.date{
+      text-align: center;
+      width: 100px;
+    }
+
+    &.time {
+      text-align: center;
+      width: 82px;
+    }
+
+    &.list {
+      width: 250px;
+    }
+
     &.description {
-      max-width: 525px;
+      width: 525px;
     }
 
     &.attendance {
-      text-align: right;
+      text-align: center;
+      width: 60px;
     }
   }
 }

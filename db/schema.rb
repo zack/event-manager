@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20180112133648) do
     t.integer "subscription_list_id", null: false
     t.integer "capacity"
     t.text "description", null: false
-    t.time "datetime", null: false
+    t.datetime "datetime", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "uuid", null: false

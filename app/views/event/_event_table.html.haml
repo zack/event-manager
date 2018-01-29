@@ -1,0 +1,30 @@
+%table.events
+  %thead
+    %tr
+      %th.date Date
+      %th.time Time
+      %th.list List
+      %th.description Description
+      %th.attendance RSVP
+      %th.show Show
+      - if editable
+        %th.edit Edit
+
+  %tbody
+    - events.each do |e|
+      %tr
+        %td.date
+          = e.datetime.strftime('%Y-%m-%d')
+        %td.time
+          = e.datetime.strftime('%l:%M %p')
+        %td.list
+          = SubscriptionList.find(e.subscription_list_id).name
+        %td.description
+          = e.description
+        %td.attendance
+          #{e.attendees.count}/#{e.capacity}
+        %td.show
+          = link_to 'Show', { controller: 'event', action: 'show', uuid: e.uuid }
+        - if editable
+          %td.edit
+            = link_to 'Edit', { controller: 'event', action: 'edit', uuid: e.uuid }

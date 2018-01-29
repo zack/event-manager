@@ -1,22 +1,11 @@
-%table
-  %thead
-    %tr
-      %th.date Date
-      %th.time Time
-      %th.list List
-      %th.description Description
-      %th.attendance RSVP
+%p
+  = link_to "New Event", { controller: "event", action: "new" }
 
-  %tbody
-    - @events.each do |e|
-      %tr
-        %td.date
-          = link_to e.datetime.strftime('%Y-%m-%d'), { controller: 'event', action: 'manage', uuid: e.uuid }
-        %td.time
-          = e.datetime.strftime('%l:%m%p')
-        %td.list
-          = SubscriptionList.find(e.subscription_list_id).name
-        %td.description
-          = e.description
-        %td.attendance
-          #{e.attendees.count}/#{e.capacity}
+- if @upcoming_events
+  %h2 Upcoming Events
+  = render partial: 'event_table', locals: { events: @upcoming_events, editable: true }
+
+- if @past_events
+  %h2 Past Events
+  = render partial: 'event_table', locals: { events: @past_events, editable: false }
+

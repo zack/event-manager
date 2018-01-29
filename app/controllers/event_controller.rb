@@ -1,6 +1,8 @@
 class EventController < ApplicationController
   def index
-    @events = Event.all
+    @events = Event.all.order(datetime: :desc)
+    @upcoming_events = @events.select{|e| e.datetime > DateTime.now}
+    @past_events = @events.select{|e| e.datetime < DateTime.now}
   end
 
   def new
@@ -11,6 +13,9 @@ class EventController < ApplicationController
     @event = Event.new(event_params)
     @event.uuid = SecureRandom.uuid
 
+    event_time = params['event']['datetime'].split(/[- :]/).map{|n| n.to_i}
+    @event.datetime = DateTime.new(*event_time)
+
     if @event.save
       redirect_to action: :manage, uuid: @event.uuid
     else
@@ -19,12 +24,33 @@ class EventController < ApplicationController
     end
   end
 
-  def manage
+  def edit
+    @event = Event.find_by uuid: params['uuid']
+  end
+
+  def show
+    @event = Event.find_by uuid: params['uuid']
+
+    subscribers = Subscriber
+      .includes(:subscription_lists)
+      .where(subscription_lists: {id: @event.subscription_list_id})
+
+    confirmed, @unconfirmed = subscribers.partition do |s|
+      s.email_confirmed and s.admin_confirmed
+    end
+
+    @invited, @not_invited = confirmed.partition do |s|
+      Syndication.where(event_id: @event, subscriber_id: s).count > 0
+    end
+  end
+
+  def syndicate
     @event = Event.find_by uuid: params['uuid']
   end
 
   def update
     @event = Event.find_by uuid: params['event']['uuid']
+
     if @event.update(event_params)
       flash[:success] = 'Event successfully updated!'
       redirect_to action: :index
@@ -49,10 +75,9 @@ class EventController < ApplicationController
   def event_params
     params.require(:event).permit(
       :capacity,
-      :date,
+      :datetime,
       :description,
       :subscription_list_id,
-      :time,
       :uuid
     )
   end

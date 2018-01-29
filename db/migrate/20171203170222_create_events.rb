@@ -5,7 +5,7 @@ class CreateEvents < ActiveRecord::Migration[5.1]
 
       t.integer :capacity
       t.text :description, null: false
-      t.time :datetime, null: false
+      t.datetime :datetime, null: false
 
       t.index :datetime, unique: true
 

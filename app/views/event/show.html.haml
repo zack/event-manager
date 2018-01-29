@@ -1,0 +1,110 @@
+%p
+  = link_to "Back", controller: "event", action: "index"
+
+%p
+  <b> Date: </b>
+  = @event.datetime.strftime("%A, %B #{@event.datetime.day.ordinalize}")
+
+%p
+  <b> Time: </b>
+  = @event.datetime.strftime('%l:%M %p')
+
+%p
+  <b> List: </b>
+  = SubscriptionList.find(@event.subscription_list_id).name
+
+%p
+  <b> Description: </b>
+  = @event.description
+
+- if @event.datetime > DateTime.now
+  - if @not_invited.count > 0
+    %p
+    %table
+      %thead
+        %tr
+          %th{colspan: 2}
+            Not Yet Invited
+        %tr
+          %th
+            Name
+          %th
+            Email Address
+      %tbody
+        - @not_invited.each do |s|
+          %tr
+            %td
+              = s.name
+            %td
+              = s.email_address
+
+- if @invited.count > 0
+  %p
+  %table
+    %thead
+      %tr
+        %th{colspan: 4}
+          - if @event.datetime > DateTime.now
+            Already Invited
+          - else
+            Invited
+      %tr
+        %th
+          Name
+        %th
+          Email Address
+        %th
+          Invited
+        - if @event.datetime > DateTime.now
+          %th
+            Resend
+    %tbody
+      - @invited.each do |s|
+        %tr
+          %td
+            = s.name
+          %td
+            = s.email_address
+          %td
+            = Syndication.where(event_id: @event.id, subscriber_id: s.id).first.created_at.strftime('%Y-%m-%d %l:%M %p')
+          - if @event.datetime > DateTime.now
+            %td.center
+              = button_to "Resend"
+- elsif @event.datetime > DateTime.now
+  %p
+    Nobody has been invited to this event.
+- else
+  %p
+    Nobody was invited to this event.
+
+
+- if @event.datetime > DateTime.now
+  - if @unconfirmed.count > 0
+    %p
+    %table
+      %thead
+        %tr
+          %th{colspan: 3}
+            Unconfirmed Subscribers
+        %tr
+          %th
+            Name
+          %th
+            Email Confirmed
+          %th
+            Admin Confirmed
+      - @unconfirmed.each do |s|
+        %tr
+          %td
+            = s.name
+          %td.center
+            = s.email_confirmed
+          %td.center
+            = s.admin_confirmed
+
+- if @event.datetime > DateTime.now
+  %p
+    = button_to "Invite #{pluralize(@not_invited.count, 'subscriber')}!", { controller: "event", action: "syndicate", uuid: @event.id }
+- else
+  %p
+    Cannot syndicate past events.
