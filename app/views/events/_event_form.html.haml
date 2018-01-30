@@ -33,4 +33,4 @@
     .actions
       = f.submit 'Submit'
       - if event.uuid
-        = link_to 'Delete Event', { controller: 'event', action: 'delete', uuid: event.uuid }, id: 'delete'
+        = link_to 'Delete Event', { controller: 'events', action: 'delete', uuid: event.uuid }, id: 'delete'

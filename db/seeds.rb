@@ -17,7 +17,7 @@ SubscriptionList.create({
 })
 
 for i in 1..50
-  Subscriber.seed do |s|
+  User.seed do |s|
     s.admin_confirmed = [true, false].sample
     s.email_address = Faker::Internet.email
     s.email_confirmation_code = SecureRandom.hex
@@ -38,27 +38,27 @@ for i in 1..10
   end
 end
 
-for s in Subscriber.all
+for s in User.all
   for i in [[[1,2].sample], [1,2]].sample
     Subscription.seed do |ss|
-      ss.subscriber_id = s.id
+      ss.user_id = s.id
       ss.subscription_list_id = i
     end
   end
 end
 
 for e in Event.all
-  for s in Subscriber.includes(:subscription_lists).where(subscription_lists: {id: e.subscription_list_id})
+  for s in User.includes(:subscription_lists).where(subscription_lists: {id: e.subscription_list_id})
     if s.email_confirmed and s.admin_confirmed and [true, true, false].sample
       Syndication.seed do |sy|
         sy.event_id = e.id
-        sy.subscriber_id = s.id
+        sy.user_id = s.id
       end
 
       if [true, false].sample
         Rsvp.seed do |r|
           r.event_id = e.id
-          r.subscriber_id = s.id
+          r.user_id = s.id
           r.response = [true, false].sample
         end
       end

@@ -24,7 +24,7 @@
         %td.attendance
           #{e.attendees.count}/#{e.capacity}
         %td.show
-          = link_to 'Show', { controller: 'event', action: 'show', uuid: e.uuid }
+          = link_to 'Show', { controller: 'events', action: 'show', uuid: e.uuid }
         - if editable
           %td.edit
-            = link_to 'Edit', { controller: 'event', action: 'edit', uuid: e.uuid }
+            = link_to 'Edit', { controller: 'events', action: 'edit', uuid: e.uuid }

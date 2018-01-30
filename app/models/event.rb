@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
   belongs_to :subscription_list
 
-  has_many :subscribers, through: :syndications
+  has_many :users, through: :syndications
   has_many :rsvps
 
   validate :check_attendance_below_limit

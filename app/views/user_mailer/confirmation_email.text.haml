@@ -3,10 +3,10 @@ Welcome to Saturday Night Board Games!
 = "\r\n"
 
 If you signed up, please click this link to confirm your email address:
-= url_for controller: 'membership', action: 'confirm_email', uuid: @subscriber.uuid, code: @subscriber.email_confirmation_code
+= url_for controller: 'users', action: 'confirm_email', uuid: @user.uuid, code: @user.email_confirmation_code
 
 = "\r\n"
 
 If you did not sign up then you can safely ignore this email.
 Or, if you like, you can click this link to delete all record of your address:
-= url_for controller: 'membership', action: 'delete', uuid: @subscriber.uuid
+= url_for controller: 'users', action: 'delete', uuid: @user.uuid

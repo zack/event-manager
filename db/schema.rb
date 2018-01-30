@@ -26,26 +26,12 @@ ActiveRecord::Schema.define(version: 20180112133648) do
 
   create_table "rsvps", force: :cascade do |t|
     t.integer "event_id", null: false
-    t.integer "subscriber_id", null: false
+    t.integer "user_id", null: false
     t.boolean "response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_rsvps_on_event_id"
-    t.index ["subscriber_id"], name: "index_rsvps_on_subscriber_id"
-  end
-
-  create_table "subscribers", force: :cascade do |t|
-    t.boolean "email_confirmed", null: false
-    t.string "email_address", null: false
-    t.string "first_name", null: false
-    t.string "last_name", null: false
-    t.string "uuid", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "admin_confirmed", null: false
-    t.string "email_confirmation_code"
-    t.index ["email_address"], name: "index_subscribers_on_email_address", unique: true
-    t.index ["uuid"], name: "index_subscribers_on_uuid", unique: true
+    t.index ["user_id"], name: "index_rsvps_on_user_id"
   end
 
   create_table "subscription_lists", force: :cascade do |t|
@@ -56,22 +42,36 @@ ActiveRecord::Schema.define(version: 20180112133648) do
   end
 
   create_table "subscriptions", force: :cascade do |t|
-    t.integer "subscriber_id", null: false
+    t.integer "user_id", null: false
     t.integer "subscription_list_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["subscriber_id", "subscription_list_id"], name: "index_subscriptions_on_subscriber_id_and_subscription_list_id", unique: true
-    t.index ["subscriber_id"], name: "index_subscriptions_on_subscriber_id"
     t.index ["subscription_list_id"], name: "index_subscriptions_on_subscription_list_id"
+    t.index ["user_id", "subscription_list_id"], name: "index_subscriptions_on_user_id_and_subscription_list_id", unique: true
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "syndications", force: :cascade do |t|
     t.integer "event_id", null: false
-    t.integer "subscriber_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_syndications_on_event_id"
-    t.index ["subscriber_id"], name: "index_syndications_on_subscriber_id"
+    t.index ["user_id"], name: "index_syndications_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.boolean "email_confirmed", null: false
+    t.string "email_address", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "uuid", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "admin_confirmed", null: false
+    t.string "email_confirmation_code"
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
 end

@@ -1,6 +1,6 @@
-class CreateSubscribers < ActiveRecord::Migration[5.1]
+class CreateUsers < ActiveRecord::Migration[5.1]
   def change
-    create_table :subscribers do |t|
+    create_table :users do |t|
       t.boolean :confirmed, null: false
       t.string :email, null: false
       t.string :first_name, null: false

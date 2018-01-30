@@ -1,6 +1,6 @@
 class Syndication < ApplicationRecord
   belongs_to :event
-  belongs_to :subscriber
+  belongs_to :user
 
-  validates :subscriber, uniqueness: { scope: :event }
+  validates :user, uniqueness: { scope: :event }
 end

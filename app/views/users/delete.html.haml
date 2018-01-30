@@ -1,0 +1,7 @@
+%p
+  = link_to 'Back', controller: 'users', action: 'edit', uuid: @user.uuid
+
+%strong Delete user: #{@user.email_address}?
+%p
+  %em This will delete all record of the above user in the database. You may create a new account afterward.
+= button_to 'Delete', { controller: 'users', action: 'destroy', uuid: @user.uuid }, id: 'delete-confirm'

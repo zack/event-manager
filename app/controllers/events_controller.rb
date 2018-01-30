@@ -1,4 +1,4 @@
-class EventController < ApplicationController
+class EventsController < ApplicationController
   def index
     @events = Event.all.order(datetime: :desc)
     @upcoming_events = @events.select{|e| e.datetime > DateTime.now}
@@ -17,34 +17,30 @@ class EventController < ApplicationController
     @event.datetime = DateTime.new(*event_time)
 
     if @event.save
-      redirect_to action: :manage, uuid: @event.uuid
+      redirect_to action: :edit, uuid: @event.uuid
     else
       @event.uuid = nil
       render :new
     end
   end
 
-  def edit
-    @event = Event.find_by uuid: params['uuid']
-  end
-
   def show
     @event = Event.find_by uuid: params['uuid']
 
-    subscribers = Subscriber
+    users = User
       .includes(:subscription_lists)
       .where(subscription_lists: {id: @event.subscription_list_id})
 
-    confirmed, @unconfirmed = subscribers.partition do |s|
+    confirmed, @unconfirmed = users.partition do |s|
       s.email_confirmed and s.admin_confirmed
     end
 
     @invited, @not_invited = confirmed.partition do |s|
-      Syndication.where(event_id: @event, subscriber_id: s).count > 0
+      Syndication.where(event_id: @event, user_id: s).count > 0
     end
   end
 
-  def syndicate
+  def edit
     @event = Event.find_by uuid: params['uuid']
   end
 
@@ -55,7 +51,7 @@ class EventController < ApplicationController
       flash[:success] = 'Event successfully updated!'
       redirect_to action: :index
     else
-      render :manage
+      render :edit
     end
   end
 
@@ -68,6 +64,10 @@ class EventController < ApplicationController
     @event.destroy
     flash[:success] = 'Event successfully deleted!'
     redirect_to action: :index
+  end
+
+  def syndicate
+    @event = Event.find_by uuid: params['uuid']
   end
 
   private

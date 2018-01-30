@@ -1,30 +1,23 @@
 Rails.application.routes.draw do
-  get '/', to: redirect('/signup')
+  get '/', to: 'welcome#index', as: 'index'
 
-  get '/signup', to: 'membership#new', as: 'signup'
-  post '/signup', to: 'membership#create', as: 'subscribe'
+  get    '/users/new',                       to: 'users#new',                 as: 'new_user'
+  post   '/users',                           to: 'users#create',              as: 'create_user'
+  get    '/users/:uuid/edit',                to: 'users#edit',                as: 'edit_user'
+  patch  '/users/:uuid',                     to: 'users#update',              as: 'update_user'
+  get    '/users/:uuid/delete',              to: 'users#delete',              as: 'delete_user'
+  delete '/users/:uuid',                     to: 'users#destroy',             as: 'destroy_user'
+  get    '/users/:uuid/deleted',             to: 'users#deleted',             as: 'deleted_user'
+  get    '/users/:uuid/confirm/:code',       to: 'users#confirm_email',       as: 'confirm_user'
+  get    '/users/:uuid/resend_confirmation', to: 'users#resend_confirmation', as: 'reconfirm_user_confirmation'
 
-  get '/manage/:uuid', to: 'membership#manage'
-  patch '/update', to: 'membership#update', as: 'update'
-
-  get '/confirm/:uuid/:code', to: 'membership#confirm_email'
-  get '/member/resend_confirmation/:uuid', to: 'membership#resend_confirmation_email'
-
-  get '/delete/:uuid', to: 'membership#delete'
-  post '/destroy', to: 'membership#destroy'
-  get '/deleted', to: 'membership#deleted'
-
-  get    '/events',              to: 'event#index',    as: 'events'
-  get    '/events/new',          to: 'event#new',      as: 'new_event'
-  post   '/events',              to: 'event#create',   as: 'create_event'
-  get    '/events/:uuid',        to: 'event#show',     as: 'event'
-  get    '/event/:uuid/edit',    to: 'event#edit',     as: 'edit_event'
-  patch  '/events/:uuid',        to: 'event#update',   as: 'update_event'
-  get    '/events/:uuid/delete', to: 'events#destroy', as: 'delete_event'
-  delete '/events/:uuid',        to: 'events#destroy', as: 'destroy_event'
-
-  post '/event/synidicate/:uuid', to: 'event#syndicate'
-
-  get '/event/delete/:uuid', to: 'event#delete'
-  post '/event/destroy', to: 'event#destroy'
+  get    '/events',                  to: 'events#index',     as: 'events'
+  get    '/events/new',              to: 'events#new',       as: 'new_event'
+  post   '/events',                  to: 'events#create',    as: 'create_event'
+  get    '/events/:uuid',            to: 'events#show',      as: 'event'
+  get    '/events/:uuid/edit',       to: 'events#edit',      as: 'edit_event'
+  patch  '/events/:uuid',            to: 'events#update',    as: 'update_event'
+  get    '/events/:uuid/delete',     to: 'events#delete',    as: 'delete_event'
+  delete '/events/:uuid',            to: 'events#destroy',   as: 'destroy_event'
+  post   '/events/:uuid/synidicate', to: 'events#syndicate', as: 'syndicate_event'
 end
