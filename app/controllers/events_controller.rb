@@ -1,8 +1,8 @@
 class EventsController < ApplicationController
   def index
     @events = Event.all.order(datetime: :desc)
-    @upcoming_events = @events.select{|e| e.datetime > DateTime.now}
-    @past_events = @events.select{|e| e.datetime < DateTime.now}
+    @upcoming_events = @events.select { |e| e.datetime > DateTime.now }
+    @past_events = @events.select { |e| e.datetime < DateTime.now }
   end
 
   def new
@@ -13,7 +13,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     @event.uuid = SecureRandom.uuid
 
-    event_time = params['event']['datetime'].split(/[- :]/).map{|n| n.to_i}
+    event_time = params['event']['datetime'].split(/[- :]/).map { |n| n.to_i }
     @event.datetime = DateTime.new(*event_time)
 
     if @event.save
@@ -29,10 +29,10 @@ class EventsController < ApplicationController
 
     users = User
       .includes(:subscription_lists)
-      .where(subscription_lists: {id: @event.subscription_list_id})
+      .where(subscription_lists: { id: @event.subscription_list_id })
 
     confirmed, @unconfirmed = users.partition do |s|
-      s.email_confirmed and s.admin_confirmed
+      s.email_confirmed && s.admin_confirmed
     end
 
     @invited, @not_invited = confirmed.partition do |s|
@@ -72,13 +72,13 @@ class EventsController < ApplicationController
 
   private
 
-  def event_params
-    params.require(:event).permit(
-      :capacity,
-      :datetime,
-      :description,
-      :subscription_list_id,
-      :uuid
-    )
-  end
+    def event_params
+      params.require(:event).permit(
+        :capacity,
+        :datetime,
+        :description,
+        :subscription_list_id,
+        :uuid
+      )
+    end
 end

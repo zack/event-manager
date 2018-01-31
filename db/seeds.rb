@@ -6,15 +6,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-SubscriptionList.create({
+SubscriptionList.create(
   name: 'Saturday Night Board Games',
   description: 'Semi-weekly board game events'
-})
+)
 
-SubscriptionList.create({
+SubscriptionList.create(
   name: 'Epic Board Games',
   description: 'For playing 2+ hour long board games'
-})
+)
 
 for i in 1..50
   User.seed do |s|
@@ -30,16 +30,16 @@ end
 
 for i in 1..10
   Event.seed do |e|
-    e.capacity = Random.rand(10)+6
+    e.capacity = Random.rand(10) + 6
     e.datetime = Faker::Time.between(DateTime.now + 14, DateTime.now - 31)
     e.description = Faker::Lorem.sentence
-    e.subscription_list_id = [1,2].sample
+    e.subscription_list_id = [1, 2].sample
     e.uuid = SecureRandom.uuid
   end
 end
 
 for s in User.all
-  for i in [[[1,2].sample], [1,2]].sample
+  for i in [[[1, 2].sample], [1, 2]].sample
     Subscription.seed do |ss|
       ss.user_id = s.id
       ss.subscription_list_id = i
@@ -48,8 +48,8 @@ for s in User.all
 end
 
 for e in Event.all
-  for s in User.includes(:subscription_lists).where(subscription_lists: {id: e.subscription_list_id})
-    if s.email_confirmed and s.admin_confirmed and [true, true, false].sample
+  for s in User.includes(:subscription_lists).where(subscription_lists: { id: e.subscription_list_id })
+    if s.email_confirmed && s.admin_confirmed && [true, true, false].sample
       Syndication.seed do |sy|
         sy.event_id = e.id
         sy.user_id = s.id
@@ -65,4 +65,3 @@ for e in Event.all
     end
   end
 end
-

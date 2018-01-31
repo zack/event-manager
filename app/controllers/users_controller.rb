@@ -14,8 +14,8 @@ class UsersController < ApplicationController
       params['user']['subscription_list_ids'].each do |s|
         new_subscription = SubscriptionList.where(id: s).take
         if new_subscription
-          Subscription.create({user_id: @user.id,
-                               subscription_list_id: new_subscription.id})
+          Subscription.create(user_id: @user.id,
+                               subscription_list_id: new_subscription.id)
         end
       end
 
@@ -35,12 +35,12 @@ class UsersController < ApplicationController
   def update
     @user = User.find_by uuid: params['user']['uuid']
     if @user.update(user_params)
-      Subscription.where({user_id: @user}).destroy_all
+      Subscription.where(user_id: @user).destroy_all
       params['user']['subscription_list_ids'].each do |s|
         new_subscription = SubscriptionList.where(id: s).take
         if new_subscription
-          Subscription.create({user_id: @user.id,
-                               subscription_list_id: new_subscription.id})
+          Subscription.create(user_id: @user.id,
+                               subscription_list_id: new_subscription.id)
         end
       end
       flash[:success] = 'Profile successfully updated!'
@@ -57,8 +57,8 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find_by uuid: params['uuid']
 
-    Subscription.where({user_id: @user}).destroy_all
-    Syndication.where({user_id: @user}).destroy_all
+    Subscription.where(user_id: @user).destroy_all
+    Syndication.where(user_id: @user).destroy_all
     @user.destroy
 
     redirect_to :deleted
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
   def confirm_email
     @user = User.find_by uuid: params['uuid']
     @confirmation_code = params['code']
-    if @user and @user.email_confirmation_code == @confirmation_code
+    if @user && (@user.email_confirmation_code == @confirmation_code)
       @user.update(email_confirmed: true)
       flash[:success] = 'Email confirmed!'
       redirect_to action: :edit, uuid: @user.uuid
@@ -88,11 +88,11 @@ class UsersController < ApplicationController
 
   private
 
-  def user_params
-    params.require(:user).permit(
-      :email_address,
-      :first_name,
-      :last_name
-    )
-  end
+    def user_params
+      params.require(:user).permit(
+        :email_address,
+        :first_name,
+        :last_name
+      )
+    end
 end

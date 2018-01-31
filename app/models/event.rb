@@ -11,14 +11,14 @@ class Event < ApplicationRecord
   validates :description, presence: true
 
   def attendees
-    Rsvp.where({ event_id: id, response: true})
+    Rsvp.where(event_id: id, response: true)
   end
 
   private
 
-  def check_attendance_below_limit
-    if attendees.count >= capacity
-      errors.add(:capacity, "has been reached!")
+    def check_attendance_below_limit
+      if attendees.count >= capacity
+        errors.add(:capacity, 'has been reached!')
+      end
     end
-  end
 end
