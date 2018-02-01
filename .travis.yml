@@ -1,0 +1,13 @@
+language: ruby
+
+rvm:
+- 2.5.0
+
+before_script:
+  bundle exec rake db:drop db:create db:migrate db:seed
+
+script:
+  bundle exec rubocop
+
+notifications:
+  email: false
