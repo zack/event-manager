@@ -42,3 +42,4 @@ bower.json
 .byebug_history
 
 config/application.yml
+*.backup
