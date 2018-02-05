@@ -21,6 +21,7 @@ gem 'validates_email_format_of', '~> 1.6'
 
 group :test, :development do
   gem 'capybara', '~> 2.17'
+  gem 'factory_bot_rails', '~> 4.8'
   gem 'rspec-rails', '~> 3.7'
   gem 'shoulda-matchers', '~> 3.1'
 end

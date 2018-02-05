@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  UUID_REGEX = /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/
+  UUID_REGEX = /\A[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}\Z/
 
   before_save :downcase_email_address
 
@@ -25,6 +25,10 @@ class User < ApplicationRecord
   end
 
   def downcase_email_address
-    self.email_address.downcase!
+    if self.email_address
+      self.email_address.downcase!
+    else # for the tests...
+      ''
+    end
   end
 end
