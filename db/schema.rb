@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180112133648) do
+ActiveRecord::Schema.define(version: 2018_01_12_133648) do
 
   create_table "events", force: :cascade do |t|
     t.integer "subscription_list_id", null: false
