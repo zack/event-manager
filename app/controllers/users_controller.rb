@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     Syndication.where(user_id: @user).destroy_all
     @user.destroy
 
-    redirect_to :deleted
+    redirect_to :deleted_user
   end
 
   def deleted

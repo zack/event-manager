@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   patch  '/users/:uuid',                     to: 'users#update',              as: 'update_user'
   get    '/users/:uuid/delete',              to: 'users#delete',              as: 'delete_user'
   delete '/users/:uuid',                     to: 'users#destroy',             as: 'destroy_user'
-  get    '/users/:uuid/deleted',             to: 'users#deleted',             as: 'deleted_user'
+  get    '/users/deleted',                   to: 'users#deleted',             as: 'deleted_user'
   get    '/users/:uuid/confirm/:code',       to: 'users#confirm_email',       as: 'confirm_user'
   get    '/users/:uuid/resend_confirmation', to: 'users#resend_confirmation', as: 'reconfirm_user_confirmation'
 
