@@ -9,7 +9,6 @@ users can decide which lists to be on.
 ### Project Roadmap
 * Application
   - [x] Implement config-driven mailing list name
-  - [ ] Implement config-driven subscription list management
   - [x] Implement config-driven email domain management
   - [x] Implement config-driven domain
   - [x] Implement config-driven admin email address
@@ -21,7 +20,6 @@ users can decide which lists to be on.
 * User self-maintanence
   - [x] A user can update their name and email address
     - [x] A user receives a confirmation email to update their email address
-    - [ ] A user can revert their email address change from their account page
   - [x] A user can delete their account
     - [x] All records of syndications to that user are deleted
     - [x] All records of subscriptions by that user are deleted
