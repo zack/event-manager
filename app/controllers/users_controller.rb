@@ -79,7 +79,7 @@ class UsersController < ApplicationController
     Syndication.where(user_id: @user).destroy_all
     @user.destroy
 
-    return(redirect_to :deleted_user)
+    redirect_to :deleted_user
   end
 
   def deleted
@@ -124,7 +124,7 @@ class UsersController < ApplicationController
       UserMailer.confirmation_email(@user).deliver_now
     end
     flash[:success] = 'Sent!'
-    return(redirect_to action: :edit, uuid: @user.uuid)
+    redirect_to action: :edit, uuid: @user.uuid
   end
 
   private
