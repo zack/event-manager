@@ -20,7 +20,7 @@ gem 'validates_email_format_of', '~> 1.6'
 
 group :test, :development do
   gem 'capybara', '~> 2.18'
-  gem 'dotenv-rails', "~> 2.7"
+  gem 'dotenv-rails', '~> 2.7'
   gem 'factory_bot_rails', '~> 4.11'
   gem 'rspec-rails', '~> 3.8'
   gem 'shoulda-matchers', '~> 3.1'
