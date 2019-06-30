@@ -1,3 +1,3 @@
-%h1 Subscribe to Mailing List Name Placeholder?
+%h1 Subscribe to #{ENV["MAILING_LIST_NAME"]}?
 
 = render partial: 'user_form', locals: { user: @user, submit_url: create_user_path }

@@ -15,6 +15,6 @@ module EventsManagement
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    config.action_mailer.default_url_options = { host: 'youngren.io', protocol: 'https' }
+    # config.action_mailer.default_url_options = { host: request.hhost_with_portost, protocol: 'https' }
   end
 end

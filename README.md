@@ -8,12 +8,12 @@ users can decide which lists to be on.
 
 ### Project Roadmap
 * Application
-  - [ ] Implement mailing list name customization
+  - [x] Implement config-driven mailing list name
   - [ ] Implement config-driven subscription list management
-  - [ ] Implement config-driven email domain management
-  - [ ] Implement config-driven domain
-  - [ ] Implement config-driven admin email address
-  - [ ] Use localhost:3000 in emails for emails sent from development env
+  - [x] Implement config-driven email domain management
+  - [x] Implement config-driven domain
+  - [x] Implement config-driven admin email address
+  - [x] Use localhost:3000 in emails for emails sent from development env
 * User Registration
   - [x] A user can register an account
   - [x] A user receives a confirmation email upon registration

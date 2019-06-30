@@ -34,7 +34,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {
     api_key: ENV.fetch('MAILGUN_API_KEY'),
-    domain: 'mail.youngren.io'
+    domain: ENV.fetch('EMAIL_DOMAIN')
   }
 
   # Print deprecation notices to the Rails logger.
