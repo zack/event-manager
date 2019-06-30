@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_01_12_133648) do
+ActiveRecord::Schema.define(version: 2019_06_30_202526) do
 
   create_table "events", force: :cascade do |t|
     t.integer "subscription_list_id", null: false
@@ -69,7 +69,9 @@ ActiveRecord::Schema.define(version: 2018_01_12_133648) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin_confirmed", null: false
+    t.string "email_backup"
     t.string "email_confirmation_code"
+    t.boolean "user_confirmed"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end

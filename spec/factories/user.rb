@@ -10,15 +10,18 @@ FactoryBot.define do
 
     factory :email_confirmed_user do
       email_confirmed true
+      email_confirmation_code nil
     end
 
     factory :admin_confirmed_user do
       admin_confirmed true
+      email_confirmation_code nil
     end
 
     factory :confirmed_user do
       admin_confirmed true
       email_confirmed true
+      email_confirmation_code nil
     end
   end
 end

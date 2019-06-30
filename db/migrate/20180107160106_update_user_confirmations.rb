@@ -8,7 +8,6 @@ class UpdateUserConfirmations < ActiveRecord::Migration[5.1]
     add_column :users, :admin_confirmed, :boolean
     change_column_null :users, :admin_confirmed, false
 
-    add_column :users, :email_confirmation_code, :string
-    change_column_null :users, :admin_confirmed, false
+    add_column :users, :registration_confirmation_code, :string
   end
 end

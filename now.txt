@@ -1,0 +1,3 @@
+test email change flow
+
+send email update email after confirmation

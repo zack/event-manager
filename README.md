@@ -12,6 +12,7 @@ users can decide which lists to be on.
   - [ ] Implement config-driven subscription list management
   - [ ] Implement config-driven email domain management
   - [ ] Implement config-driven domain
+  - [ ] Implement config-driven admin email address
   - [ ] Use localhost:3000 in emails for emails sent from development env
 * User Registration
   - [x] A user can register an account
@@ -19,7 +20,7 @@ users can decide which lists to be on.
   - [x] The user can confirm their email address using the confirmation email
 * User self-maintanence
   - [x] A user can update their name and email address
-    - [ ] A user receives a confirmation email to update their email address
+    - [x] A user receives a confirmation email to update their email address
     - [ ] A user can revert their email address change from their account page
   - [x] A user can delete their account
     - [x] All records of syndications to that user are deleted
@@ -28,6 +29,7 @@ users can decide which lists to be on.
   - [x] A user can update their subscriptions
     - [x] A user can subscribe from one or all subscriptions
     - [x] A user can unsubscribe from one or all subscriptions
+  - [ ] Add option for user to recover their UUID by submitting their email address
 * Event interaction
   - [ ] A user receives an email for an open event if they subscribe to a list
   - [ ] A user can RSVP yes/no to an event

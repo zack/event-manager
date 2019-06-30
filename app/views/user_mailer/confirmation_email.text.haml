@@ -3,10 +3,15 @@ Welcome to Mailing List Name Placeholder!
 = "\r\n"
 
 If you signed up, please click this link to confirm your email address:
-= url_for controller: 'users', action: 'confirm_email', uuid: @user.uuid, code: @user.email_confirmation_code
+= url_for controller: 'users', action: 'confirm_email', code: @user.email_confirmation_code
+
+= "\r\n"
+
+In the future, you may use this link to access your account page:
+= url_for controller: 'users', action: 'edit', uuid: @user.uuid
 
 = "\r\n"
 
 If you did not sign up then you can safely ignore this email.
 Or, if you like, you can click this link to delete all record of your address:
-= url_for controller: 'users', action: 'delete', uuid: @user.uuid
+= url_for controller: 'users', action: 'delete_from_email', code: @user.email_confirmation_code

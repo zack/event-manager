@@ -1,0 +1,5 @@
+%strong Delete user: #{@user.email_address}?
+
+%p
+  %em This will delete all record of the above user in the database. You may create a new account afterward.
+= button_to 'Delete', { controller: 'users', action: 'destroy', code: @user.email_confirmation_code}, {method: :delete, id: 'delete-confirm'}

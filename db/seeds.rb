@@ -20,7 +20,6 @@ for i in 1..50
   User.seed do |s|
     s.admin_confirmed = [true, false].sample
     s.email_address = Faker::Internet.email
-    s.email_confirmation_code = SecureRandom.hex
     s.email_confirmed = [true, false].sample
     s.first_name = Faker::Name.first_name
     s.last_name = Faker::Name.last_name

@@ -1,0 +1,12 @@
+Please confirm your change of email address!
+
+= "\r\n"
+
+To confirm your new email address, please click this link:
+= url_for controller: 'users', action: 'confirm_email', code: @user.email_confirmation_code
+
+= "\r\n"
+
+If you do not recognize this email then you can safely ignore this email.
+Or, if you like, you can click this link to delete all record of your address:
+= url_for controller: 'users', action: 'revert_email', code: @user.email_confirmation_code
