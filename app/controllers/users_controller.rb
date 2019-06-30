@@ -64,11 +64,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def delete_from_email
-    @user = User.find_by email_confirmation_code: params['code']
-    destroy(@user)
-  end
-
   def delete
     @user = User.find_by uuid: params['uuid']
     destroy(@user)
@@ -113,7 +108,12 @@ class UsersController < ApplicationController
     end
   end
 
-  def email_change_reverted
+  def recover_account_submit
+    @user = User.find_by email_address: params['email_address']
+    if @user
+      UserMailer.recover_account(@user).deliver_now
+    end
+    render :recover_account_confirmation
   end
 
   def resend_confirmation

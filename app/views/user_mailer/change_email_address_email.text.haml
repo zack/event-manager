@@ -7,6 +7,6 @@ To confirm your new email address, please click this link:
 
 = "\r\n"
 
-If you do not recognize this email then you can safely ignore this email.
+If you did not sign up then you can safely ignore this email.
 Or, if you like, you can click this link to delete all record of your address:
-= url_for controller: 'users', action: 'revert_email', code: @user.email_confirmation_code
+= url_for controller: 'users', action: 'delete', uuid: @user.uuid

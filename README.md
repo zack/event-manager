@@ -27,7 +27,7 @@ users can decide which lists to be on.
   - [x] A user can update their subscriptions
     - [x] A user can subscribe from one or all subscriptions
     - [x] A user can unsubscribe from one or all subscriptions
-  - [ ] Add option for user to recover their UUID by submitting their email address
+  - [x] Add option for user to recover their UUID by submitting their email address
 * Event interaction
   - [ ] A user receives an email for an open event if they subscribe to a list
   - [ ] A user can RSVP yes/no to an event

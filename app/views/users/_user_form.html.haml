@@ -45,3 +45,5 @@
       = f.submit 'Submit'
       - if user.uuid
         = link_to 'Delete My Account', { controller: 'users', action: 'delete', uuid: user.uuid }, id: 'delete'
+      - else
+        = link_to "Lost access to your account?", { controller: 'users', action: 'recover_account' }, id: 'recover'

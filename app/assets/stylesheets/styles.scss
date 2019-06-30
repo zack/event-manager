@@ -90,7 +90,7 @@ $form-width: 550px;
     margin-top: 10px;
     width: $form-width;
 
-    a#delete {
+    a#delete, a#recover {
       display: inline-block;
       float: right;
       margin-top: 4px;
