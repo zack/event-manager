@@ -1,7 +1,7 @@
 language: ruby
 
 rvm:
-- 2.5.0
+- 2.6.3
 
 before_script:
   bundle exec rake db:drop db:create db:migrate db:seed
@@ -11,3 +11,9 @@ script:
 
 notifications:
   email: false
+
+env:
+  MAILING_LIST_NAME="Travis Config Mailing List"
+  EMAIL_USER=ci
+  EMAIL_DOMAIN=travis-ci.org
+
