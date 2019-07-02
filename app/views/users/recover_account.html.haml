@@ -1,6 +1,6 @@
 %h1 Recover your account for #{ENV["MAILING_LIST_NAME"]}?
 
-= form_tag('/users/recover_account', method: 'post') do |f|
+= form_tag(recover_account_path, method: 'post') do |f|
   = label_tag :email_address, 'Email Address:'
   = text_field_tag :email_address
   = submit_tag "Submit"

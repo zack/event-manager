@@ -9,4 +9,10 @@
     - if flash[:success]
       .flash.success
         = flash[:success]
+    - if flash[:notice]
+      .flash.notice
+        = flash[:notice]
+    - if flash[:warning]
+      .flash.warning
+        = flash[:warning]
     = yield
