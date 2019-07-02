@@ -3,11 +3,11 @@ Rails.application.routes.draw do
 
   get    '/users/new',                        to: 'users#new',                    as: 'new_user'
   post   '/users',                            to: 'users#create',                 as: 'create_user'
+  get    '/users/deleted',                    to: 'users#deleted',                as: 'deleted_user'
   get    '/users/:uuid',                      to: 'users#edit',                   as: 'edit_user'
   patch  '/users/:uuid',                      to: 'users#update',                 as: 'update_user'
   get    '/users/:uuid/delete',               to: 'users#delete',                 as: 'delete_user'
   delete '/users/:uuid',                      to: 'users#destroy',                as: 'destroy_user'
-  get    '/users/deleted',                    to: 'users#deleted',                as: 'deleted_user'
   get    '/users/confirm_email/:code',        to: 'users#confirm_email',          as: 'confirm_email'
   get    '/users/revert_email/:code',         to: 'users#revert_email',           as: 'revert_email'
   get    '/users/:uuid/resend_confirmation',  to: 'users#resend_confirmation',    as: 'reconfirm_user_confirmation'
