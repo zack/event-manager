@@ -36,7 +36,7 @@ users can decide which lists to be on.
   - [ ] A user can see the number of other people RSVPd to an event
   - [ ] A user can see the information about the event
 * Authentication
-  - [ ] Implement authentication for administration
+  - [x] Implement authentication for administration
   - [ ] Gate necessary endpoints with admin auth
 * User administration
   - [ ] An admin can see a list of all users and their confirmation statuses
