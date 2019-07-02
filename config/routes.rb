@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get    '/users/new',                        to: 'users#new',                    as: 'new_user'
   post   '/users',                            to: 'users#create',                 as: 'create_user'
-  get    '/users/:uuid/edit',                 to: 'users#edit',                   as: 'edit_user'
+  get    '/users/:uuid',                      to: 'users#edit',                   as: 'edit_user'
   patch  '/users/:uuid',                      to: 'users#update',                 as: 'update_user'
   get    '/users/:uuid/delete',               to: 'users#delete',                 as: 'delete_user'
   delete '/users/:uuid',                      to: 'users#destroy',                as: 'destroy_user'
