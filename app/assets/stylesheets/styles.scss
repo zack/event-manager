@@ -120,7 +120,7 @@ table {
   td, th {
     border: 1px solid black;
     overflow: hidden;
-    padding: 4px;
+    padding: 8px 4px;
     text-overflow: ellipsis;
     white-space: nowrap;
 
@@ -150,5 +150,9 @@ table {
       text-align: center;
       width: 60px;
     }
+  }
+
+  th {
+    padding: 12px 4px;
   }
 }

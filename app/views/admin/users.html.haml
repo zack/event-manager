@@ -2,6 +2,25 @@
 
 %h2 All Users
 
-%ul
-  - @users.each do |user|
-    %li= user.email_address
+%table
+  %thead
+    %tr
+      %th First Name
+      %th Last Name
+      %th Email Address
+      %th Email
+      %th Admin
+
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td.first-name
+          = user.first_name
+        %td.last-name
+          = user.last_name
+        %td
+          = user.email_address
+        %td
+          = user.email_confirmed
+        %td
+          = user.admin_confirmed
