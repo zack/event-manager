@@ -1,0 +1,16 @@
+= render partial: 'toolbar'
+
+%h2 #{@user.name()} (#{@user.admin_confirmed ? bool_to_unicode(@user.admin_confirmed) : link_to("Confirm?", admin_confirm_user_path(@user.uuid))})
+
+%div
+  %strong Email Address:
+  = "#{@user.email_address} (#{bool_to_unicode(@user.email_confirmed)})"
+
+%div
+  %strong Subscriptions:
+  %ul
+    - @subscriptions.each do |s|
+      %li
+        = s
+
+= link_to 'Delete this user', { controller: 'admin', action: 'delete_user', uuid: @user.uuid }

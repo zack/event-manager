@@ -8,19 +8,19 @@
       %th First Name
       %th Last Name
       %th Email Address
-      %th Email
-      %th Admin
+      %th #{"\u2709".encode('utf-8')}
+      %th #{"\u2611".encode('utf-8')}
 
   %tbody
     - @users.each do |user|
       %tr
         %td.first-name
-          = user.first_name
+          = link_to user.first_name, { controller: 'admin', action: 'user', uuid: user.uuid }
         %td.last-name
           = user.last_name
         %td
           = user.email_address
-        %td
-          = user.email_confirmed
-        %td
-          = user.admin_confirmed
+        %td.center
+          = bool_to_unicode(user.email_confirmed)
+        %td.center
+          = bool_to_unicode(user.admin_confirmed)

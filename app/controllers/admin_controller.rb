@@ -28,6 +28,34 @@ class AdminController < ApplicationController
     @users = User.all
   end
 
+  def user
+    @user = User.find_by(uuid: params[:uuid])
+    @subscriptions = Subscription.where(user_id: @user).map do |s|
+      SubscriptionList.find(s.subscription_list_id).name
+    end
+  end
+
+  def confirm_user
+    @user = User.find_by(uuid: params[:uuid])
+    @user.update(admin_confirmed: true)
+    flash[:success] = 'User successfully confirmed'
+    redirect_to :admin_view_user
+  end
+
+  def delete_user
+    @user = User.find_by uuid: params['uuid']
+    destroy_user(@user)
+  end
+
+  def destroy_user(user)
+    Subscription.where(user_id: @user).destroy_all
+    Syndication.where(user_id: @user).destroy_all
+    flash[:success] = "Successfully deleted #{user.name()}"
+    @user.destroy
+
+    redirect_to :admin_view_users
+  end
+
   private
 
     def validate_session

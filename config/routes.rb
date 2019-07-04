@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   get    '/admin/login',                      to: 'admin#login',                    as: 'admin_login'
   post   '/admin/login',                      to: 'admin#process_login',            as: 'admin_process_login'
   get    '/admin/users',                      to: 'admin#users',                    as: 'admin_view_users'
+  get    '/admin/user/:uuid',                 to: 'admin#user',                     as: 'admin_view_user'
+  get    '/admin/user/:uuid/confirm',         to: 'admin#confirm_user',             as: 'admin_confirm_user'
   get    '/admin/logout',                     to: 'admin#logout',                   as: 'admin_logout'
+  get    '/admin/user/:uuid/delete',          to: 'admin#delete_user',              as: 'admin_delete_user'
 
   post   '/users',                            to: 'users#create',                   as: 'create_user'
   get    '/users/confirm_email/:code',        to: 'users#confirm_email',            as: 'confirm_email'
@@ -17,7 +20,6 @@ Rails.application.routes.draw do
   get    '/users/:uuid',                      to: 'users#edit',                     as: 'edit_user'
   patch  '/users/:uuid',                      to: 'users#update',                   as: 'update_user'
   get    '/users/:uuid/delete',               to: 'users#delete',                   as: 'delete_user'
-  delete '/users/:uuid',                      to: 'users#destroy',                  as: 'destroy_user'
   get    '/users/:uuid/resend_confirmation',  to: 'users#resend_confirmation',      as: 'reconfirm_user_confirmation'
 
   get    '/events',                           to: 'events#index',                   as: 'events'

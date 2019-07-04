@@ -37,11 +37,11 @@ users can decide which lists to be on.
   - [ ] A user can see the information about the event
 * Authentication
   - [x] Implement authentication for administration
-  - [ ] Gate necessary endpoints with admin auth
+  - [x] Gate necessary endpoints with admin auth
 * User administration
-  - [ ] An admin can see a list of all users and their confirmation statuses
-  - [ ] An admin can admin-confirm a user
-  - [ ] An admin can delete a user
+  - [x] An admin can see a list of all users and their confirmation statuses
+  - [x] An admin can admin-confirm a user
+  - [x] An admin can delete a user
   - [ ] An admin can change a user's name
   - [ ] An admin can change a user's email address
     - [ ] A user receives a confirmation email to update their email address

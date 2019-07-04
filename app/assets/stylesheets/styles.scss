@@ -1,5 +1,15 @@
 $form-width: 550px;
 
+a {
+  &:visited {
+    color: blue;
+  }
+}
+
+ul {
+  margin: 0;
+}
+
 .flash {
   width: $form-width;
 }
@@ -113,10 +123,6 @@ table {
     }
   }
 
-  th {
-    text-align: center;
-  }
-
   td, th {
     border: 1px solid black;
     overflow: hidden;
@@ -153,6 +159,6 @@ table {
   }
 
   th {
-    padding: 12px 4px;
+    padding: 12px 8px;
   }
 }
