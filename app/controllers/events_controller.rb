@@ -24,7 +24,7 @@ class EventsController < ApplicationController
     end
   end
 
-  def show
+  def admin
     @event = Event.find_by uuid: params['uuid']
 
     users = User
@@ -38,6 +38,11 @@ class EventsController < ApplicationController
     @invited, @not_invited = confirmed.partition do |s|
       Syndication.where(event_id: @event, user_id: s).count > 0
     end
+  end
+
+  def show
+    @event = Event.find_by uuid: params['uuid']
+    @rsvp_count = Rsvp.where(event: @event, response: true).count
   end
 
   def edit

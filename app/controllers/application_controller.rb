@@ -13,4 +13,11 @@ class ApplicationController < ActionController::Base
       ActionMailer::Base.default_url_options[:protocol] = request.protocol
       ActionMailer::Base.default_url_options[:host] = request.host_with_port
     end
+
+    def require_admin_login
+      if not session[:admin]
+        flash[:warning] = 'You must be logged in'
+        redirect_to :admin_login
+      end
+    end
 end

@@ -1,4 +1,4 @@
-= render partial: 'toolbar'
+= render partial: 'admin_toolbar'
 
 %h2 All Users
 
@@ -15,7 +15,7 @@
     - @users.each do |user|
       %tr
         %td.first-name
-          = link_to user.first_name, { controller: 'admin', action: 'user', uuid: user.uuid }
+          = link_to user.first_name, { controller: 'users', action: 'admin', uuid: user.uuid }
         %td.last-name
           = user.last_name
         %td

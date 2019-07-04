@@ -33,8 +33,8 @@ users can decide which lists to be on.
   - [ ] A user can RSVP yes/no to an event
   - [ ] A user can RSVP with a +1/2 to an event
   - [ ] A user can change an existing RSVP to an event
-  - [ ] A user can see the number of other people RSVPd to an event
-  - [ ] A user can see the information about the event
+  - [x] A user can see the number of other people RSVPd to an event
+  - [x] A user can see the information about the event
 * Authentication
   - [x] Implement authentication for administration
   - [x] Gate necessary endpoints with admin auth

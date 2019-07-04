@@ -1,4 +1,22 @@
 class UsersController < ApplicationController
+  before_action :require_admin_login, only: [
+    :index, :admin, :edit, :admin_delete, :admin_destroy, :confirm_user
+  ]
+
+  def index
+    @users = User.all
+  end
+
+  def show
+  end
+
+  def admin
+    @user = User.find_by(uuid: params[:uuid])
+    @subscriptions = Subscription.where(user_id: @user).map do |s|
+      SubscriptionList.find(s.subscription_list_id).name
+    end
+  end
+
   def new
     @user = User.new
   end
@@ -29,7 +47,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
+
+  def show
     @user = User.find_by uuid: params['uuid']
   end
 
@@ -69,15 +88,31 @@ class UsersController < ApplicationController
     destroy(@user)
   end
 
-  def destroy(user)
+  def destroy(user, admin = false)
     Subscription.where(user_id: @user).destroy_all
     Syndication.where(user_id: @user).destroy_all
     @user.destroy
 
-    redirect_to :deleted_user
+    if admin
+      redirect_to :users
+    else
+      redirect_to :deleted_user
+    end
+  end
+
+  def admin_delete
+    @user = User.find_by uuid: params['uuid']
+    destroy(@user, true)
   end
 
   def deleted
+  end
+
+  def confirm_user
+    @user = User.find_by(uuid: params[:uuid])
+    @user.update(admin_confirmed: true)
+    flash[:success] = 'User successfully confirmed'
+    redirect_to :admin_user
   end
 
   def confirm_email

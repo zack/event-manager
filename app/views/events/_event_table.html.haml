@@ -6,7 +6,7 @@
       %th.list List
       %th.description Description
       %th.attendance RSVP
-      %th.show Show
+      %th.admin Admin
       - if editable
         %th.edit Edit
 
@@ -23,8 +23,8 @@
           = e.description
         %td.attendance
           #{e.attendees.count}/#{e.capacity}
-        %td.show
-          = link_to 'Show', { controller: 'events', action: 'show', uuid: e.uuid }
+        %td.admin
+          = link_to 'Admin', { controller: 'events', action: 'admin', uuid: e.uuid }
         - if editable
           %td.edit
             = link_to 'Edit', { controller: 'events', action: 'edit', uuid: e.uuid }
