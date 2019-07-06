@@ -1,4 +1,11 @@
 class EventsController < ApplicationController
+  RSVP_NO = -1
+  RSVP_MAYBE = 0
+  RSVP_YES = 1
+  RSVP_YES_AND_ONE = 2
+  RSVP_YES_AND_TWO = 3
+  RSVP_YES_AND_THREE = 4
+
   def index
     @events = Event.all.order(datetime: :desc)
     @upcoming_events = @events.select { |e| e.datetime > DateTime.now }
@@ -58,6 +65,29 @@ class EventsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def rsvp
+    @event = Event.find_by uuid: params[:uuid]
+    @user = User.find_by uuid: params[:user_uuid]
+    @options =
+      [
+        { 'option' => 'No', 'value' => RSVP_NO },
+        { 'option' => 'Maybe', 'value' => RSVP_MAYBE },
+        { 'option' => 'Yes', 'value' => RSVP_YES },
+        { 'option' => 'Yes + 1', 'value' => RSVP_YES_AND_ONE },
+        { 'option' => 'Yes + 2', 'value' => RSVP_YES_AND_TWO },
+        { 'option' => 'Yes + 3', 'value' => RSVP_YES_AND_THREE }
+      ]
+    @options_for_select = @options.map { |o| [o['option'], o['value']] }
+  end
+
+  def submit_rsvp
+    @event = Event.find_by uuid: params[:uuid]
+    @user = User.find_by uuid: params[:user][:uuid]
+    rsvp = params[:RSVP]
+    # TODO: CREATE RSVP CONTROLLER AND CREATE RSVPS
+    redirect_to action: :rsvp, user_uuid: @user.uuid
   end
 
   def delete

@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  get    '/',                                 to: 'welcome#index',                  as: 'index'
+  get    '/',                                to: 'welcome#index',                  as: 'index'
 
-  get    '/admin',                            to: 'admin#index',                    as: 'admin_index'
-  get    '/admin/login',                      to: 'admin#login',                    as: 'admin_login'
-  post   '/admin/login',                      to: 'admin#process_login',            as: 'admin_process_login'
-  get    '/admin/logout',                     to: 'admin#logout',                   as: 'admin_logout'
+  get    '/admin',                           to: 'admin#index',                    as: 'admin_index'
+  get    '/admin/login',                     to: 'admin#login',                    as: 'admin_login'
+  post   '/admin/login',                     to: 'admin#process_login',            as: 'admin_process_login'
+  get    '/admin/logout',                    to: 'admin#logout',                   as: 'admin_logout'
 
   get    '/users',                           to: 'users#index',                    as: 'users'
   post   '/user',                            to: 'users#create',                   as: 'create_user'
@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   post   '/event',                           to: 'events#create',                  as: 'create_event'
   get    '/event/new',                       to: 'events#new',                     as: 'new_event'
   get    '/event/:uuid',                     to: 'events#show',                    as: 'event'
+  get    '/event/:uuid/rsvp/:user_uuid',     to: 'events#rsvp',                    as: 'event_rsvp'
+  post   '/event/:uuid/rsvp',                to: 'events#submit_rsvp',             as: 'submit_event_rsvp'
   get    '/event/:uuid/admin',               to: 'events#admin',                   as: 'admin_event'
   get    '/event/:uuid/edit',                to: 'events#edit',                    as: 'edit_event'
   patch  '/event/:uuid',                     to: 'events#update',                  as: 'update_event'
