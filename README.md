@@ -30,9 +30,9 @@ users can decide which lists to be on.
   - [x] Add option for user to recover their UUID by submitting their email address
 * Event interaction
   - [ ] A user receives an email for an open event if they subscribe to a list
-  - [ ] A user can RSVP yes/no to an event
-  - [ ] A user can RSVP with a +1/2 to an event
-  - [ ] A user can change an existing RSVP to an event
+  - [x] A user can RSVP yes/no to an event
+  - [x] A user can RSVP with a +1/2 to an event
+  - [x] A user can change an existing RSVP to an event
   - [x] A user can see the number of other people RSVPd to an event
   - [x] A user can see the information about the event
 * Authentication

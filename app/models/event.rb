@@ -11,7 +11,7 @@ class Event < ApplicationRecord
   validates :description, presence: true
 
   def attendees
-    Rsvp.where(event_id: id, response: true)
+    Rsvp.where(event_id: id).where('response > ?', 0).pluck(:response).reduce(:+) || 0
   end
 
   private

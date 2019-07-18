@@ -11,12 +11,12 @@
   = @event.description
 
 %p
-  %strong Guests:
-  = "#{@rsvp_count || 0} Confirmed"
+  %strong Total Event Guests:
+  = "#{@event.attendees} Confirmed"
 
 %p
   = form_tag(submit_event_rsvp_path) do |f|
     %strong RSVP:
-    = select_tag 'RSVP', options_for_select(@options_for_select), :include_blank => true
+    = select_tag 'RSVP', options_for_select(@options_for_select, @existing_rsvp_value)
     = hidden_field(:user, :uuid, :value => @user.uuid)
     = submit_tag "Submit"

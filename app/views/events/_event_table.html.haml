@@ -22,7 +22,7 @@
         %td.description
           = e.description
         %td.attendance
-          #{e.attendees.count}/#{e.capacity}
+          #{e.attendees}/#{e.capacity}
         %td.admin
           = link_to 'Admin', { controller: 'events', action: 'admin', uuid: e.uuid }
         - if editable

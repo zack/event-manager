@@ -17,6 +17,34 @@
   %strong Description:
   = @event.description
 
+%p
+  %strong Total Event Guests:
+  = "#{@event.attendees} Confirmed"
+
+%p
+  %strong Total Event Maybes:
+  = "#{Rsvp.where(event_id: @event.id).where('response = 0').count} Maybe(s)"
+
+- if Rsvp.where(event_id: @event.id).count > 0
+  %p
+  %table
+    %thead
+      %tr
+        %th{colspan: 2}
+          Responses
+      %tr
+        %th
+          Name
+        %th
+          Response
+    %tbody
+      - Rsvp.where(event_id: @event.id).each do |r|
+        %tr
+          %td
+            = User.find(r.user_id).name
+          %td
+            = Rsvp::RESPONSE_STRINGS_BY_VALUE[r.response]
+
 - if @event.datetime > DateTime.now
   - if @not_invited.count > 0
     %p

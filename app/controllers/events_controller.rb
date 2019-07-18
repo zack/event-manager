@@ -49,7 +49,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find_by uuid: params['uuid']
-    @rsvp_count = Rsvp.where(event: @event, response: true).count
+    @rsvp_count = Rsvp.where(event_id: @event).where('response > ?', 0).count
   end
 
   def edit
@@ -70,24 +70,26 @@ class EventsController < ApplicationController
   def rsvp
     @event = Event.find_by uuid: params[:uuid]
     @user = User.find_by uuid: params[:user_uuid]
-    @options =
-      [
-        { 'option' => 'No', 'value' => RSVP_NO },
-        { 'option' => 'Maybe', 'value' => RSVP_MAYBE },
-        { 'option' => 'Yes', 'value' => RSVP_YES },
-        { 'option' => 'Yes + 1', 'value' => RSVP_YES_AND_ONE },
-        { 'option' => 'Yes + 2', 'value' => RSVP_YES_AND_TWO },
-        { 'option' => 'Yes + 3', 'value' => RSVP_YES_AND_THREE }
-      ]
-    @options_for_select = @options.map { |o| [o['option'], o['value']] }
+    @options_for_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }
+    @existing_rsvp_value = Rsvp.find_by(event_id: @event, user_id: @user)&.response || false
   end
 
   def submit_rsvp
-    @event = Event.find_by uuid: params[:uuid]
-    @user = User.find_by uuid: params[:user][:uuid]
-    rsvp = params[:RSVP]
-    # TODO: CREATE RSVP CONTROLLER AND CREATE RSVPS
-    redirect_to action: :rsvp, user_uuid: @user.uuid
+    event = Event.find_by uuid: params[:uuid]
+    user = User.find_by uuid: params[:user][:uuid]
+    rsvp = Rsvp.find_or_create_by(
+      'event_id' => event.id,
+      'user_id' => user.id
+    )
+
+    if params[:RSVP] == nil
+      rsvp.delete
+      return (redirect_to action: :rsvp, user_uuid: params[:user][:uuid])
+    else
+      flash[:success] = 'RSVP received. Thank you!'
+      rsvp.update(response: params[:RSVP])
+      redirect_to action: :rsvp, user_uuid: params[:user][:uuid]
+    end
   end
 
   def delete
