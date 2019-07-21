@@ -16,6 +16,7 @@ users can decide which lists to be on.
 * User Registration
   - [x] A user can register an account
   - [x] A user receives a confirmation email upon registration
+    - [x] The confirmation email lists their subscriptions
   - [x] The user can confirm their email address using the confirmation email
 * User self-maintanence
   - [x] A user can update their name and email address

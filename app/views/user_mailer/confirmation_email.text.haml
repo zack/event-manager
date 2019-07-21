@@ -1,6 +1,11 @@
 Welcome to #{ENV.fetch('MAILING_LIST_NAME')}!
 = "\r\n"
 
+You have signed up for the following mailing lists:
+- @subscription_names.each do |s|
+  = "-> #{s}".html_safe
+= "\r\n"
+
 If you signed up, please click this link to confirm your email address:
 = url_for controller: 'users', action: 'confirm_email', code: @user.email_confirmation_code
 

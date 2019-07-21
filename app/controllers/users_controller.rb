@@ -38,7 +38,7 @@ class UsersController < ApplicationController
         end
       end
 
-      UserMailer.confirmation_email(@user).deliver_now
+      send_user_confirmation_email(@user)
 
       return(redirect_to action: :show, uuid: @user.uuid)
     else
@@ -46,7 +46,6 @@ class UsersController < ApplicationController
       render :new
     end
   end
-
 
   def show
     @user = User.find_by uuid: params['uuid']
@@ -152,12 +151,16 @@ class UsersController < ApplicationController
     render :recover_account_confirmation
   end
 
+  def send_user_confirmation_email(user)
+    UserMailer.confirmation_email(user).deliver_now
+  end
+
   def resend_confirmation
     @user = User.find_by uuid: params['uuid']
     if @user.user_confirmed
       UserMailer.change_email_address_email(@user).deliver_now
     else
-      UserMailer.confirmation_email(@user).deliver_now
+      send_user_confirmation_email(@user)
     end
     flash[:success] = 'Sent!'
     redirect_to action: :show, uuid: @user.uuid
