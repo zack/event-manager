@@ -1,4 +1,8 @@
 class EventsController < ApplicationController
+  before_action :require_admin_login, only: [
+    :index, :new, :create, :admin, :edit, :update, :delete, :destroy, :syndicate
+  ]
+
   RSVP_NO = -1
   RSVP_MAYBE = 0
   RSVP_YES = 1
