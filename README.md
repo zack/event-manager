@@ -23,7 +23,7 @@ users can decide which lists to be on.
   - [x] A user can delete their account
     - [x] All records of syndications to that user are deleted
     - [x] All records of subscriptions by that user are deleted
-    - [ ] All records of RSVPs by that user are anonymized
+    - [x] All records of RSVPs by that user are deleted
   - [x] A user can update their subscriptions
     - [x] A user can subscribe from one or all subscriptions
     - [x] A user can unsubscribe from one or all subscriptions

@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 
       UserMailer.confirmation_email(@user).deliver_now
 
-      return(redirect_to action: :edit, uuid: @user.uuid)
+      return(redirect_to action: :show, uuid: @user.uuid)
     else
       @user.uuid = nil
       render :new
@@ -77,9 +77,9 @@ class UsersController < ApplicationController
       end
 
       flash[:success] = 'Profile successfully updated!'
-      return(redirect_to action: :edit, uuid: @user.uuid)
+      return(redirect_to action: :show, uuid: @user.uuid)
     else
-      render :edit
+      render :show
     end
   end
 
@@ -91,6 +91,7 @@ class UsersController < ApplicationController
   def destroy(user, admin = false)
     Subscription.where(user_id: @user).destroy_all
     Syndication.where(user_id: @user).destroy_all
+    Rsvp.where(user_id: @user).destroy_all
     @user.destroy
 
     if admin
@@ -126,7 +127,7 @@ class UsersController < ApplicationController
     @user.update(user_confirmed: true)
     if @user.save
       # redirect_to :email_change_confirmed
-      return(redirect_to action: :edit, uuid: @user.uuid)
+      return(redirect_to action: :show, uuid: @user.uuid)
     end
   end
 
@@ -159,7 +160,7 @@ class UsersController < ApplicationController
       UserMailer.confirmation_email(@user).deliver_now
     end
     flash[:success] = 'Sent!'
-    redirect_to action: :edit, uuid: @user.uuid
+    redirect_to action: :show, uuid: @user.uuid
   end
 
   private
