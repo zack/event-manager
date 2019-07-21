@@ -43,10 +43,6 @@ users can decide which lists to be on.
   - [x] An admin can see a list of all users and their confirmation statuses
   - [x] An admin can admin-confirm a user
   - [x] An admin can delete a user
-  - [ ] An admin can change a user's name
-  - [ ] An admin can change a user's email address
-    - [ ] A user receives a confirmation email to update their email address
-    - [ ] A user can revert their email address change from their account page
 * Event administration
   - [x] An admin can see all future events
   - [x] An admin can see all past events
