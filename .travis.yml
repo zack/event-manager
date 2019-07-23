@@ -13,7 +13,9 @@ notifications:
   email: false
 
 env:
+  MAILGUN_API_KEY=key
   MAILING_LIST_NAME="Travis Config Mailing List"
   EMAIL_USER=ci
-  EMAIL_DOMAIN=travis-ci.org
+  EMAIL_DOMAIN=example.com
+  ADMIN_PASSWORD=password
 
