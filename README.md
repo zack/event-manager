@@ -48,6 +48,7 @@ users can decide which lists to be on.
   - [x] An admin can see all past events
   - [x] An admin can create an event
     - [x] The event is attached to a specific mailing list
+    - [ ] The event can generate an optional google calender event
   - [ ] An admin can initiate an email to all subscribers to the event's current list
   - [x] An admin can delete an event
     - [ ] A placeholder page is set up indicating the event was deleted
