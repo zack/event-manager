@@ -29,6 +29,7 @@ users can decide which lists to be on.
     - [x] A user can subscribe from one or all subscriptions
     - [x] A user can unsubscribe from one or all subscriptions
   - [x] Add option for user to recover their UUID by submitting their email address
+  - [ ] A user can select to receive emails, gcal invites, or neither, for their events
 * Event interaction
   - [ ] A user receives an email for an open event if they subscribe to a list
   - [x] A user can RSVP yes/no to an event
@@ -48,11 +49,12 @@ users can decide which lists to be on.
   - [x] An admin can see all past events
   - [x] An admin can create an event
     - [x] The event is attached to a specific mailing list
-    - [ ] The event can generate an optional google calender event
-  - [ ] An admin can initiate an email to all subscribers to the event's current list
+  - [ ] An admin can initiate invitations to an event
+    - [ ] The event generates plaintext emails for everyone who has selected that option
+    - [ ] The event generates gcal invites for everyone who has selected that option
   - [x] An admin can delete an event
     - [ ] A placeholder page is set up indicating the event was deleted
-    - [ ] All RSVPd users are notified that the event was deleted
+    - [ ] All invited users are notified that the event was deleted
   - [x] An admin can modify an event
     - [ ] All RSVDpd users are notified that the event was modified
     - [ ] A notice is placed on the page indicitating that the event was modified
