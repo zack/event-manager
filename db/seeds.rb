@@ -24,6 +24,8 @@ for i in 1..50
     s.first_name = Faker::Name.first_name
     s.last_name = Faker::Name.last_name
     s.uuid = SecureRandom.uuid
+    s.uuid = SecureRandom.uuid
+    s.invitation_type = [1, 2, 3].sample
   end
 end
 
