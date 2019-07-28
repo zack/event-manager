@@ -22,6 +22,12 @@ class User < ApplicationRecord
   validates :email_address, presence: true,
                             uniqueness: { case_sensitive: false }
 
+  INVITE_TYPE_BY_VALUE = {
+    INVITATION_TYPE_EMAIL => 'Email',
+    INVITATION_TYPE_GCAL => 'GCal Invite',
+    INVITATION_TYPE_EMAIL_AND_GCAL => 'Email & Gcal Invite'
+  }
+
   def name
     "#{first_name} #{last_name}"
   end

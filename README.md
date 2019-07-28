@@ -29,7 +29,7 @@ users can decide which lists to be on.
     - [x] A user can subscribe from one or all subscriptions
     - [x] A user can unsubscribe from one or all subscriptions
   - [x] Add option for user to recover their UUID by submitting their email address
-  - [ ] A user can select to receive emails, gcal invites, or neither, for their events
+  - [x] A user can select to receive emails, gcal invites, or neither, for their events
 * Event interaction
   - [ ] A user receives an email for an open event if they subscribe to a list
   - [x] A user can RSVP yes/no to an event

@@ -12,6 +12,7 @@ class UsersController < ApplicationController
 
   def admin
     @user = User.find_by(uuid: params[:uuid])
+    @existing_invite_value = @user.invitation_type || false
     @subscriptions = Subscription.where(user_id: @user).map do |s|
       SubscriptionList.find(s.subscription_list_id).name
     end
@@ -19,6 +20,8 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @options_for_invite = User::INVITE_TYPE_BY_VALUE.map { |k, v| [v, k] }
+    @existing_invite_value = @user.invitation_type || false
   end
 
   def create
@@ -49,6 +52,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by uuid: params['uuid']
+    @options_for_invite = User::INVITE_TYPE_BY_VALUE.map { |k, v| [v, k] }
+    @existing_invite_value = @user.invitation_type || false
   end
 
   def update
@@ -172,6 +177,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(
         :email_address,
         :first_name,
+        :invitation_type,
         :last_name
       )
     end
