@@ -3,13 +3,6 @@ class EventsController < ApplicationController
     :index, :new, :create, :admin, :edit, :update, :delete, :destroy, :syndicate
   ]
 
-  RSVP_NO = -1
-  RSVP_MAYBE = 0
-  RSVP_YES = 1
-  RSVP_YES_AND_ONE = 2
-  RSVP_YES_AND_TWO = 3
-  RSVP_YES_AND_THREE = 4
-
   def index
     @events = Event.all.order(datetime: :desc)
     @upcoming_events = @events.select { |e| e.datetime > DateTime.now }

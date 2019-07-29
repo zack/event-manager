@@ -5,7 +5,6 @@ class Event < ApplicationRecord
   has_many :rsvps
 
   validate :check_attendance_below_limit
-  validates :capacity, presence: true
   validates :datetime, presence: true,
                        uniqueness: true
   validates :description, presence: true
@@ -14,10 +13,18 @@ class Event < ApplicationRecord
     Rsvp.where(event_id: id).where('response > ?', 0).pluck(:response).reduce(:+) || 0
   end
 
+  def maybes
+    Rsvp.where(event_id: id).where('response = ?', 0).count || 0
+  end
+
+  def nopes
+    Rsvp.where(event_id: id).where('response = ?', -1).count || 0
+  end
+
   private
 
     def check_attendance_below_limit
-      if attendees.count >= capacity
+      if capacity && attendees >= capacity
         errors.add(:capacity, 'has been reached!')
       end
     end

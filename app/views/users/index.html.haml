@@ -13,7 +13,7 @@
 
   %tbody
     - @users.each do |user|
-      %tr
+      %tr{class: !user.admin_confirmed ? 'not-admin' : !user.email_confirmed ? 'not-email' : ''}
         %td.first-name
           = link_to user.first_name, { controller: 'users', action: 'admin', uuid: user.uuid }
         %td.last-name

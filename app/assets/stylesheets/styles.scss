@@ -121,6 +121,14 @@ table {
     &:nth-child(even) {
       background-color: rgba(black, 0.09);
     }
+
+    &.not-admin {
+      background-color: #FFAAAA;
+    }
+
+    &.not-email {
+      background-color: #FFFFAA;
+    }
   }
 
   td, th {

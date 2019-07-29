@@ -117,18 +117,16 @@
         %tr
           %th
             Name
-          %th
-            Email Confirmed
-          %th
-            Admin Confirmed
+          %th #{"\u2709".encode('utf-8')}
+          %th #{"\u2611".encode('utf-8')}
       - @unconfirmed.each do |s|
         %tr
           %td
             = s.name
           %td.center
-            = s.email_confirmed
+            = bool_to_unicode(s.email_confirmed)
           %td.center
-            = s.admin_confirmed
+            = bool_to_unicode(s.admin_confirmed)
 
 - if @event.datetime > DateTime.now
   %p
