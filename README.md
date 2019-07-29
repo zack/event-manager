@@ -31,7 +31,7 @@ users can decide which lists to be on.
   - [x] Add option for user to recover their UUID by submitting their email address
   - [x] A user can select to receive emails, gcal invites, or neither, for their events
 * Event interaction
-  - [ ] A user receives an email for an open event if they subscribe to a list
+  - [ ] A user receives an invitation for an open event if they subscribe to a list
   - [x] A user can RSVP yes/no to an event
   - [x] A user can RSVP with a +1/2 to an event
   - [x] A user can change an existing RSVP to an event
