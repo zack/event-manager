@@ -17,9 +17,6 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     @event.uuid = SecureRandom.uuid
 
-    event_time = params['event']['datetime'].split(/[- :]/).map { |n| n.to_i }
-    @event.datetime = DateTime.new(*event_time)
-
     if @event.save
       redirect_to action: :edit, uuid: @event.uuid
     else
