@@ -53,7 +53,7 @@ users can decide which lists to be on.
     - [ ] The event generates plaintext emails for everyone who has selected that option
     - [ ] The event generates gcal invites for everyone who has selected that option
   - [x] An admin can delete an event
-    - [ ] A placeholder page is set up indicating the event was deleted
+    - [x] A placeholder page is set up indicating the event was deleted
     - [ ] All invited users are notified that the event was deleted
   - [x] An admin can modify an event
     - [ ] All RSVPd users are notified that the event was modified
