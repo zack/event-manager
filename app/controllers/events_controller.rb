@@ -6,7 +6,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.all.order(datetime: :desc)
     @upcoming_events = @events.select { |e| e.datetime > DateTime.now }
-    @past_events = @events.select { |e| e.datetime < DateTime.now }
+    @past_and_deleted_events = @events.select { |e| (e.datetime < DateTime.now) || e.deleted }
   end
 
   def new
@@ -39,11 +39,18 @@ class EventsController < ApplicationController
     @invited, @not_invited = confirmed.partition do |s|
       Syndication.where(event_id: @event, user_id: s).count > 0
     end
+
+    if @event.deleted
+      flash[:warning] = 'This event has been soft deleted.'
+    end
   end
 
   def show
     @event = Event.find_by uuid: params['uuid']
     @rsvp_count = Rsvp.where(event_id: @event).where('response > ?', 0).count
+    if @event.deleted
+      flash[:warning] = 'This event has been cancelled! Sorry!'
+    end
   end
 
   def edit
@@ -90,10 +97,10 @@ class EventsController < ApplicationController
     @event = Event.find_by uuid: params[:uuid]
   end
 
-  def destroy
+  def soft_delete
     @event = Event.find_by uuid: params['uuid']
-    @event.destroy
-    flash[:success] = 'Event successfully deleted!'
+    @event.update(deleted: true)
+    flash[:success] = 'Event successfully soft deleted!'
     redirect_to action: :index
   end
 

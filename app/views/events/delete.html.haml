@@ -3,4 +3,4 @@
 
 %strong Delete event: #{@event.datetime.strftime('%Y-%m-%d @ %l:%m%p')}?
 
-= button_to 'Delete', { controller: 'events', action: 'destroy', uuid: @event.uuid }, {method: :delete, id: 'delete-confirm'}
+= button_to 'Delete', { controller: 'events', action: 'soft_delete', uuid: @event.uuid }, {method: :delete, id: 'delete-confirm'}

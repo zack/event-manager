@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   get    '/event/:uuid/edit',                to: 'events#edit',                    as: 'edit_event'
   patch  '/event/:uuid',                     to: 'events#update',                  as: 'update_event'
   get    '/event/:uuid/delete',              to: 'events#delete',                  as: 'delete_event'
-  delete '/event/:uuid',                     to: 'events#destroy',                 as: 'destroy_event'
+  delete '/event/:uuid',                     to: 'events#soft_delete',             as: 'soft_delete_event'
   post   '/event/:uuid/synidicate',          to: 'events#syndicate',               as: 'syndicate_event'
 
   get    '/errors/email_already_confirmed',   to: 'errors#email_already_confirmed', as: 'email_already_confirmed'

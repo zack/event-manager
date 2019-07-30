@@ -56,7 +56,7 @@ users can decide which lists to be on.
     - [ ] A placeholder page is set up indicating the event was deleted
     - [ ] All invited users are notified that the event was deleted
   - [x] An admin can modify an event
-    - [ ] All RSVDpd users are notified that the event was modified
+    - [ ] All RSVPd users are notified that the event was modified
     - [ ] A notice is placed on the page indicitating that the event was modified
       - [ ] The admin may choose to omit this notice (for, say, fixing a typo)
   - [ ] An admin can clone an existing past or future event
