@@ -48,8 +48,13 @@ class EventsController < ApplicationController
   def show
     @event = Event.find_by uuid: params['uuid']
     @rsvp_count = Rsvp.where(event_id: @event).where('response > ?', 0).count
+
     if @event.deleted
       flash[:warning] = 'This event has been cancelled! Sorry!'
+    end
+
+    if @event.created_at != @event.updated_at
+      flash[:notice] = @event.updated_at.strftime('This event has been updated. It was last updated on %b %d at %I:%M%p')
     end
   end
 
@@ -73,8 +78,13 @@ class EventsController < ApplicationController
     @user = User.find_by uuid: params[:user_uuid]
     @options_for_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }
     @existing_rsvp_value = Rsvp.find_by(event_id: @event, user_id: @user)&.response || false
+
     if @event.deleted
       flash[:warning] = 'This event has been cancelled! Sorry!'
+    end
+
+    if @event.created_at != @event.updated_at
+      flash[:notice] = @event.updated_at.strftime('This event has been updated. It was last updated on %b %d at %I:%M%p')
     end
   end
 
