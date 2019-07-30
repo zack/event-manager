@@ -10,6 +10,10 @@
   = @event.datetime.strftime('%l:%M %p')
 
 %p
+  %strong Location:
+  = @event.location
+
+%p
   %strong List:
   = SubscriptionList.find(@event.subscription_list_id).name
 

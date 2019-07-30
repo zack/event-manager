@@ -111,6 +111,7 @@ class EventsController < ApplicationController
         :capacity,
         :datetime,
         :description,
+        :location,
         :subscription_list_id,
         :uuid
       )
