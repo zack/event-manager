@@ -57,6 +57,6 @@ users can decide which lists to be on.
     - [ ] All invited users are notified that the event was deleted
   - [x] An admin can modify an event
     - [ ] All RSVPd users are notified that the event was modified
-    - [ ] A notice is placed on the page indicitating that the event was modified
-      - [ ] The admin may choose to omit this notice (for, say, fixing a typo)
+      - [ ] The admin may choose to omit this email (for, say, fixing a typo)
+    - [x] A notice is placed on the page indicitating that the event was modified
   - [ ] An admin can clone an existing past or future event
