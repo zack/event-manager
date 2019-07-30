@@ -13,6 +13,17 @@ class EventsController < ApplicationController
     @event = Event.new
   end
 
+  def clone
+    @source = Event.find_by uuid: params['uuid']
+    @event = Event.new
+
+    @event.description = @source.description
+    @event.location = @source.location
+    @event.capacity = @source.capacity
+    @event.subscription_list_id = @source.subscription_list_id
+    render :new
+  end
+
   def create
     @event = Event.new(event_params)
     @event.uuid = SecureRandom.uuid

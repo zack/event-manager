@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   get    '/events',                          to: 'events#index',                   as: 'events'
   post   '/event',                           to: 'events#create',                  as: 'create_event'
+  get '/event/clone',                     to: 'events#clone',                   as: 'clone_event'
   get    '/event/new',                       to: 'events#new',                     as: 'new_event'
   get    '/event/:uuid',                     to: 'events#show',                    as: 'event'
   get    '/event/:uuid/rsvp/:user_uuid',     to: 'events#rsvp',                    as: 'event_rsvp'

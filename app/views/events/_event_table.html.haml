@@ -9,6 +9,7 @@
       %th.admin Show
       - if editable
         %th.edit Edit
+      %th.clone Clone
 
   %tbody
     - events.each do |e|
@@ -28,3 +29,5 @@
         - if editable
           %td.edit
             = link_to 'Edit', { controller: 'events', action: 'edit', uuid: e.uuid }
+        %td.clone
+          = link_to 'Clone', { controller: 'events', action: 'clone', uuid: e.uuid }, method: :post
