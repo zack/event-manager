@@ -73,6 +73,9 @@ class EventsController < ApplicationController
     @user = User.find_by uuid: params[:user_uuid]
     @options_for_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }
     @existing_rsvp_value = Rsvp.find_by(event_id: @event, user_id: @user)&.response || false
+    if @event.deleted
+      flash[:warning] = 'This event has been cancelled! Sorry!'
+    end
   end
 
   def submit_rsvp

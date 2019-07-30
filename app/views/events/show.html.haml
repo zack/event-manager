@@ -14,6 +14,7 @@
   %strong Description:
   = @event.description
 
-%p
-  %strong Guests:
-  = "#{@rsvp_count} confirmed"
+-if not @event.deleted
+  %p
+    %strong Guests:
+    = "#{@rsvp_count} confirmed"
