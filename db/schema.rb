@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_30_023441) do
+ActiveRecord::Schema.define(version: 2019_08_07_015748) do
 
   create_table "events", force: :cascade do |t|
     t.integer "subscription_list_id", null: false
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_023441) do
     t.string "uuid", null: false
     t.string "location"
     t.boolean "deleted"
+    t.string "gcal_event_id"
     t.index ["datetime"], name: "index_events_on_datetime", unique: true
     t.index ["subscription_list_id"], name: "index_events_on_subscription_list_id"
   end
