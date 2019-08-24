@@ -29,10 +29,11 @@
       = f.label :email_address
       = f.text_field :email_address
 
-    -#
+    -# some day maybe we'll add gcal invites. for now, hardcode email type
       .option.text
         = f.label "Invitation Type"
         = f.select :invitation_type, options_for_select(@options_for_invite, @existing_invite_value)
+    = f.hidden_field :invitation_type, :value => 1
 
     .checkboxes
       = collection_check_boxes :user,

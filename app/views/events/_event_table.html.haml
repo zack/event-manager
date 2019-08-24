@@ -23,7 +23,8 @@
         %td.description
           = e.description
         %td.attendance
-          #{e.attendees}(#{e.maybes})#{e.capacity && ("/#{ e.capacity}")}
+          %span{"title" => "Confirmed: #{e.attendees}, Maybe: #{e.maybes}"}
+            #{e.attendees}(#{e.maybes})#{e.capacity && ("/#{ e.capacity}")}
         %td.admin
           = link_to 'Show', { controller: 'events', action: 'admin', uuid: e.uuid }
         - if editable

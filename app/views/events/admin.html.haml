@@ -27,8 +27,10 @@
 
 %p
   %strong Total Event Maybes:
-  = "#{Rsvp.where(event_id: @event.id).where('response = 0').count} Maybe(s)"
+  - maybe_count = Rsvp.where(event_id: @event.id).where('response = 0').count
+  = "#{pluralize(maybe_count, 'Maybe')}"
 
+-# Table of RSVPs
 - if Rsvp.where(event_id: @event.id).count > 0
   %p
   %table
@@ -48,28 +50,12 @@
             = User.find(r.user_id).name
           %td
             = Rsvp::RESPONSE_STRINGS_BY_VALUE[r.response]
+- else
+  %p
+    Nobody has RSVPd to this event
 
-- if @event.datetime > DateTime.now
-  - if @not_invited.count > 0
-    %p
-    %table
-      %thead
-        %tr
-          %th{colspan: 2}
-            Not Yet Invited
-        %tr
-          %th
-            Name
-          %th
-            Email Address
-      %tbody
-        - @not_invited.each do |s|
-          %tr
-            %td
-              = s.name
-            %td
-              = s.email_address
 
+-# Table of invited users who have not RSVPd
 - if @invited.count > 0
   %p
   %table
@@ -109,7 +95,40 @@
   %p
     Nobody was invited to this event.
 
+-# Table of not-yet-invited users who are eligible for invitations
+- if @event.datetime > DateTime.now
+  - if @not_invited.count > 0
+    %table
+      %thead
+        %tr
+          %th{colspan: 2}
+            Not Yet Invited
+        %tr
+          %th
+            Name
+          %th
+            Email Address
+      %tbody
+        - @not_invited.each do |s|
+          %tr
+            %td
+              = link_to s.name, { controller: 'users', action: 'admin', uuid: s.uuid }
+            %td
+              = s.email_address
 
+- if @event.datetime > DateTime.now
+  %p
+    = button_to "Invite #{pluralize(@not_invited.count, 'user')}!", { controller: 'events', action: 'syndicate', uuid: @event.id }
+- else
+  %p
+    Cannot syndicate past events.
+
+%div.flash.notice
+  The following users either have uncofirmed accounts or have not confirmed |
+    their email addresses. Invitations cannot be sent to users that meet one or |
+    both of these conditions. |
+
+-# Table of users who cannot be invited
 - if @event.datetime > DateTime.now
   - if @unconfirmed.count > 0
     %p
@@ -126,15 +145,8 @@
       - @unconfirmed.each do |s|
         %tr
           %td
-            = s.name
+            = link_to s.name, { controller: 'users', action: 'admin', uuid: s.uuid }
           %td.center
             = bool_to_unicode(s.email_confirmed)
           %td.center
             = bool_to_unicode(s.admin_confirmed)
-
-- if @event.datetime > DateTime.now
-  %p
-    = button_to "Invite #{pluralize(@not_invited.count, 'user')}!", { controller: 'events', action: 'syndicate', uuid: @event.id }
-- else
-  %p
-    Cannot syndicate past events.
