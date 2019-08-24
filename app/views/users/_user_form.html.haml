@@ -29,9 +29,10 @@
       = f.label :email_address
       = f.text_field :email_address
 
-    .option.text
-      = f.label "Invitation Type"
-      = f.select :invitation_type, options_for_select(@options_for_invite, @existing_invite_value)
+    -#
+      .option.text
+        = f.label "Invitation Type"
+        = f.select :invitation_type, options_for_select(@options_for_invite, @existing_invite_value)
 
     .checkboxes
       = collection_check_boxes :user,
