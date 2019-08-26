@@ -49,8 +49,8 @@ users can decide which lists to be on.
   - [x] An admin can see all past events
   - [x] An admin can create an event
     - [x] The event is attached to a specific mailing list
-  - [ ] An admin can initiate invitations to an event
-    - [ ] The event generates plaintext emails for everyone who has selected that option
+  - [x] An admin can initiate invitations to an event
+    - [x] The event generates plaintext emails for everyone who has selected that option
     - [ ] The event generates gcal invites for everyone who has selected that option
   - [x] An admin can delete an event
     - [x] A placeholder page is set up indicating the event was deleted
@@ -60,3 +60,6 @@ users can decide which lists to be on.
       - [ ] The admin may choose to omit this email (for, say, fixing a typo)
     - [x] A notice is placed on the page indicitating that the event was modified
   - [x] An admin can clone an existing past or future event
+* Mailing list administration
+  - [ ] The admin can initiate an email to all members of the mailing list
+  - [ ] The admin can add or remove subscription lists
