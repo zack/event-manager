@@ -1,5 +1,12 @@
+= render partial: 'admin_toolbar'
+
 %p
   = link_to 'Back', controller: 'events', action: 'index'
+
+%div
+  %strong Public Link:
+  = link_to 'Here', { controller: 'events', action: 'show', uuid: @event.uuid }
+
 
 %div
   %strong Date:
@@ -61,6 +68,7 @@
         = Syndication.where(event_id: @event.id, user_id: user.id).first.created_at.strftime('%Y-%m-%d %l:%M %p')
       %td.center
         = Rsvp::RESPONSE_STRINGS_BY_VALUE[r.response]
+
   %tr.section-header
     %td{colspan: 99} Invited (But Not Responded)
   %tr.header-row
@@ -78,7 +86,8 @@
           = Syndication.where(event_id: @event.id, user_id: user.id).first.created_at.strftime('%Y-%m-%d %l:%M %p')
         %td.center
           - if @event.datetime > DateTime.now
-            = button_to 'Resend'
+            = button_to "Resend", {}, :disabled => true, :title => 'Not yet implemented'
+
   %tr.section-header
     %td{colspan: 99} Not Invited (But Eligible)
   %tr.header-row
@@ -95,7 +104,8 @@
       %td
       %td.center
         - if @event.datetime > DateTime.now
-          = button_to 'Invite'
+          = button_to 'Invite', {}, :disabled => true, :title => 'Not yet implemented'
+
   %tr.section-header
     %td{colspan: 99} Subscribed But Ineligible For Invitation
   %tr.header-row
