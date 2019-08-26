@@ -37,5 +37,9 @@ Rails.application.routes.draw do
   get    '/event/:uuid/synidicate',          to: 'events#syndicate',               as: 'syndicate_event'
   get    '/event/:uuid/synidicate_preview',  to: 'events#syndicate_preview',       as: 'syndicate_event_preview'
 
+  get    '/lists',                           to: 'subscription_lists#index',       as: 'lists'
+  post   '/lists',                           to: 'subscription_lists#update',      as: 'update_list'
+  delete '/lists',                           to: 'subscription_lists#delete',      as: 'delete_list'
+
   get    '/errors/email_already_confirmed',   to: 'errors#email_already_confirmed', as: 'email_already_confirmed'
 end

@@ -31,7 +31,6 @@ users can decide which lists to be on.
   - [x] Add option for user to recover their UUID by submitting their email address
   - [x] A user can select to receive emails, gcal invites, or neither, for their events
 * Event interaction
-  - [ ] A user receives an invitation for an open event if they subscribe to a list
   - [x] A user can RSVP yes/no to an event
   - [x] A user can RSVP with a +1/2 to an event
   - [x] A user can change an existing RSVP to an event
@@ -61,5 +60,6 @@ users can decide which lists to be on.
     - [x] A notice is placed on the page indicitating that the event was modified
   - [x] An admin can clone an existing past or future event
 * Mailing list administration
-  - [ ] The admin can initiate an email to all members of the mailing list
-  - [ ] The admin can add or remove subscription lists
+  - [ ] The admin can initiate an email to all members of the global mailing list
+  - [ ] The admin can initiate an email to all members of a subscription list
+  - [x] The admin can edit, add, or remove subscription lists
