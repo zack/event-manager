@@ -3,4 +3,4 @@
 
 %h1 Manage event for #{@event.datetime.strftime('%A, %B %d at %I:%M %p')}
 
-= render partial: 'event_form', locals: { event: @event, submit_url: update_event_path }
+= render partial: 'event_form', locals: { event: @event, submit_url: update_event_path, edit: true }

@@ -1,0 +1,31 @@
+Hello! An event you have previously been invited to has been updated.
+
+= "\r\n"
+
+Here's the new info:
+
+= "\r\n"
+
+When it is: #{@new_event.datetime.strftime("%A, %B, #{@new_event.datetime.day.ordinalize} at %-l:%M%p")}
+Where it is: #{@new_event.location}
+What it is: #{@new_event.description}
+
+= "\r\n"
+
+Here's the OLD info:
+
+= "\r\n"
+
+When it was: #{@old_event.datetime.strftime("%A, %B, #{@old_event.datetime.day.ordinalize} at %-l:%M%p")}
+Where it was: #{@old_event.location}
+What it was: #{@old_event.description}
+
+= "\r\n"
+
+You can access your account settings here:
+= url_for controller: 'users', action: 'show', uuid: @user.uuid
+
+= "\r\n"
+
+If you would like to delete your account and all associated history records, please click here:
+= url_for controller: 'users', action: 'delete', uuid: @user.uuid

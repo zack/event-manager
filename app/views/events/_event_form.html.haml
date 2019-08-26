@@ -22,15 +22,20 @@
       = f.label :description
       = f.text_field :description
 
-    .radios
-      = collection_radio_buttons :event,
-                                 :subscription_list_id,
-                                 SubscriptionList.all,
-                                 :id,
-                                 lambda {|l| "#{l.name} (#{l.description})"} do |b|
-        .option
-          = b.radio_button
-          = b.label
+    -if not edit
+      .radios
+        = collection_radio_buttons :event,
+                                   :subscription_list_id,
+                                   SubscriptionList.all,
+                                   :id,
+                                   lambda {|l| "#{l.name} (#{l.description})"} do |b|
+          .option
+            = b.radio_button
+            = b.label
+
+    - if edit
+      =check_box_tag :suppress_email
+      =f.label "Supress update email"
 
     - if event.uuid
       = f.hidden_field :uuid, :value => event.uuid

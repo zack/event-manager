@@ -87,8 +87,25 @@ class EventsController < ApplicationController
   def update
     @event = Event.find_by uuid: params['event']['uuid']
 
-    if @event.update(event_params)
-      flash[:success] = 'Event successfully updated!'
+    old_event = @event.clone
+    @event.assign_attributes(event_params)
+    event_changed = @event.changed?
+
+    if event_changed && params[:suppress_email] == '1'
+      flash[:success] = 'Event successfully updated! Update email suppressed.'
+    elsif event_changed
+      users = User.includes(:syndications).where(syndications: { event_id: @event })
+      users.each do |u|
+        UserMailer.event_updated(u, @event, old_event).deliver_now
+      end
+      user_string = ActionController::Base.helpers.pluralize(users.count, 'user')
+      flash[:success] = "Event successfully updated! Notified #{user_string}."
+    else
+      flash[:notice] = 'No changes detected.'
+    end
+
+
+    if @event.save
       redirect_to action: :index
     else
       render :edit
@@ -135,7 +152,15 @@ class EventsController < ApplicationController
   def soft_delete
     @event = Event.find_by uuid: params['uuid']
     @event.update(deleted: true)
-    flash[:success] = 'Event successfully soft deleted!'
+
+    @event = Event.find_by uuid: params['uuid']
+    users = User.includes(:syndications).where(syndications: { event_id: @event })
+    users.each do |u|
+      UserMailer.event_deleted(u, @event).deliver_now
+    end
+
+    user_string = ActionController::Base.helpers.pluralize(users.count, 'user')
+    flash[:success] = "Event successfully soft deleted! Notified #{user_string}."
     redirect_to action: :index
   end
 
