@@ -1,0 +1,38 @@
+= render partial: 'admin_toolbar'
+
+%p
+  = link_to 'Back', controller: 'events', action: 'admin', uuid: @event.uuid
+
+%h1 Invite users?
+
+%h2 Event:
+%div
+  %strong Date:
+  = @event.datetime.strftime("%A, %B #{@event.datetime.day.ordinalize}")
+
+%div
+  %strong Time:
+  = @event.datetime.strftime('%l:%M %p')
+
+%div
+  %strong Location:
+  = @event.location
+
+%div
+  %strong List:
+  = SubscriptionList.find(@event.subscription_list_id).name
+
+%div
+  %strong Description:
+  = @event.description
+
+%h2 Users:
+%table
+  - @users.each do |u|
+    %tr
+      %td #{u.name}
+      %td #{u.email_address}
+
+%br
+
+= button_to 'Invite!', { controller: 'events', action: 'syndicate', uuid: @event.uuid}, {method: :get}

@@ -1,152 +1,117 @@
 %p
   = link_to 'Back', controller: 'events', action: 'index'
 
-%p
+%div
   %strong Date:
   = @event.datetime.strftime("%A, %B #{@event.datetime.day.ordinalize}")
 
-%p
+%div
   %strong Time:
   = @event.datetime.strftime('%l:%M %p')
 
-%p
+%div
   %strong Location:
   = @event.location
 
-%p
+%div
   %strong List:
   = SubscriptionList.find(@event.subscription_list_id).name
 
-%p
+%div
   %strong Description:
   = @event.description
 
-%p
+%div
   %strong Total Event Guests:
   = "#{@event.attendees} Confirmed"
 
-%p
+%div
   %strong Total Event Maybes:
-  - maybe_count = Rsvp.where(event_id: @event.id).where('response = 0').count
+  - maybe_count = Rsvp.where(event_id: @event.id).where('response == 0').count
   = "#{pluralize(maybe_count, 'Maybe')}"
 
--# Table of RSVPs
-- if Rsvp.where(event_id: @event.id).count > 0
+- if @event.datetime > DateTime.now and @not_invited.count > 0
   %p
-  %table
-    %thead
-      %tr
-        %th{colspan: 2}
-          Responses
-      %tr
-        %th
-          Name
-        %th
-          Response
-    %tbody
-      - Rsvp.where(event_id: @event.id).each do |r|
-        %tr
-          %td
-            = User.find(r.user_id).name
-          %td
-            = Rsvp::RESPONSE_STRINGS_BY_VALUE[r.response]
-- else
+    = link_to "Invite #{pluralize(@not_invited.count, 'user')}!", { controller: 'events', action: 'syndicate_preview', uuid: @event.uuid }
+- elsif @event.datetime > DateTime.now and @not_invited.count == 0
   %p
-    Nobody has RSVPd to this event
-
-
--# Table of invited users who have not RSVPd
-- if @invited.count > 0
-  %p
-  %table
-    %thead
-      %tr
-        %th{colspan: 4}
-          - if @event.datetime > DateTime.now
-            Already Invited
-          - else
-            Invited
-      %tr
-        %th
-          Name
-        %th
-          Email Address
-        %th
-          Invited
-        - if @event.datetime > DateTime.now
-          %th
-            Resend
-    %tbody
-      - @invited.each do |s|
-        %tr
-          %td
-            = s.name
-          %td
-            = s.email_address
-          %td
-            = Syndication.where(event_id: @event.id, user_id: s.id).first.created_at.strftime('%Y-%m-%d %l:%M %p')
-          - if @event.datetime > DateTime.now
-            %td.center
-              = button_to 'Resend'
-- elsif @event.datetime > DateTime.now
-  %p
-    Nobody has been invited to this event.
-- else
-  %p
-    Nobody was invited to this event.
-
--# Table of not-yet-invited users who are eligible for invitations
-- if @event.datetime > DateTime.now
-  - if @not_invited.count > 0
-    %table
-      %thead
-        %tr
-          %th{colspan: 2}
-            Not Yet Invited
-        %tr
-          %th
-            Name
-          %th
-            Email Address
-      %tbody
-        - @not_invited.each do |s|
-          %tr
-            %td
-              = link_to s.name, { controller: 'users', action: 'admin', uuid: s.uuid }
-            %td
-              = s.email_address
-
-- if @event.datetime > DateTime.now
-  %p
-    = button_to "Invite #{pluralize(@not_invited.count, 'user')}!", { controller: 'events', action: 'syndicate', uuid: @event.id }
+    All eligible users have been invited
 - else
   %p
     Cannot syndicate past events.
 
-%div.flash.notice
-  The following users either have uncofirmed accounts or have not confirmed |
-    their email addresses. Invitations cannot be sent to users that meet one or |
-    both of these conditions. |
-
--# Table of users who cannot be invited
-- if @event.datetime > DateTime.now
-  - if @unconfirmed.count > 0
-    %p
-    %table
-      %thead
-        %tr
-          %th{colspan: 3}
-            Unconfirmed users
-        %tr
-          %th
-            Name
-          %th #{"\u2709".encode('utf-8')}
-          %th #{"\u2611".encode('utf-8')}
-      - @unconfirmed.each do |s|
-        %tr
-          %td
-            = link_to s.name, { controller: 'users', action: 'admin', uuid: s.uuid }
-          %td.center
-            = bool_to_unicode(s.email_confirmed)
-          %td.center
-            = bool_to_unicode(s.admin_confirmed)
+-# Sorry about this huge, gross table.
+%table
+  %tr.section-header
+    %td{colspan: 99} Responsed
+  %tr.header-row
+    %td Name
+    %td Email Address
+    %td Invited
+    %td Response
+  - rsvps = Rsvp.where(event_id: @event.id).sort_by { |r| 0 - r.response }
+  - rsvps.each do |r|
+    - user = User.find(r.user_id)
+    %tr
+      %td
+        = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
+      %td
+        = user.email_address
+      %td
+        = Syndication.where(event_id: @event.id, user_id: user.id).first.created_at.strftime('%Y-%m-%d %l:%M %p')
+      %td.center
+        = Rsvp::RESPONSE_STRINGS_BY_VALUE[r.response]
+  %tr.section-header
+    %td{colspan: 99} Invited (But Not Responded)
+  %tr.header-row
+    %td Name
+    %td Email Address
+    %td Invited
+    %td Resend
+    - @invited.each do |user|
+      %tr
+        %td
+          = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
+        %td
+          = user.email_address
+        %td
+          = Syndication.where(event_id: @event.id, user_id: user.id).first.created_at.strftime('%Y-%m-%d %l:%M %p')
+        %td.center
+          - if @event.datetime > DateTime.now
+            = button_to 'Resend'
+  %tr.section-header
+    %td{colspan: 99} Not Invited (But Eligible)
+  %tr.header-row
+    %td Name
+    %td Email Address
+    %td
+    %td Invite
+  - @not_invited.each do |user|
+    %tr
+      %td
+        = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
+      %td
+        = user.email_address
+      %td
+      %td.center
+        - if @event.datetime > DateTime.now
+          = button_to 'Invite'
+  %tr.section-header
+    %td{colspan: 99} Subscribed But Ineligible For Invitation
+  %tr.header-row
+    %td Name
+    %td Email Address
+    %td
+    %td Missing
+    - @unconfirmed.each do |user|
+      %tr
+        %td
+          = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
+        %td
+          = user.email_address
+        %td
+        %td.relative
+          -if not user.email_confirmed
+            %span.absolute.unconfirmed.email{title: "User has not confirmed email address"} #{"\u2709".encode('utf-8')}
+          -if not user.admin_confirmed
+            %span.absolute.unconfirmed.admin{title: "Admin has not confirmed user"} #{"\u2611".encode('utf-8')}

@@ -7,32 +7,39 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 SubscriptionList.create(
-  name: 'Saturday Night Board Games',
-  description: 'Semi-weekly board game events'
+  name: 'List 1',
+  description: 'List 1 Description'
 )
 
 SubscriptionList.create(
-  name: 'Epic Board Games',
-  description: 'For playing 2+ hour long board games'
+  name: 'List 2',
+  description: 'List 2 Description'
 )
 
-for i in 1..50
+SubscriptionList.create(
+  name: 'List 3',
+  description: 'List 3 Description'
+)
+
+for i in 1..100
   User.seed do |s|
+    email_confirmed = [true, false].sample
     s.admin_confirmed = [true, false].sample
     s.email_address = Faker::Internet.email
-    s.email_confirmed = [true, false].sample
+    s.email_confirmed = email_confirmed
+    s.user_confirmed = email_confirmed && [true, false].sample
     s.first_name = Faker::Name.first_name
     s.last_name = Faker::Name.last_name
     s.uuid = SecureRandom.uuid
     s.uuid = SecureRandom.uuid
-    s.invitation_type = [1, 2, 3].sample
+    s.invitation_type = [1].sample# , 2, 3].sample
   end
 end
 
-for i in 1..10
+for i in 1..30
   Event.seed do |e|
     e.capacity = Random.rand(10) + 6
-    e.datetime = Faker::Time.between(DateTime.now + 14, DateTime.now - 31)
+    e.datetime = Faker::Time.between(DateTime.now + 14, DateTime.now - 14)
     e.description = Faker::Lorem.sentence
     e.subscription_list_id = [1, 2].sample
     e.uuid = SecureRandom.uuid
@@ -40,7 +47,7 @@ for i in 1..10
 end
 
 for s in User.all
-  for i in [[[1, 2].sample], [1, 2]].sample
+  for i in [1, 2, 3].filter { [true, false].sample }
     Subscription.seed do |ss|
       ss.user_id = s.id
       ss.subscription_list_id = i

@@ -1,0 +1,22 @@
+Hello! You have been invited to an event!
+
+= "\r\n"
+
+When: #{@event.datetime.strftime("%A, %B, #{@event.datetime.day.ordinalize} at %-l:%M%p")}
+Where: #{@event.location}
+What: #{@event.description}
+
+= "\r\n"
+
+You can RSVP here:
+= url_for controller: 'events', action: 'rsvp', uuid: @event.uuid, user_uuid: @user.uuid
+
+= "\r\n"
+
+You can access your account settings here:
+= url_for controller: 'users', action: 'show', uuid: @user.uuid
+
+= "\r\n"
+
+If you would like to delete your account and all associated history records, please click here:
+= url_for controller: 'users', action: 'delete', uuid: @user.uuid

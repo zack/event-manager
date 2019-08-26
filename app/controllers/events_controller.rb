@@ -39,16 +39,27 @@ class EventsController < ApplicationController
   def admin
     @event = Event.find_by uuid: params['uuid']
 
-    users = User
+    subscribed_users = User
       .includes(:subscription_lists)
       .where(subscription_lists: { id: @event.subscription_list_id })
 
-    confirmed, @unconfirmed = users.partition do |s|
+    # split users into those that are:
+    # * eligible for invites (confirmed)
+    # * ineligible for invites (unconfirmed)
+    confirmed, @unconfirmed = subscribed_users.partition do |s|
       s.email_confirmed && s.admin_confirmed
     end
 
+    # split all eligible users into
+    # * already invited (and possibly responded)
+    # * not invited
     @invited, @not_invited = confirmed.partition do |s|
       Syndication.where(event_id: @event, user_id: s).count > 0
+    end
+
+    # but we don't want users that have already responded in this array
+    @invited = @invited.filter do |u|
+      Rsvp.where(event_id: @event, user_id: u).count == 0
     end
 
     if @event.deleted
@@ -128,11 +139,41 @@ class EventsController < ApplicationController
     redirect_to action: :index
   end
 
+  def syndicate_preview
+    @event = Event.find_by uuid: params['uuid']
+    @users = get_users_for_event_syndication(@event)
+  end
+
   def syndicate
     @event = Event.find_by uuid: params['uuid']
+    @users = get_users_for_event_syndication(@event)
+    @users.each do |u|
+      UserMailer.invite(u, @event).deliver_now
+      Syndication.create(
+        event_id: @event.id,
+        user_id: u.id
+      )
+    end
+
+    flash[:succes] = "Successfully invited #{@users.count} users!"
+    redirect_to action: :admin, uuid: @event.uuid
   end
 
   private
+
+    def get_users_for_event_syndication(event)
+      users = User
+        .includes(:subscription_lists)
+        .includes(:syndications)
+        .where(users: { email_confirmed: true })
+        .where(users: { admin_confirmed: true })
+        .where(subscription_lists: { id: @event.subscription_list_id })
+
+      # there's probably a way to do this in the above query, but this works
+      @users = users.filter do |u|
+        Syndication.where(user_id: u, event_id: @event).count == 0
+      end
+    end
 
     def event_params
       params.require(:event).permit(

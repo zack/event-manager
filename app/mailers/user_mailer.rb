@@ -16,4 +16,13 @@ class UserMailer < ApplicationMailer
     @user = user
     mail to: @user.email_address, subject: "#{ENV.fetch('MAILING_LIST_NAME')} Account Recovery"
   end
+
+  def invite(user, event)
+    @user = user
+    @event = event
+    @subscription_list_name = SubscriptionList.find(@event.subscription_list_id).name
+    datetime = @event.datetime.strftime('%-m/%-d at %-l:%M%p')
+    subject = "#{ENV.fetch('MAILING_LIST_NAME')}: Invitation for #{@subscription_list_name} on #{datetime}"
+    mail to: @user.email_address, subject: subject
+  end
 end
