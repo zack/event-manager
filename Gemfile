@@ -14,7 +14,6 @@ gem 'rails', '~> 5.2'
 gem 'rubocop', '~> 0.71', require: false
 gem 'sass-rails', '~> 5.0'
 gem 'seed-fu', '~> 2.3'
-gem 'sqlite3', '~> 1.4'
 gem 'uglifier', '~> 4.1'
 gem 'validates_email_format_of', '~> 1.6'
 
@@ -24,6 +23,7 @@ group :test, :development do
   gem 'factory_bot_rails', '~> 4.11'
   gem 'rspec-rails', '~> 3.8'
   gem 'shoulda-matchers', '~> 3.1'
+  gem 'sqlite3', '~> 1.4'
 end
 
 group :development do
@@ -32,6 +32,10 @@ group :development do
   gem 'spring', '~> 2.1'
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'web-console', '~> 3.7'
+end
+
+group :production do
+  gem 'pg'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
