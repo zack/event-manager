@@ -1,0 +1,11 @@
+#{@body}
+
+= "\r\n"
+
+You can access your account settings here:
+= url_for controller: 'users', action: 'show', uuid: @user.uuid
+
+= "\r\n"
+
+If you would like to delete your account and all associated history records, please click here:
+= url_for controller: 'users', action: 'delete', uuid: @user.uuid

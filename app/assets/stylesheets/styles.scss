@@ -67,6 +67,10 @@ ul {
     position: relative;
     width: $form-width;
 
+    &.area {
+      height: 104px;
+    }
+
     label {
       left: 0px;
       position: absolute;
@@ -78,6 +82,16 @@ ul {
       border-radius: 3px;
       border: 1px solid #cacaca;
       height: 30px;
+      padding: 5px;
+      position: absolute;
+      right: 0px;
+      width: 75%;
+    }
+
+    textarea {
+      border-radius: 3px;
+      border: 1px solid #cacaca;
+      height: 90px;
       padding: 5px;
       position: absolute;
       right: 0px;

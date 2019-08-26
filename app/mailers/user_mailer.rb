@@ -1,10 +1,16 @@
 class UserMailer < ApplicationMailer
+  def ad_hoc_send(user, subject, body)
+    @user = user
+    @body = body
+    mail to: @user.email_address, subject: "#{ENV.fetch("MAILING_LIST_NAME")}: #{subject}"
+  end
+
   def confirmation_email(user)
     @user = user
     @subscription_names = Subscription.where(user_id: @user).map do |s|
       SubscriptionList.find(s.subscription_list_id).name
     end
-    mail to: @user.email_address, subject: "#{ENV.fetch('MAILING_LIST_NAME')} Email Confirmation"
+    mail to: @user.email_address, subject: "# {ENV.fetch('MAILING_LIST_NAME')} Email Confirmation"
   end
 
   def change_email_address_email(user)

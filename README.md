@@ -60,6 +60,6 @@ users can decide which lists to be on.
     - [x] A notice is placed on the page indicitating that the event was modified
   - [x] An admin can clone an existing past or future event
 * Mailing list administration
-  - [ ] The admin can initiate an email to all members of the global mailing list
-  - [ ] The admin can initiate an email to all members of a subscription list
+  - [x] The admin can initiate an email to all members of the global mailing list
+  - [x] The admin can initiate an email to all members of a subscription list
   - [x] The admin can edit, add, or remove subscription lists
