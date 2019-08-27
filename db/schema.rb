@@ -12,8 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2019_08_07_015748) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
+  enable_extension "plpgsql"
+
   create_table "events", force: :cascade do |t|
-    t.integer "subscription_list_id", null: false
+    t.bigint "subscription_list_id", null: false
     t.integer "capacity"
     t.text "description", null: false
     t.datetime "datetime", null: false
@@ -28,8 +32,8 @@ ActiveRecord::Schema.define(version: 2019_08_07_015748) do
   end
 
   create_table "rsvps", force: :cascade do |t|
-    t.integer "event_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "event_id", null: false
+    t.bigint "user_id", null: false
     t.integer "response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -45,8 +49,8 @@ ActiveRecord::Schema.define(version: 2019_08_07_015748) do
   end
 
   create_table "subscriptions", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "subscription_list_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "subscription_list_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subscription_list_id"], name: "index_subscriptions_on_subscription_list_id"
@@ -55,8 +59,8 @@ ActiveRecord::Schema.define(version: 2019_08_07_015748) do
   end
 
   create_table "syndications", force: :cascade do |t|
-    t.integer "event_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "event_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_syndications_on_event_id"

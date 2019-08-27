@@ -34,7 +34,7 @@
 
 %div
   %strong Total Event Maybes:
-  - maybe_count = Rsvp.where(event_id: @event.id).where('response == 0').count
+  - maybe_count = Rsvp.where(event_id: @event.id).where('response = 0').count
   = "#{pluralize(maybe_count, 'Maybe')}"
 
 - if @event.datetime > DateTime.now and @not_invited.count > 0

@@ -237,7 +237,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.1)
     strings (0.1.5)
       strings-ansi (~> 0.1)
       unicode-display_width (~> 1.5)
@@ -289,7 +288,7 @@ DEPENDENCIES
   jbuilder (~> 2.9)
   listen (~> 3.1)
   mailgun_rails (~> 0.9)
-  pg
+  pg (~> 1.1)
   pry (~> 0.12)
   puma (~> 3.12)
   rails (~> 5.2)
@@ -300,7 +299,6 @@ DEPENDENCIES
   shoulda-matchers (~> 3.1)
   spring (~> 2.1)
   spring-watcher-listen (~> 2.0)
-  sqlite3 (~> 1.4)
   tzinfo-data
   uglifier (~> 4.1)
   validates_email_format_of (~> 1.6)

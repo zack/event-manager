@@ -4,7 +4,7 @@ class CreateRsvps < ActiveRecord::Migration[5.1]
       t.references :event, null: false
       t.references :user, null: false
 
-      t.boolean :response
+      t.integer :response
 
       t.timestamps
     end
