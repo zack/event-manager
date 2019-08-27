@@ -2,7 +2,7 @@ Hello! You have been invited to an event!
 
 = "\r\n"
 
-When: #{@event.datetime.strftime("%A, %B, #{@event.datetime.day.ordinalize} at %-l:%M%p")}
+When: #{@event.datetime.strftime("%A, %B #{@event.datetime.day.ordinalize} at %-l:%M%p")}
 Where: #{@event.location}
 What: #{@event.description}
 
