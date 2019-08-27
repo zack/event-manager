@@ -9,7 +9,7 @@
 
 -@lists.each do |list|
   .form
-    = form_for(list, url: update_list_url, method: 'post') do |f|
+    = form_for(list, url: update_list_url, method: :post) do |f|
       .option.text
         = f.label :name
         = f.text_field :name, value: list.name
@@ -18,7 +18,7 @@
         = f.text_field :description, value: list.description
       = f.hidden_field :id, :value => list.id
       = f.submit "#{list.name ? 'Update' : 'Create'}"
-      - if list.id
-        = button_to 'Delete', { controller: 'subscription_lists', action: 'delete', id: list.id }, {method: :delete}
+    - if list.id
+      = button_to 'Delete', { controller: 'subscription_lists', action: 'delete', subscription_list: { id: list.id }}, { method: :delete }
     %br
     %br
