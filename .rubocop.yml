@@ -1,5 +1,7 @@
 # mostly from rails/rails
 
+require: rubocop-rails
+
 AllCops:
   TargetRubyVersion: 2.5
   # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
