@@ -16,15 +16,15 @@ before_script:
   - bundle exec rake db:drop db:create db:migrate db:seed
 
 script:
-  - bundle exec rubocop
+  bundle exec rubocop
 
 notifications:
-  - email: false
+  email: false
 
 env:
-  - MAILGUN_API_KEY=key
-  - MAILING_LIST_NAME="Travis Config Mailing List"
-  - EMAIL_USER=ci
-  - EMAIL_DOMAIN=example.com
-  - ADMIN_PASSWORD=password
+  MAILGUN_API_KEY=key
+  MAILING_LIST_NAME="Travis Config Mailing List"
+  EMAIL_USER=ci
+  EMAIL_DOMAIN=example.com
+  ADMIN_PASSWORD=password
 
