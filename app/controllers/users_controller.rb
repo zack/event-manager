@@ -130,12 +130,9 @@ class UsersController < ApplicationController
     @user.update(email_confirmed: true)
     @user.update(user_confirmed: true)
     if @user.save
-      # redirect_to :email_change_confirmed
+      flash[:success] = 'Thank you, your email address has been confirmed!'
       return(redirect_to action: :show, uuid: @user.uuid)
     end
-  end
-
-  def email_change_confirmed
   end
 
   def revert_email
