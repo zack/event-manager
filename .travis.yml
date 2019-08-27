@@ -3,8 +3,13 @@ language: ruby
 rvm:
 - 2.6.3
 
+services:
+  -postgresql
+
 before_script:
-  bundle exec rake db:drop db:create db:migrate db:seed
+  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database events_management_test;' -U postgres
+  - bundle exec rake db:drop db:create db:migrate db:seed
 
 script:
   bundle exec rubocop
