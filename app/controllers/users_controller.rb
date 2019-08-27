@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   ]
 
   def index
-    @users = User.all
+    @users = User.all.order(:first_name, :last_name)
   end
 
   def show
