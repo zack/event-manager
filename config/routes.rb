@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get    '/',                                to: 'users#new',                      as: 'root'
+  get    '/',                                to: 'welcome#index',                      as: 'root'
 
   get    '/admin',                           to: 'admin#index',                    as: 'admin_index'
   get    '/admin/email',                     to: 'admin#compose_email',            as: 'admin_compose_email'

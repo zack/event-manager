@@ -1,5 +1,10 @@
 This is a reminder from #{ENV.fetch('MAILING_LIST_NAME')}!
 = "\r\n"
 
-You may use this link to access your account page:
-= url_for controller: 'users', action: 'edit', uuid: @user.uuid
+You can access your account settings here:
+= url_for controller: 'users', action: 'show', uuid: @user.uuid
+
+= "\r\n"
+
+If you would like to delete your account and all associated history records, please click here:
+= url_for controller: 'users', action: 'delete', uuid: @user.uuid
