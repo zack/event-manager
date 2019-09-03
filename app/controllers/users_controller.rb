@@ -3,6 +3,8 @@ class UsersController < ApplicationController
     :index, :admin, :edit, :admin_delete, :admin_destroy, :confirm_user
   ]
 
+  include Rails.application.routes.url_helpers
+
   def index
     @users = User.all.order(:first_name, :last_name)
   end
@@ -129,9 +131,15 @@ class UsersController < ApplicationController
     @user.update(email_confirmation_code: nil)
     @user.update(email_confirmed: true)
     @user.update(user_confirmed: true)
+
     if @user.save
       flash[:success] = 'Thank you, your email address has been confirmed!'
-      return(redirect_to action: :show, uuid: @user.uuid)
+      if params['admin']
+        flash[:success] = 'The user\'s email address has been succesfully confirmed.'
+        return(redirect_to action: :admin, uuid: @user.uuid)
+      else
+        return(redirect_to action: :show, uuid: @user.uuid)
+      end
     end
   end
 

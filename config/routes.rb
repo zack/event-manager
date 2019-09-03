@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   get    '/users',                           to: 'users#index',                    as: 'users'
   post   '/user',                            to: 'users#create',                   as: 'create_user'
-  get    '/user/confirm_email/:code',        to: 'users#confirm_email',            as: 'confirm_email'
+  get    '/user/confirm_email',              to: 'users#confirm_email',            as: 'confirm_email'
   get    '/user/deleted',                    to: 'users#deleted',                  as: 'deleted_user'
   get    '/user/new',                        to: 'users#new',                      as: 'new_user'
   get    '/user/recover_account',            to: 'users#recover_account',          as: 'recover_account'
