@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/zack/events-management.svg?branch=master)](https://travis-ci.org/zack/events-management)
+[![Build Status](https://travis-ci.org/zack/events-management.svg?branch=master)](https://travis-ci.org/zack/event-manager)
 
 ### An app to manage event mailing lists and RSVPs.
 Users are not required to authenticate, and will use unique URLs from emails to
