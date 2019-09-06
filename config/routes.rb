@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post   '/admin/login',                     to: 'admin#process_login',            as: 'admin_process_login'
   get    '/admin/logout',                    to: 'admin#logout',                   as: 'admin_logout'
 
+  get    '/signup',                          to: 'users#new',                      as: 'signup'
   get    '/users',                           to: 'users#index',                    as: 'users'
   post   '/user',                            to: 'users#create',                   as: 'create_user'
   get    '/user/confirm_email',              to: 'users#confirm_email',            as: 'confirm_email'

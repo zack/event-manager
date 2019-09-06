@@ -16,6 +16,7 @@ users can decide which lists to be on.
 * Prepare the database: `$ bundle exec rake db:create db:migrate`
 * Optionally, seed the databases with bogus data `$bundle exec rake db:seed`
 * Set your development env variables in `.env`
+  * See required keys in `config/initializers/dotenv.rb`
 * Make sure to set your environment variables in your CI and prod environments!
 
 ### Project Roadmap
