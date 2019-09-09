@@ -72,6 +72,7 @@ users can decide which lists to be on.
       - [x] The admin may choose to omit this email (for, say, fixing a typo)
     - [x] A notice is placed on the page indicitating that the event was modified
   - [x] An admin can clone an existing past or future event
+  - [ ] Suppress flashes indicating that events have been edited for unsyndicated events
 * Mailing list administration
   - [x] The admin can initiate an email to all members of the global mailing list
   - [x] The admin can initiate an email to all members of a subscription list
