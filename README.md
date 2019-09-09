@@ -60,6 +60,8 @@ users can decide which lists to be on.
   - [x] An admin can see a list of all users and their confirmation statuses
   - [x] An admin can admin-confirm a user
   - [x] An admin can delete a user
+  - [ ] Optionally email admin when new users sign up
+    - [ ] Hook this up to preferences
 * Event administration
   - [x] An admin can see all future events
   - [x] An admin can see all past events
@@ -81,3 +83,4 @@ users can decide which lists to be on.
   - [x] The admin can initiate an email to all members of the global mailing list
   - [x] The admin can initiate an email to all members of a subscription list
   - [x] The admin can edit, add, or remove subscription lists
+  - [ ] Add preferences for the admin
