@@ -1,0 +1,16 @@
+%div{style: "font-family: monospace;"}
+  %div
+    #{@body}
+
+  %br
+
+  %div
+    \-----------------------------------------
+
+  %br
+
+  %div
+    You can access your account settings #{link_to "here", { controller: 'users', action: 'show', uuid: @user.uuid}}.
+
+  %div
+    If you would like to delete your account and all associated history records, please click #{link_to "here", { controller: 'users', action: 'delete', uuid: @user.uuid}}.
