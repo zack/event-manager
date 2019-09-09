@@ -49,33 +49,38 @@
 
 -# Sorry about this huge, gross table.
 %table
+  - rsvps = Rsvp.where(event_id: @event.id).sort_by { |r| 0 - r.response }
   %tr.section-header
     %td{colspan: 99} Responsed
-  %tr.header-row
-    %td Name
-    %td Email Address
-    %td Invited
-    %td Response
-  - rsvps = Rsvp.where(event_id: @event.id).sort_by { |r| 0 - r.response }
-  - rsvps.each do |r|
-    - user = User.find(r.user_id)
+  - if rsvps.count > 0
+    %tr.header-row
+      %td Name
+      %td Email Address
+      %td Invited
+      %td Response
+    - rsvps.each do |r|
+      - user = User.find(r.user_id)
+      %tr
+        %td
+          = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
+        %td
+          = user.email_address
+        %td
+          = Syndication.where(event_id: @event.id, user_id: user.id).first.created_at.strftime('%Y-%m-%d %l:%M %p')
+        %td.center
+          = Rsvp::RESPONSE_STRINGS_BY_VALUE[r.response]
+  - else
     %tr
-      %td
-        = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
-      %td
-        = user.email_address
-      %td
-        = Syndication.where(event_id: @event.id, user_id: user.id).first.created_at.strftime('%Y-%m-%d %l:%M %p')
-      %td.center
-        = Rsvp::RESPONSE_STRINGS_BY_VALUE[r.response]
+      %td.center{colspan: 99} No RSVPs
 
   %tr.section-header
     %td{colspan: 99} Invited (But Not Responded)
-  %tr.header-row
-    %td Name
-    %td Email Address
-    %td Invited
-    %td Resend
+  - if @invited.count > 0
+    %tr.header-row
+      %td Name
+      %td Email Address
+      %td Invited
+      %td Resend
     - @invited.each do |user|
       %tr
         %td
@@ -87,41 +92,52 @@
         %td.center
           - if @event.datetime > DateTime.now
             = button_to "Resend", {}, :disabled => true, :title => 'Not yet implemented'
+  - else
+    %tr
+      %td.center{colspan: 99} No Users
 
   %tr.section-header
     %td{colspan: 99} Not Invited (But Eligible)
-  %tr.header-row
-    %td Name
-    %td Email Address
-    %td
-    %td Invite
-  - @not_invited.each do |user|
-    %tr
+  - if @not_invited.count > 0
+    %tr.header-row
+      %td Name
+      %td Email Address
       %td
-        = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
-      %td
-        = user.email_address
-      %td
-      %td.center
-        - if @event.datetime > DateTime.now
-          = button_to 'Invite', {}, :disabled => true, :title => 'Not yet implemented'
-
-  %tr.section-header
-    %td{colspan: 99} Subscribed But Ineligible For Invitation
-  %tr.header-row
-    %td Name
-    %td Email Address
-    %td
-    %td Missing
-    - @unconfirmed.each do |user|
+      %td Invite
+    - @not_invited.each do |user|
       %tr
         %td
           = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
         %td
           = user.email_address
         %td
-        %td.relative
-          -if not user.email_confirmed
-            %span.absolute.unconfirmed.email{title: "User has not confirmed email address"} #{"\u2709".encode('utf-8')}
-          -if not user.admin_confirmed
-            %span.absolute.unconfirmed.admin{title: "Admin has not confirmed user"} #{"\u2611".encode('utf-8')}
+        %td.center
+          - if @event.datetime > DateTime.now
+            = button_to 'Invite', {}, :disabled => true, :title => 'Not yet implemented'
+  - else
+    %tr
+      %td.center{colspan: 99} No Users
+
+  %tr.section-header
+    %td{colspan: 99} Subscribed But Ineligible For Invitation
+  - if @unconfirmed.count > 0
+    %tr.header-row
+      %td Name
+      %td Email Address
+      %td
+      %td Missing
+      - @unconfirmed.each do |user|
+        %tr
+          %td
+            = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
+          %td
+            = user.email_address
+          %td
+          %td.relative
+            -if not user.email_confirmed
+              %span.absolute.unconfirmed.email{title: "User has not confirmed email address"} #{"\u2709".encode('utf-8')}
+            -if not user.admin_confirmed
+              %span.absolute.unconfirmed.admin{title: "Admin has not confirmed user"} #{"\u2611".encode('utf-8')}
+  - else
+    %tr
+      %td.center{colspan: 99} No Users
