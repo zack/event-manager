@@ -10,14 +10,18 @@ users can decide which lists to be on.
 * Get a mailgun account and mailgun API key
 * Install ruby, the version specified in .ruby-version
 * Install postgres on your system. This varies system to system.
-* Install bundler `$ gem install bundler`
-* Install everything else `$ bundle install`
-* Create a superuser in your postgres database with name `rails` , password `rails`
+* Add a postgres superuser 'rails' with password 'rails'
+  * `$ psql postgres`
+  * `postgres=# create user rails with password 'rails';`
+  * `postgres=# alter role rails superuser createrole createdb replication;`
+* Install bundler: `$ gem install bundler`
+* Install everything else: `$ bundle install`
 * Prepare the database: `$ bundle exec rake db:create db:migrate`
 * Optionally, seed the databases with bogus data `$bundle exec rake db:seed`
 * Set your development env variables in `.env`
   * See required keys in `config/initializers/dotenv.rb`
-* Make sure to set your environment variables in your CI and prod environments!
+  * Each line should look like `EMAIL_DOMAIN=example.com`
+* Make sure to set your environment variables in your CI and prod environments, too!
 
 ### Project Roadmap
 * Application
