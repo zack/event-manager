@@ -84,3 +84,6 @@ users can decide which lists to be on.
   - [x] The admin can initiate an email to all members of a subscription list
   - [x] The admin can edit, add, or remove subscription lists
   - [ ] Add preferences for the admin
+* List Administration
+  - [ ] Update the list admin page to show stats for list, plus an edit and delete button
+  - [ ] Give each list its own independent administration page
