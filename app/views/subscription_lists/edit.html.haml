@@ -1,0 +1,25 @@
+= render partial: 'admin_toolbar'
+
+%br
+%br
+.flash.notice
+  Note that deleting a list will permanently delete all associated events and
+  subscriptions.  There is no soft delete and no undo.
+%br
+
+%h1
+  = @list.name
+
+%p
+  %span
+    %strong Description:
+  %span
+    = @list.description
+
+%p
+  %span
+    %strong Subscriber Count:
+  %span
+    = @list.subscriptions.count
+
+

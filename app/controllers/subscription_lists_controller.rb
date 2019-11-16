@@ -3,8 +3,6 @@ class SubscriptionListsController < ApplicationController
 
   def index
     @lists = SubscriptionList.all.to_a
-    @list = SubscriptionList.new
-    @lists = @lists.push(@list)
   end
 
   def update
@@ -18,6 +16,10 @@ class SubscriptionListsController < ApplicationController
     end
 
     redirect_to :lists
+  end
+
+  def edit
+    @list = SubscriptionList.find_by id: params['id']
   end
 
   def delete

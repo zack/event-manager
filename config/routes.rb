@@ -41,6 +41,7 @@ Rails.application.routes.draw do
   get    '/event/:uuid/synidicate_preview',  to: 'events#syndicate_preview',       as: 'syndicate_event_preview'
 
   get    '/lists',                           to: 'subscription_lists#index',       as: 'lists'
+  get    '/list/:id/edit',                   to: 'subscription_lists#edit',        as: 'list'
   post   '/list/update',                     to: 'subscription_lists#update',      as: 'update_list'
   delete '/lists',                           to: 'subscription_lists#delete',      as: 'delete_list'
 
