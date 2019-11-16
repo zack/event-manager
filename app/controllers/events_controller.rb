@@ -69,7 +69,6 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find_by uuid: params['uuid']
-    @rsvp_count = Rsvp.where(event_id: @event).where('response > ?', 0).count
 
     if @event.deleted
       flash[:warning] = 'This event has been cancelled! Sorry!'
