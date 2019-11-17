@@ -42,8 +42,9 @@ Rails.application.routes.draw do
 
   get    '/lists',                           to: 'subscription_lists#index',       as: 'lists'
   get    '/list/:id/edit',                   to: 'subscription_lists#edit',        as: 'list'
-  post   '/list/update',                     to: 'subscription_lists#update',      as: 'update_list'
-  delete '/lists',                           to: 'subscription_lists#delete',      as: 'delete_list'
+  patch  '/list/:id',                        to: 'subscription_lists#update',      as: 'update_list'
+  get    '/list/:id/delete',                 to: 'subscription_lists#delete',      as: 'delete_list'
+  delete '/list/:id/destroy',                to: 'subscription_lists#destroy',     as: 'destroy_list'
 
   get    '/errors/email_already_confirmed',   to: 'errors#email_already_confirmed', as: 'email_already_confirmed'
 end

@@ -1,0 +1,22 @@
+#list_form.form
+  = form_for(list, url: submit_url) do |f|
+    - if @list.errors.any?
+      %ul#errors
+        - @event.errors.full_messages.each do |err|
+          %li
+            =err
+
+    .option.text
+      = f.label :name
+      = f.text_field :name
+
+    .option.text
+      = f.label :description
+      = f.text_field :description
+
+    - if list.id
+      = f.hidden_field :id, :id => list.id
+    .actions
+      = f.submit 'Submit'
+      - if list.id
+        = link_to 'Delete List', { controller: 'subscription_lists', action: 'delete', id: list.id }, id: 'delete'

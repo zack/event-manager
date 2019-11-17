@@ -23,7 +23,11 @@ class SubscriptionListsController < ApplicationController
   end
 
   def delete
-    list = SubscriptionList.find(subscription_list_params[:id])
+    @list = SubscriptionList.find_by id: params['id']
+  end
+
+  def destroy
+    list = SubscriptionList.find_by id: params['id']
     events = Event.where('subscription_list_id': list.id)
     subscriptions = Subscription.where('subscription_list_id': list.id)
 

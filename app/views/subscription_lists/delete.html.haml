@@ -1,0 +1,14 @@
+= render partial: 'admin_toolbar'
+
+%br
+%br
+.flash.notice
+  Note that deleting a list will permanently delete all associated events and
+  subscriptions.  There is no soft delete and no undo.
+
+%p
+  = link_to 'Back', controller: 'subscription_lists', action: 'edit', uuid: @list.id
+
+%strong Delete list: #{@list.name}?
+
+= button_to 'Delete', { controller: 'subscription_lists', action: 'destroy', id: @list.id }, {method: :delete, id: 'delete-confirm'}
