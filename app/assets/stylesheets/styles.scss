@@ -123,8 +123,9 @@ ul {
 }
 
 table {
-  border: 1px solid black;
   border-collapse: collapse;
+  border: 1px solid black;
+  table-layout: fixed;
 
   thead, .header-row {
     border: 1px solid black;
@@ -157,7 +158,6 @@ table {
     border: 1px solid black;
     overflow: hidden;
     padding: 8px 4px;
-    table-layout: fixed;
     text-overflow: ellipsis;
     white-space: nowrap;
 
