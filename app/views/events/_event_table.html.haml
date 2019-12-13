@@ -1,34 +1,36 @@
 %table.events
   %thead
     %tr
-      %th.date Date
-      %th.time Time
-      %th.list List
-      %th.description Description
-      %th.attendance RSVP
-      %th.admin Show
+      %th Date
+      %th Time
+      %th List
+      %th Description
+      %th RSVP
+      %th Show
       - if editable
         %th.edit Edit
-      %th.clone Clone
+      %th Clone
 
   %tbody
     - events.each do |e|
       %tr
-        %td.date
+        %td
           = e.datetime.strftime('%Y-%m-%d')
-        %td.time
+        %td
           = e.datetime.strftime('%l:%M %p')
-        %td.list
+        %td
           = SubscriptionList.find(e.subscription_list_id).name
-        %td.description
-          = e.description
-        %td.attendance
+        %td.wide
+          %span.wide-outer-span
+            %span.wide-inner-span
+              = e.description
+        %td.center
           %span{"title" => "Confirmed: #{e.attendees}, Maybe: #{e.maybes}"}
             #{e.attendees}(#{e.maybes})#{e.capacity && ("/#{ e.capacity}")}
-        %td.admin
+        %td.center
           = link_to 'Show', { controller: 'events', action: 'admin', uuid: e.uuid }
         - if editable
           %td.edit
             = link_to 'Edit', { controller: 'events', action: 'edit', uuid: e.uuid }
-        %td.clone
+        %td.center
           = link_to 'Clone', { controller: 'events', action: 'clone', uuid: e.uuid }, method: :post

@@ -2,7 +2,7 @@
 
 %h2 All Users
 
-%table
+%table.users
   %thead
     %tr
       %th Name
@@ -13,7 +13,7 @@
   %tbody
     - @users.each do |user|
       %tr{class: !user.admin_confirmed ? 'not-admin' : !user.email_confirmed ? 'not-email' : ''}
-        %td.name
+        %td
           = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
         %td
           = user.email_address
