@@ -13,7 +13,7 @@ gem 'haml-rails', '~> 1.0'
 gem 'jbuilder', '~> 2.9'
 gem 'mailgun_rails', '~> 0.9'
 gem 'pg', '~> 1.1'
-gem 'puma', '~> 3.12'
+gem 'puma', '~> 4.3'
 gem 'rails', '~> 5.2'
 gem 'rubocop', '~> 0.71', require: false
 gem 'rubocop-rails', '~> 2.0'
