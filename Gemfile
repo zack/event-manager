@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'faker', '~> 1.9'
-gem 'nokogiri', '~> 1.10'
+gem 'nokogiri', '~> 1.11'
 gem 'haml-rails', '~> 1.0'
 gem 'jbuilder', '~> 2.9'
 gem 'mailgun_rails', '~> 0.9'
