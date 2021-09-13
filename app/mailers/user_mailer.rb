@@ -10,12 +10,12 @@ class UserMailer < ApplicationMailer
     @subscription_names = Subscription.where(user_id: @user).map do |s|
       SubscriptionList.find(s.subscription_list_id).name
     end
-    mail to: @user.email_address, subject: "#{ENV.fetch('MAILING_LIST_NAME')} Email Confirmation"
+    mail to: @user.email_address, subject: "#{ENV.fetch('MAILING_LIST_NAME')} Email Confirmation [CLICK REQUIRED]"
   end
 
   def change_email_address_email(user)
     @user = user
-    mail to: @user.email_address, subject: "#{ENV.fetch('MAILING_LIST_NAME')} Email Address Change Confirmation"
+    mail to: @user.email_address, subject: "#{ENV.fetch('MAILING_LIST_NAME')} Email Address Change Confirmation [CLICK REQUIRED]"
   end
 
   def recover_account(user)

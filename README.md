@@ -16,11 +16,11 @@ users can decide which lists to be on.
   * `postgres=# alter role rails superuser createrole createdb replication;`
 * Install bundler: `$ gem install bundler`
 * Install everything else: `$ bundle install`
-* Prepare the database: `$ bundle exec rake db:create db:migrate`
-* Optionally, seed the databases with bogus data `$bundle exec rake db:seed`
 * Set your development env variables in `.env`
   * See required keys in `config/initializers/dotenv.rb`
   * Each line should look like `EMAIL_DOMAIN=example.com`
+* Prepare the database: `$ bundle exec rake db:create db:migrate`
+* Optionally, seed the databases with bogus data `$ bundle exec rake db:seed`
 * Make sure to set your environment variables in your CI and prod environments, too!
 
 ### Project Roadmap

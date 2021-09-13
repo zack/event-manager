@@ -57,6 +57,10 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 
+Mailgun.configure do |config|
+  config.api_key = ENV.fetch('MAILGUN_API_KEY')
+end
+
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec

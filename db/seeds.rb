@@ -39,7 +39,7 @@ end
 for i in 1..30
   Event.seed do |e|
     e.capacity = Random.rand(10) + 6
-    e.datetime = Faker::Time.between(DateTime.now + 14, DateTime.now - 14)
+    e.datetime = Faker::Time.between(from: DateTime.now + 14, to: DateTime.now - 14)
     e.description = Faker::Lorem.sentence
     e.subscription_list_id = [1, 2].sample
     e.uuid = SecureRandom.uuid
