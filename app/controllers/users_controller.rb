@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 
       send_user_confirmation_email(@user)
 
-      return(redirect_to action: :show, uuid: @user.uuid)
+      (redirect_to action: :show, uuid: @user.uuid)
     else
       @user.uuid = nil
       render :new
@@ -83,7 +83,7 @@ class UsersController < ApplicationController
       end
 
       flash[:success] = 'Profile successfully updated!'
-      return(redirect_to action: :show, uuid: @user.uuid)
+      (redirect_to action: :show, uuid: @user.uuid)
     else
       render :show
     end
@@ -136,9 +136,9 @@ class UsersController < ApplicationController
       flash[:success] = 'Thank you, your email address has been confirmed!'
       if params['admin']
         flash[:success] = 'The user\'s email address has been succesfully confirmed.'
-        return(redirect_to action: :admin, uuid: @user.uuid)
+        (redirect_to action: :admin, uuid: @user.uuid)
       else
-        return(redirect_to action: :show, uuid: @user.uuid)
+        (redirect_to action: :show, uuid: @user.uuid)
       end
     end
   end
@@ -149,7 +149,7 @@ class UsersController < ApplicationController
     @user.update(email_backup: nil)
     @user.update(email_confirmation_code: nil)
     if @user.save
-      return(redirect_to :email_change_reverted)
+      (redirect_to :email_change_reverted)
     end
   end
 

@@ -7,6 +7,7 @@ FactoryBot.define do
     uuid { SecureRandom.uuid }
     admin_confirmed { false }
     email_confirmed { false }
+    invitation_type { 'Email' }
 
     factory :email_confirmed_user do
       email_confirmed { true }

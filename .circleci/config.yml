@@ -1,15 +1,36 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2
+  ruby: circleci/ruby@1.1.4
 
 jobs:
   build:
     docker:
       - image: circleci/ruby:3.0.0-buster
+        environment:
+          RAILS_ENV: test
+      - image: circleci/postgres:9.6.9
+        environment: # add POSTGRES environment variables.
+          POSTGRES_USER: rails
+          POSTGRES_DB: events_management_test
+          POSTGRES_PASSWORD: "rails"
     executor: ruby/default
     steps:
       - checkout
+      - ruby/install-deps
+      - ruby/rspec-test
+      - ruby/rubocop-check
       - run:
-          name: Which bundler?
-          command: bundle -v
-      - ruby/bundle-install
+          name: Database Schema Load
+          command: bundle exec rails db:drop
+      - run:
+          name: Database Create
+          command: bundle exec rails db:create
+      - run:
+          name: Database Schema Load
+          command: bundle exec rails db:schema:load
+      - run:
+          name: Database Migrate
+          command: bundle exec rails db:migrate
+      - run:
+          name: Database Seed
+          command: bundle exec rails db:seed

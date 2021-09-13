@@ -136,7 +136,7 @@ class EventsController < ApplicationController
 
     if params[:RSVP] == nil
       rsvp.delete
-      return (redirect_to action: :rsvp, user_uuid: params[:user][:uuid])
+      (redirect_to action: :rsvp, user_uuid: params[:user][:uuid])
     else
       flash[:success] = 'RSVP received. Thank you!'
       rsvp.update(response: params[:RSVP])
