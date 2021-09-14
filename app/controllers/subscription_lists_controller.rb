@@ -1,8 +1,30 @@
 class SubscriptionListsController < ApplicationController
   before_action :require_admin_login
 
+  include Rails.application.routes.url_helpers
+
   def index
     @lists = SubscriptionList.all.to_a
+  end
+
+  def show
+    @list = SubscriptionList.find_by id: params['id']
+    @users = User.includes(:subscription_lists).where(subscription_lists: { id: params['id'] })
+  end
+
+  def new
+    @list = List.new
+  end
+
+  def create
+    @list = List.new(list_params)
+
+    if @list.save
+      redirect_to action: :edit, id: @list.id
+    else
+      @list.id = nil
+      render :new
+    end
   end
 
   def update

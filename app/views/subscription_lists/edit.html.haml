@@ -3,7 +3,7 @@
 %br
 
 %p
-  = link_to 'Back', controller: 'subscription_lists', action: 'index'
+  = link_to 'Back', controller: 'subscription_lists', action: 'show', id: @list.id
 
 %h1 Manage list: #{@list.name}
 

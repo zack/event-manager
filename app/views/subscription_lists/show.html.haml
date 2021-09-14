@@ -1,6 +1,13 @@
 = render partial: 'admin_toolbar'
 
-%h2 All Users
+%br
+
+%p
+  = link_to 'Back', controller: 'subscription_lists', action: 'index'
+  = link_to 'Edit', { controller: 'subscription_lists', action: 'edit', id: @list.id }
+
+%h2 #{@list.name}
+%p #{@list.description}
 
 %table.users
   %thead
@@ -21,3 +28,4 @@
           = bool_to_unicode(user.email_confirmed)
         %td.center
           = bool_to_unicode(user.admin_confirmed)
+

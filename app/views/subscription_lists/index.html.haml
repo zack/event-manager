@@ -1,5 +1,8 @@
 = render partial: 'admin_toolbar'
 
+%p
+  = link_to 'New List', { controller: 'subscription_lists', action: 'new' }
+
 %br
 %br
 
@@ -7,15 +10,17 @@
   %thead
     %tr
       %th.name Name
-      %th.name Description
-      %th.subscribers Subscribers
+      %th.description Description
+      %th.subscribers Subs
+      %th.edit Edit
   %tbody
     - @lists.each do |l|
       %tr
         %td.name
-          = link_to l.name, { controller: 'subscription_lists', action: 'edit', id: l.id }
+          = link_to l.name, { controller: 'subscription_lists', action: 'show', id: l.id }
         %td.description
           = l.description
         %td.subscribers
           = l.subscriptions.count
-
+        %td.edit
+          = link_to 'Edit', { controller: 'subscription_lists', action: 'edit', id: l.id }

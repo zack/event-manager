@@ -9,9 +9,6 @@ class UsersController < ApplicationController
     @users = User.all.order(:first_name, :last_name)
   end
 
-  def show
-  end
-
   def admin
     @user = User.find_by(uuid: params[:uuid])
     @existing_invite_value = @user.invitation_type || false

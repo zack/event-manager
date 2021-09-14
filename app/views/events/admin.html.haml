@@ -136,9 +136,9 @@
           %td
           %td.relative
             -if not user.email_confirmed
-              %span.absolute.unconfirmed.email{title: "User has not confirmed email address"} #{"\u2709".encode('utf-8')}
+              %span.absolute.unconfirmed.email{title: "User has not confirmed email address"} #{"\u{1F4E7}".encode('utf-8')}
             -if not user.admin_confirmed
-              %span.absolute.unconfirmed.admin{title: "Admin has not confirmed user"} #{"\u2611".encode('utf-8')}
+              %span.absolute.unconfirmed.admin{title: "Admin has not confirmed user"} #{"\u{1F6E1}".encode('utf-8')}
   - else
     %tr
       %td.center{colspan: 99} No Users
