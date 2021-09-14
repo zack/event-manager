@@ -1,3 +1,5 @@
+= javascript_include_tag 'event-form-flatpickr'
+
 #event_form.form
   = form_for(event, url: submit_url) do |f|
     - if @event.errors.any?
@@ -8,7 +10,7 @@
 
     .option.text
       = f.label :datetime
-      = f.text_field :datetime, { placeholder: 'YYYY-MM-DD HH:MM [AM/PM]' }
+      = f.text_field :datetime
 
     .option.text
       = f.label :location
@@ -18,9 +20,9 @@
       = f.label :capacity
       = f.text_field :capacity
 
-    .option.text
+    .option.text.area
       = f.label :description
-      = f.text_field :description
+      = f.text_area :description
 
     -if not edit
       .radios
