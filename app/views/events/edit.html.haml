@@ -1,7 +1,7 @@
 = render partial: 'admin_toolbar'
 
 %p
-  = link_to 'Back', controller: 'events', action: 'index'
+  = link_to 'Back', { controller: 'events', action: 'admin', uuid: @event.uuid }
 
 %h1 Manage event for #{@event.datetime.strftime('%A, %B %d at %I:%M %p')}
 

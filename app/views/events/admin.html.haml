@@ -2,6 +2,7 @@
 
 %p
   = link_to 'Back', controller: 'events', action: 'index'
+  = link_to 'Edit', { controller: 'events', action: 'edit', uuid: @event.uuid }
 
 %div
   %strong Public Link:
