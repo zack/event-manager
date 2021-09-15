@@ -40,15 +40,15 @@ class Event < ApplicationRecord
 
   private
 
-  def check_attendance_below_limit
-    if capacity && attendees >= capacity
-      errors.add(:capacity, 'has been reached!')
+    def check_attendance_below_limit
+      if capacity && attendees >= capacity
+        errors.add(:capacity, 'has been reached!')
+      end
     end
-  end
 
-  def check_end_after_start
-    if datetime_end < datetime
-      errors.add(:datetime_end, 'is before start')
+    def check_end_after_start
+      if datetime_end < datetime
+        errors.add(:datetime_end, 'is before start')
+      end
     end
-  end
 end
