@@ -21,11 +21,25 @@ class Event < ApplicationRecord
     Rsvp.where(event_id: id).where('response = ?', -1).count || 0
   end
 
+  def create_ics(attendee)
+    cal = Icalendar::Calendar.new
+    cal.event do |e|
+      e.dtstart     = datetime.utc.strftime('%Y%m%dT%H%M%SZ')
+      e.attendee    = "mailto:#{attendee.email_address}"
+      e.summary     = subscription_list.name
+      e.organizer   = "mailto:#{ENV.fetch('EMAIL_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}"
+      e.description = description
+    end
+
+    cal.ip_method = 'PUBLISH'
+    cal.to_ical
+  end
+
   private
 
-    def check_attendance_below_limit
-      if capacity && attendees >= capacity
-        errors.add(:capacity, 'has been reached!')
-      end
+  def check_attendance_below_limit
+    if capacity && attendees >= capacity
+      errors.add(:capacity, 'has been reached!')
     end
+  end
 end

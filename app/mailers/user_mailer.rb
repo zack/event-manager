@@ -29,6 +29,7 @@ class UserMailer < ApplicationMailer
     @subscription_list_name = SubscriptionList.find(@event.subscription_list_id).name
     datetime = @event.datetime.strftime('%-m/%-d at %-l:%M%p')
     subject = "#{ENV.fetch('MAILING_LIST_NAME')}: Invitation for #{@subscription_list_name} on #{datetime}"
+    attachments['invite.ics'] = { mime_type: 'text/calendar', content: @event.create_ics(@user) }
     mail to: @user.email_address, subject: subject
   end
 

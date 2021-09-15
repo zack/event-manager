@@ -29,7 +29,7 @@ class EventsController < ApplicationController
     @event.uuid = SecureRandom.uuid
 
     if @event.save
-      redirect_to action: :show, uuid: @event.uuid
+      redirect_to action: :admin, uuid: @event.uuid
     else
       @event.uuid = nil
       render :new
@@ -95,7 +95,7 @@ class EventsController < ApplicationController
     elsif event_changed
       users = User.includes(:syndications).where(syndications: { event_id: @event })
       users.each do |u|
-        UserMailer.event_updated(u, @event, old_event).deliver_now
+        UserMailer.event_updated(u, @event, old_event).deliver_later
       end
       user_string = ActionController::Base.helpers.pluralize(users.count, 'user')
       flash[:success] = "Event successfully updated! Notified #{user_string}."
@@ -155,7 +155,7 @@ class EventsController < ApplicationController
     @event = Event.find_by uuid: params['uuid']
     users = User.includes(:syndications).where(syndications: { event_id: @event })
     users.each do |u|
-      UserMailer.event_deleted(u, @event).deliver_now
+      UserMailer.event_deleted(u, @event).deliver_later
     end
 
     user_string = ActionController::Base.helpers.pluralize(users.count, 'user')
@@ -172,7 +172,7 @@ class EventsController < ApplicationController
     @event = Event.find_by uuid: params['uuid']
     @users = get_users_for_event_syndication(@event)
     @users.each do |u|
-      UserMailer.invite(u, @event).deliver_now
+      UserMailer.invite(u, @event).deliver_later
       Syndication.create(
         event_id: @event.id,
         user_id: u.id

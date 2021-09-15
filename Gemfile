@@ -10,6 +10,7 @@ end
 
 gem 'flatpickr_rails', '~> 1.1'
 gem 'haml-rails', '~> 2.0'
+gem 'icalendar', '~> 2.7'
 gem 'jbuilder', '~> 2.11'
 gem 'mailgun-ruby', '~> 1.2'
 gem 'nokogiri', '~> 1.12'
