@@ -1,0 +1,10 @@
+= render partial: 'admin_toolbar'
+
+%br
+
+%p
+  = link_to 'Back', controller: 'subscription_lists', action: 'index'
+
+%h1 New list
+
+= render partial: 'list_form', locals: { list: @list, submit_url: create_list_path, edit: false }

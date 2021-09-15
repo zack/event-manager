@@ -29,7 +29,7 @@ class EventsController < ApplicationController
     @event.uuid = SecureRandom.uuid
 
     if @event.save
-      redirect_to action: :edit, uuid: @event.uuid
+      redirect_to action: :show, uuid: @event.uuid
     else
       @event.uuid = nil
       render :new

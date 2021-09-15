@@ -13,14 +13,14 @@ class SubscriptionListsController < ApplicationController
   end
 
   def new
-    @list = List.new
+    @list = SubscriptionList.new
   end
 
   def create
-    @list = List.new(list_params)
+    @list = SubscriptionList.new(subscription_list_params)
 
     if @list.save
-      redirect_to action: :edit, id: @list.id
+      redirect_to action: :show, id: @list.id
     else
       @list.id = nil
       render :new
