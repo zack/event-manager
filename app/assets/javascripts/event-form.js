@@ -33,4 +33,8 @@ window.onload = function() {
   };
 
   const start_flatpickr = flatpickr(start_el, start_opts);
+
+  if (start_el.value) {
+      end_flatpickr.set("minDate", start_el.value.split(" ")[0]);
+  }
 };

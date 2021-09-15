@@ -5,8 +5,9 @@ class Event < ApplicationRecord
   has_many :rsvps
 
   validate :check_attendance_below_limit
-  validates :datetime, presence: true,
-    uniqueness: true
+  validate :check_end_after_start
+  validates :datetime, presence: true, uniqueness: true
+  validates :datetime_end, presence: true
   validates :description, presence: true
 
   def attendees
@@ -42,6 +43,12 @@ class Event < ApplicationRecord
   def check_attendance_below_limit
     if capacity && attendees >= capacity
       errors.add(:capacity, 'has been reached!')
+    end
+  end
+
+  def check_end_after_start
+    if datetime_end < datetime
+      errors.add(:datetime_end, 'is before start')
     end
   end
 end
