@@ -203,6 +203,7 @@ class EventsController < ApplicationController
       params.require(:event).permit(
         :capacity,
         :datetime,
+        :datetime_end,
         :description,
         :location,
         :subscription_list_id,

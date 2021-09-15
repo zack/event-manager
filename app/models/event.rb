@@ -25,6 +25,7 @@ class Event < ApplicationRecord
     cal = Icalendar::Calendar.new
     cal.event do |e|
       e.dtstart     = datetime.utc.strftime('%Y%m%dT%H%M%SZ')
+      e.dtend       = datetime_end.utc.strftime('%Y%m%dT%H%M%SZ')
       e.attendee    = "mailto:#{attendee.email_address}"
       e.summary     = subscription_list.name
       e.location    = location

@@ -18,6 +18,10 @@
   = @event.datetime.strftime('%l:%M %p')
 
 %div
+  %strong End:
+  = @event.datetime_end.strftime('%l:%M %p')
+
+%div
   %strong Location:
   = @event.location
 
