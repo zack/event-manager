@@ -6,7 +6,7 @@ class Event < ApplicationRecord
 
   validate :check_attendance_below_limit
   validates :datetime, presence: true,
-                       uniqueness: true
+    uniqueness: true
   validates :description, presence: true
 
   def attendees
@@ -27,6 +27,7 @@ class Event < ApplicationRecord
       e.dtstart     = datetime.utc.strftime('%Y%m%dT%H%M%SZ')
       e.attendee    = "mailto:#{attendee.email_address}"
       e.summary     = subscription_list.name
+      e.location    = location
       e.organizer   = "mailto:#{ENV.fetch('EMAIL_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}"
       e.description = description
     end
