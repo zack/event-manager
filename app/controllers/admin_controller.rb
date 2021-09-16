@@ -30,6 +30,9 @@ class AdminController < ApplicationController
   end
 
   def login
+    if session[:admin]
+      redirect_to :admin_index
+    end
   end
 
   def logout
