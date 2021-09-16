@@ -18,7 +18,7 @@
 
     .option.text
       = f.label :address
-      = f.select :address_id, options_for_select(Address.all.collect { |a| [a.formatted_full_one_line, a.id] } ), { include_blank: true }
+      = f.select :address_id, options_for_select(Address.all.collect { |a| [a.formatted_full_one_line, a.id] }, @event.address_id || nil), { include_blank: true }
 
     .option.text
       = f.label :capacity
