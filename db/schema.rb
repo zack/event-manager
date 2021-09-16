@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2021_09_16_191052) do
     t.string "uuid", null: false
     t.boolean "deleted"
     t.string "gcal_event_id"
-    t.datetime "datetime_end", null: false
+    t.datetime "datetime_end"
     t.bigint "address_id"
     t.index ["address_id"], name: "index_events_on_address_id"
     t.index ["datetime"], name: "index_events_on_datetime", unique: true
