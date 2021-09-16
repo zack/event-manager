@@ -16,6 +16,15 @@ ActiveRecord::Schema.define(version: 2021_09_15_193909) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
+  create_table "addresses", force: :cascade do |t|
+    t.text "address_line_1", null: false
+    t.text "address_line_2"
+    t.text "city", null: false
+    t.text "state", null: false
+    t.text "zip", null: false
+    t.text "special_instructions"
+  end
+
   create_table "events", force: :cascade do |t|
     t.bigint "subscription_list_id", null: false
     t.integer "capacity"
