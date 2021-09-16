@@ -34,7 +34,11 @@ class Event < ApplicationRecord
       e.description = description
     end
 
-    cal.ip_method = 'PUBLISH'
+    # Using 'REQUEST' means that when the recipient selects a response it will
+    # get emailed back to the organizer email address. Make sure that address
+    # can receive mail or else they'll get a bounceback. If you don't want this
+    # behavior, you can change the method to 'PUBLISH'
+    cal.ip_method = 'REQUEST'
     cal.to_ical
   end
 

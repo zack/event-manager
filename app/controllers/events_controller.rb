@@ -69,9 +69,16 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find_by uuid: params['uuid']
+    @address = Address.find(@event.address_id)
 
     if @event.deleted
-      flash[:warning] = 'This event has been cancelled! Sorry!'
+      render :deleted
+      return
+    end
+
+    if @event.datetime < DateTime.now - 24.hours
+      render :past
+      return
     end
 
     if @event.created_at != @event.updated_at

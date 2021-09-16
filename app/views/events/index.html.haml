@@ -5,9 +5,9 @@
 
 - if @upcoming_events
   %h2 Upcoming Events
-  = render partial: 'event_table', locals: { events: @upcoming_events, editable: true }
+  = render partial: 'event_table', locals: { events: @upcoming_events, editable: true, deleted: false }
 
 - if @past_and_deleted_events
   %h2 Past and Deleted Events
-  = render partial: 'event_table', locals: { events: @past_and_deleted_events, editable: false }
+  = render partial: 'event_table', locals: { events: @past_and_deleted_events, editable: false, deleted: true }
 
