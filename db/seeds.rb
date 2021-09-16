@@ -36,10 +36,25 @@ for i in 1..100
   end
 end
 
+for i in 1..10
+  Address.seed do |a|
+    a.address_line_1 = Faker::Address.street_address
+    a.address_line_2 = [Faker::Address.secondary_address, nil].sample
+    a.city = Faker::Address.city
+    a.state = Faker::Address.state_abbr
+    a.zip = Faker::Address.zip
+    a.special_instructions = [Faker::Lorem.sentence, nil].sample
+  end
+end
+
 for i in 1..30
   Event.seed do |e|
+    start_time = Faker::Time.between(from: DateTime.now + 14, to: DateTime.now - 14)
+
+    e.address_id = [Address.all.sample.id, nil].sample
     e.capacity = Random.rand(10) + 6
-    e.datetime = Faker::Time.between(from: DateTime.now + 14, to: DateTime.now - 14)
+    e.datetime = start_time
+    e.datetime_end = start_time + 3 * 60 * 60
     e.description = Faker::Lorem.sentence
     e.subscription_list_id = [1, 2].sample
     e.uuid = SecureRandom.uuid

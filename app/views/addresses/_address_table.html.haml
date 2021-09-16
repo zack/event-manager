@@ -2,6 +2,7 @@
   %thead
     %tr
       %th Address
+      %th Special Instructions
       %th Edit
 
   %tbody
@@ -9,5 +10,7 @@
       %tr
         %td
           = e.formatted_full_one_line
+        %td
+          = e.special_instructions
         %td.center
           = link_to 'Edit', { controller: 'addresses', action: 'edit', id: e.id }

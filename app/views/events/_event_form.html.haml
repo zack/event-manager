@@ -17,8 +17,8 @@
       = f.text_field :datetime_end
 
     .option.text
-      = f.label :location
-      = f.text_field :location
+      = f.label :address
+      = f.select :address_id, options_for_select(Address.all.collect { |a| [a.formatted_full_one_line, a.id] } ), { include_blank: true }
 
     .option.text
       = f.label :capacity

@@ -26,6 +26,9 @@ class UserMailer < ApplicationMailer
   def invite(user, event)
     @user = user
     @event = event
+    if @event.address_id
+      @address = Address.find(@event.address_id)
+    end
     @subscription_list_name = SubscriptionList.find(@event.subscription_list_id).name
     datetime = @event.datetime.strftime('%-m/%-d at %-l:%M%p')
     subject = "#{ENV.fetch('MAILING_LIST_NAME')}: Invitation for #{@subscription_list_name} on #{datetime}"

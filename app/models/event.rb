@@ -29,15 +29,17 @@ class Event < ApplicationRecord
       e.dtend       = datetime_end.utc.strftime('%Y%m%dT%H%M%SZ')
       e.attendee    = "mailto:#{attendee.email_address}"
       e.summary     = subscription_list.name
-      e.location    = location
+      e.location    = Address.find(address_id).formatted_full_one_line
       e.organizer   = "mailto:#{ENV.fetch('EMAIL_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}"
       e.description = description
     end
 
     # Using 'REQUEST' means that when the recipient selects a response it will
     # get emailed back to the organizer email address. Make sure that address
-    # can receive mail or else they'll get a bounceback. If you don't want this
-    # behavior, you can change the method to 'PUBLISH'
+    # can receive mail or else the user will get a bounceback. If you don't
+    # want this behavior, you can change the method to 'PUBLISH'. Email clients
+    # will add an "Add this event to your calendar" button instead of
+    # "Yes/No/Maybe" RSVP buttons
     cal.ip_method = 'REQUEST'
     cal.to_ical
   end

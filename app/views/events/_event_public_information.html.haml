@@ -1,0 +1,25 @@
+%p
+  %strong Date:
+  = event.datetime.strftime("%A, %B #{event.datetime.day.ordinalize}")
+
+%p
+  %strong Time:
+  = event.datetime.strftime('%l:%M %p')
+
+- if @address
+  %p
+    %strong Address:
+    = @address.formatted_full_one_line
+
+  - if @address.special_instructions && @address.special_instructions.length > 0
+    %p
+      %strong Address Instructions:
+      = @address.special_instructions
+
+%p
+  %strong Description:
+  = event.description
+
+%p
+  %strong Guests:
+  = "#{event.attendees} Confirmed"

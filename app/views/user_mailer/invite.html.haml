@@ -7,10 +7,16 @@
       %strong
         When:
       #{@event.datetime.strftime("%A, %B #{@event.datetime.day.ordinalize} at %-l:%M%p")}
-    %p
-      %strong
-        Where:
-      #{@event.location}
+    - if @address
+      %p
+        %strong
+          Where:
+        #{@address.formatted_full_one_line}
+        - if @address.special_instructions && @address.special_instructions.length > 0
+          %p
+            %strong
+              Instructions:
+            #{@address.special_instructions}
     %p
       %strong
         What:

@@ -26,11 +26,13 @@
       = f.label "Zip"
       = f.text_field :zip
 
+    .option.text
+      = f.label "Special Instructions"
+      = f.text_field :special_instructions
+
     - if address.id
       = f.hidden_field :id, :value => address.id
     .actions
       = f.submit 'Submit'
-      - if @address.is_deleteable
+      - if @address.id
         = link_to 'Delete this address', { controller: 'addresses', action: 'delete', id: @address.id }, id: 'delete'
-      - else
-        = link_to 'Hide', { controller: 'addresses', action: 'delete', id: @address.id }, id: 'delete'

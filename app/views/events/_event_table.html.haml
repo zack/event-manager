@@ -5,11 +5,14 @@
       %th Time
       %th List
       %th Description
+      %th Address
       %th RSVP
       %th Show
       - if editable
         %th.edit Edit
       %th Clone
+      - if deleted
+        %th Deleted
 
   %tbody
     - events.each do |e|
@@ -24,6 +27,9 @@
           %span.wide-outer-span
             %span.wide-inner-span
               = e.description
+        %td.wide
+          - if e.address_id
+            = Address.find(e.address_id).address_line_1
         %td.center
           %span{"title" => "Confirmed: #{e.attendees}, Maybe: #{e.maybes}"}
             #{e.attendees}(#{e.maybes})#{e.capacity && ("/#{ e.capacity}")}
@@ -34,3 +40,6 @@
             = link_to 'Edit', { controller: 'events', action: 'edit', uuid: e.uuid }
         %td.center
           = link_to 'Clone', { controller: 'events', action: 'clone', uuid: e.uuid }, method: :post
+        -if deleted
+          %td.center
+            = bool_to_unicode_clean(e.deleted)

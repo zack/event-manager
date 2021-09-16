@@ -47,24 +47,36 @@ class AddressesController < ApplicationController
   end
 
   def delete
-    @address = Address.find_by id: params[:id]
+    address_id = params[:id]
+    @address = Address.find_by id: address_id
+    @future_event_count = Event.where({ address_id: address_id }).filter { |e| e.datetime > DateTime.now }.count
+    @past_event_count = Event.where({ address_id: address_id }).filter { |e| e.datetime < DateTime.now }.count
   end
 
   def destroy
-    @address = Address.find_by id: params[:id]
+    address_id = params[:id]
+
+    @address = Address.find_by id: address_id
     @address.delete
+    events = Event.where({ address_id: address_id })
+    events.each do |e|
+      e.address_id = nil
+      e.save
+    end
+    flash[:success] = "Successfully deleted: #{@address.address_line_1}!"
     redirect_to action: :index
   end
 
   private
 
-  def address_params
-    params.require(:address).permit(
-      :address_line_1,
-      :address_line_2,
-      :city,
-      :state,
-      :zip
-    )
-  end
+    def address_params
+      params.require(:address).permit(
+        :address_line_1,
+        :address_line_2,
+        :city,
+        :special_instructions,
+        :state,
+        :zip
+      )
+    end
 end

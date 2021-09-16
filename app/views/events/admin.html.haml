@@ -21,9 +21,15 @@
   %strong End:
   = @event.datetime_end.strftime('%l:%M %p')
 
-%div
-  %strong Location:
-  = @event.location
+- if @address
+  %div
+    %strong Address:
+    = @address.formatted_full_one_line
+
+  %div
+    %strong Special Instructions:
+    - if @address.special_instructions && @address.special_instructions.length > 0
+      = @address.special_instructions
 
 %div
   %strong List:

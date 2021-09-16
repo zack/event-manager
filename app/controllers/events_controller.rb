@@ -18,7 +18,7 @@ class EventsController < ApplicationController
     @event = Event.new
 
     @event.description = @source.description
-    @event.location = @source.location
+    @event.address_id = @source.address_id
     @event.capacity = @source.capacity
     @event.subscription_list_id = @source.subscription_list_id
     render :new
@@ -38,6 +38,9 @@ class EventsController < ApplicationController
 
   def admin
     @event = Event.find_by uuid: params['uuid']
+    if @event.address_id
+      @address = Address.find(@event.address_id)
+    end
 
     subscribed_users = User
       .includes(:subscription_lists)
@@ -121,6 +124,7 @@ class EventsController < ApplicationController
   def rsvp
     @event = Event.find_by uuid: params[:uuid]
     @user = User.find_by uuid: params[:user_uuid]
+    @address = Address.find(@event.address_id)
     @options_for_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }
     @existing_rsvp_value = Rsvp.find_by(event_id: @event, user_id: @user)&.response || false
 
@@ -172,6 +176,7 @@ class EventsController < ApplicationController
 
   def syndicate_preview
     @event = Event.find_by uuid: params['uuid']
+    @address = Address.find(@event.address_id)
     @users = get_users_for_event_syndication(@event)
   end
 
@@ -208,11 +213,11 @@ class EventsController < ApplicationController
 
     def event_params
       params.require(:event).permit(
+        :address_id,
         :capacity,
         :datetime,
         :datetime_end,
         :description,
-        :location,
         :subscription_list_id,
         :uuid
       )

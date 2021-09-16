@@ -7,7 +7,7 @@ Here's the new info:
 = "\r\n"
 
 When it is: #{@new_event.datetime.strftime("%A, %B, #{@new_event.datetime.day.ordinalize} at %-l:%M%p")}
-Where it is: #{@new_event.location}
+Where it was: #{Address.find(@new_event.address_id).formatted_full_one_line}
 What it is: #{@new_event.description}
 
 = "\r\n"
@@ -17,7 +17,7 @@ Here's the OLD info:
 = "\r\n"
 
 When it was: #{@old_event.datetime.strftime("%A, %B, #{@old_event.datetime.day.ordinalize} at %-l:%M%p")}
-Where it was: #{@old_event.location}
+Where it was: #{Address.find(@old_event.address_id).formatted_full_one_line}
 What it was: #{@old_event.description}
 
 = "\r\n"
