@@ -1,0 +1,9 @@
+= render partial: 'admin_toolbar'
+
+%p
+  = link_to 'Back', controller: 'addresses', action: 'edit', id: @address.id
+
+%strong Delete address:
+%p #{@address.formatted_full_one_line}
+
+= button_to 'Delete', { controller: 'addresses', action: 'destroy', id: @address.id }, {method: :delete, id: 'delete-confirm'}

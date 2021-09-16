@@ -1,0 +1,8 @@
+= render partial: 'admin_toolbar'
+
+%p
+  = link_to 'Back', controller: 'addresses', action: 'index'
+
+%h1 New Address
+
+= render partial: 'address_form', locals: { address: @address, submit_url: create_address_path }

@@ -1,0 +1,6 @@
+= render partial: 'admin_toolbar'
+
+%p
+  = link_to 'New Address', { controller: 'addresses', action: 'new' }
+
+= render partial: 'address_table', locals: { addresses: @addresses }

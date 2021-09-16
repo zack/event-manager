@@ -1,0 +1,36 @@
+#address_form.form
+  = form_for(address, url: submit_url) do |f|
+    - if @address.errors.any?
+      %ul#errors
+        - @address.errors.full_messages.each do |err|
+          %li
+            =err
+
+    .option.text
+      = f.label "Address Line 1"
+      = f.text_field :address_line_1
+
+    .option.text
+      = f.label "Address Line 2"
+      = f.text_field :address_line_2
+
+    .option.text
+      = f.label "City"
+      = f.text_field :city
+
+    .option.text
+      = f.label "State"
+      = f.text_field :state
+
+    .option.text
+      = f.label "Zip"
+      = f.text_field :zip
+
+    - if address.id
+      = f.hidden_field :id, :value => address.id
+    .actions
+      = f.submit 'Submit'
+      - if @address.is_deleteable
+        = link_to 'Delete this address', { controller: 'addresses', action: 'delete', id: @address.id }, id: 'delete'
+      - else
+        = link_to 'Hide', { controller: 'addresses', action: 'delete', id: @address.id }, id: 'delete'

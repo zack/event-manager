@@ -1,0 +1,13 @@
+%table.addresses
+  %thead
+    %tr
+      %th Address
+      %th Edit
+
+  %tbody
+    - @addresses.each do |e|
+      %tr
+        %td
+          = e.formatted_full_one_line
+        %td.center
+          = link_to 'Edit', { controller: 'addresses', action: 'edit', id: e.id }
