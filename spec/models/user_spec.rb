@@ -26,10 +26,6 @@ RSpec.describe User, type: :model do
       should validate_presence_of(:last_name)
     end
 
-    it 'validates presence of email_confirmation_code' do
-      should validate_presence_of(:email_confirmation_code)
-    end
-
     it 'validates presence of email_address' do
       should validate_presence_of(:email_address)
     end
