@@ -19,4 +19,12 @@ class Rsvp < ApplicationRecord
     RSVP_YES_AND_TWO => 'Yes + 2',
     RSVP_YES_AND_THREE => 'Yes + 3'
   }
+
+  def get_rsvp_as_string
+    if response
+      RESPONSE_STRINGS_BY_VALUE[response]
+    else
+      ''
+    end
+  end
 end

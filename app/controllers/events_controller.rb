@@ -38,9 +38,12 @@ class EventsController < ApplicationController
 
   def admin
     @event = Event.find_by uuid: params['uuid']
-    if @event.address_id
-      @address = Address.find(@event.address_id)
-    end
+
+    @options_for_rsvp_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }
+    @existing_rsvp_values =
+        Hash[User.all.collect {
+          |u| [u.id, Rsvp.find_by(event_id: @event, user_id: u)&.response || false]
+        }]
 
     subscribed_users = User
       .includes(:subscription_lists)
@@ -147,9 +150,14 @@ class EventsController < ApplicationController
       rsvp.delete
       (redirect_to action: :rsvp, user_uuid: params[:user][:uuid])
     else
-      flash[:success] = 'RSVP received. Thank you!'
       rsvp.update(response: params[:RSVP])
-      redirect_to action: :rsvp, user_uuid: params[:user][:uuid]
+      if session[:admin] && params[:admin] && params[:admin][:true] == 'true'
+        flash[:success] = "#{user.name} RSVP updated to: #{rsvp.get_rsvp_as_string}"
+        redirect_to action: :admin, event: params[:uuid]
+      else
+        flash[:success] = 'RSVP received. Thank you!'
+        redirect_to action: :rsvp, user_uuid: params[:user][:uuid]
+      end
     end
   end
 
