@@ -1,3 +1,3 @@
 %h1 Manage membership for #{@user.name} (#{@user.email_address})
 
-= render partial: 'user_form', locals: { user: @user, submit_url: update_user_path }
+= render partial: 'user_form', locals: { user: @user, submit_url: update_user_path, admin: false }

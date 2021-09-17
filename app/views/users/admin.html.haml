@@ -15,4 +15,7 @@
       %li
         = s
 
-= link_to 'Delete this user', { controller: 'users', action: 'admin_delete', uuid: @user.uuid }
+.form
+  .actions
+    = link_to 'Edit', { controller: 'users', action: 'edit', uuid: @user.uuid }
+    = link_to 'Delete this user', { controller: 'users', action: 'admin_delete', uuid: @user.uuid }, id: 'delete'

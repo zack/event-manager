@@ -1,0 +1,8 @@
+= render partial: 'admin_toolbar'
+
+%p
+  = link_to 'Back', { controller: 'users', action: 'admin', uuid: @user.uuid }
+
+%h1 Manage membership for #{@user.name} (#{@user.email_address})
+
+= render partial: 'user_form', locals: { user: @user, submit_url: update_user_path, admin: true }

@@ -17,6 +17,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = User.find_by(uuid: params[:uuid])
+    @existing_invite_value = @user.invitation_type || false
+    @subscriptions = Subscription.where(user_id: @user).map do |s|
+      SubscriptionList.find(s.subscription_list_id).name
+    end
+  end
+
   def new
     @user = User.new
     @options_for_invite = User::INVITE_TYPE_BY_VALUE.map { |k, v| [v, k] }
@@ -57,7 +65,9 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find_by uuid: params['user']['uuid']
-    request_email_update = params['user']['email_address'] != @user['email_address']
+    is_admin = !!(params['user']['admin'] == 'true' && session[:admin])
+    admin_confirm_required = is_admin && params['require_email_confirmation'] == '1'
+    non_admin_confirm_required = params['user']['email_address'] != @user['email_address'] && !is_admin
 
     if @user.update(user_params)
       Subscription.where(user_id: @user).destroy_all
@@ -71,7 +81,7 @@ class UsersController < ApplicationController
         end
       end
 
-      if request_email_update
+      if admin_confirm_required || non_admin_confirm_required
         @user.update(email_confirmation_code: SecureRandom.hex)
         @user.update(email_confirmed: false)
         if @user.save
@@ -80,7 +90,12 @@ class UsersController < ApplicationController
       end
 
       flash[:success] = 'Profile successfully updated!'
-      (redirect_to action: :show, uuid: @user.uuid)
+
+      if is_admin
+        redirect_to action: :admin, uuid: @user.uuid
+      else
+        redirect_to action: :show, uuid: @user.uuid
+      end
     else
       render :show
     end
