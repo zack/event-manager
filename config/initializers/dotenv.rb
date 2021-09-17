@@ -1,10 +1,11 @@
 Bundler.require(*Rails.groups)
 if ['development', 'test'].include? ENV['RAILS_ENV']
   Dotenv.require_keys(
-    'MAILGUN_API_KEY',
-    'MAILING_LIST_NAME',
-    'EMAIL_USER',
-    'EMAIL_DOMAIN',
-    'ADMIN_PASSWORD'
+    'ADMIN_PASSWORD', # password to enter admin pages at /admin
+    'EMAIL_DOMAIN', # email domain to use for outgoing emails, eg 'example.com'
+    'EMAIL_USER', # email user to use for outgoing emails, eg 'admin'
+    'EXCEPTIONS_EMAIL_ADDRESS', # email to which exception notifications shall be sent
+    'MAILGUN_API_KEY', # api key from mailgun.com
+    'MAILING_LIST_NAME' # prefixes emails and stuff
   )
 end

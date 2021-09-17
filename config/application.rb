@@ -17,4 +17,11 @@ module EventsManagement
     # -- all .rb files in that directory are automatically loaded.
     config.time_zone = 'Eastern Time (US & Canada)'
   end
+
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+    email: {
+      email_prefix: '[EXCEPTION] ',
+      sender_address: "notifier <notifier@#{ENV.fetch('EMAIL_DOMAIN')}>",
+      exception_recipients: ENV.fetch('EXCEPTIONS_EMAIL_ADDRESS'),
+    }
 end

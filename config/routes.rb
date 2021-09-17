@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get    '/',                                to: 'welcome#index',                      as: 'root'
 
   get    '/admin',                           to: 'admin#index',                    as: 'admin_index'
+  get    '/admin/test_exception',            to: 'admin#test_exception'
   get    '/admin/email',                     to: 'admin#compose_email',            as: 'admin_compose_email'
   post   '/admin/email',                     to: 'admin#send_email',               as: 'admin_send_email'
   get    '/admin/login',                     to: 'admin#login',                    as: 'admin_login'

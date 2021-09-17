@@ -4,6 +4,11 @@ class AdminController < ApplicationController
   def index
   end
 
+  def test_exception
+    # make sure exception emails are working on production
+    raise 'exception'
+  end
+
   def compose_email
   end
 
