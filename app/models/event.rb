@@ -31,7 +31,7 @@ class Event < ApplicationRecord
       e.attendee    = "mailto:#{attendee.email_address}"
       e.summary     = subscription_list.name
       e.location    = Address.find(address_id).formatted_full_one_line
-      e.organizer   = "mailto:#{ENV.fetch('EMAIL_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}"
+      e.organizer   = "mailto:#{ENV.fetch('EVENT_ORGANIZER_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}"
       e.description = description
     end
 
