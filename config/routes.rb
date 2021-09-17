@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get    '/',                                to: 'welcome#index',                      as: 'root'
+  get    '/',                                to: 'welcome#index',                  as: 'root'
+  get    '/test_invite',                     to: 'welcome#test_invite',            as: 'test_invite'
 
   get    '/admin',                           to: 'admin#index',                    as: 'admin_index'
   get    '/admin/test_exception',            to: 'admin#test_exception'
@@ -30,6 +31,7 @@ Rails.application.routes.draw do
   post   '/event',                           to: 'events#create',                  as: 'create_event'
   get    '/event/clone',                     to: 'events#clone',                   as: 'clone_event'
   get    '/event/new',                       to: 'events#new',                     as: 'new_event'
+  get    '/event/invite_user',               to: 'events#invite_user',             as: 'invite_user'
   get    '/event/:uuid',                     to: 'events#show',                    as: 'event'
   get    '/event/:uuid/rsvp/:user_uuid',     to: 'events#rsvp',                    as: 'event_rsvp'
   post   '/event/:uuid/rsvp',                to: 'events#submit_rsvp',             as: 'submit_event_rsvp'

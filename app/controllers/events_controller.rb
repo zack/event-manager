@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :require_admin_login, only: [
-    :index, :new, :create, :admin, :edit, :update, :delete, :destroy, :syndicate
+    :index, :new, :create, :admin, :edit, :update, :delete, :destroy, :syndicate, :invite_user
   ]
 
   def index
@@ -190,6 +190,14 @@ class EventsController < ApplicationController
     end
 
     flash[:succes] = "Successfully invited #{@users.count} users!"
+    redirect_to action: :admin, uuid: @event.uuid
+  end
+
+  def invite_user
+    @user = User.find(params['user_id'])
+    @event = Event.find(params['event_id'])
+    UserMailer.invite(@user, @event).deliver_now
+    Syndication.create(event_id: @event.id, user_id: @user.id)
     redirect_to action: :admin, uuid: @event.uuid
   end
 

@@ -102,7 +102,8 @@
           = Syndication.where(event_id: @event.id, user_id: user.id).first.created_at.strftime('%Y-%m-%d %l:%M %p')
         %td.center
           - if @event.datetime > DateTime.now
-            = button_to "Resend", {}, :disabled => true, :title => 'Not yet implemented'
+            = button_to 'Resend', invite_user_path, method: :get, params: { event_id: @event.id, user_id: user.id }
+
   - else
     %tr
       %td.center{colspan: 99} No Users
@@ -124,7 +125,7 @@
         %td
         %td.center
           - if @event.datetime > DateTime.now
-            = button_to 'Invite', {}, :disabled => true, :title => 'Not yet implemented'
+            = button_to 'Invite', invite_user_path, method: :get, params: { event_id: @event.id, user_id: user.id }
   - else
     %tr
       %td.center{colspan: 99} No Users
