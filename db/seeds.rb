@@ -51,7 +51,7 @@ for i in 1..30
   Event.seed do |e|
     start_time = Faker::Time.between(from: DateTime.now + 14, to: DateTime.now - 14)
 
-    e.address_id = [Address.all.sample.id, nil].sample
+    e.address_id = Address.all.sample.id
     e.capacity = Random.rand(10) + 6
     e.datetime = start_time
     e.datetime_end = start_time + 3 * 60 * 60
