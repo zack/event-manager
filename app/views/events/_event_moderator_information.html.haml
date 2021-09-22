@@ -1,0 +1,32 @@
+-# Sorry about this huge, gross table.
+%table
+  - rsvps = Rsvp.where(event_id: @event.id).sort_by { |r| 0 - r.response }
+  %tr.section-header
+    %td{colspan: 99} Responsed
+  - if rsvps.count > 0
+    %tr.header-row
+      %td Name
+      %td Response
+    - rsvps.each do |r|
+      - user = User.find(r.user_id)
+      %tr
+        %td
+          = user.name
+        %td
+          = Rsvp::RESPONSE_STRINGS_BY_VALUE[@existing_rsvp_values[r.user_id]]
+  - else
+    %tr
+      %td.center{colspan: 99} No RSVPs
+
+  %tr.section-header
+    %td{colspan: 99} Invited (But Not Responded)
+  - if @invited.count > 0
+    %tr.header-row
+      %td{colspan: 2} Name
+    - @invited.each do |user|
+      %tr
+        %td{colspan: 2}
+          = user.name
+  - else
+    %tr
+      %td.center{colspan: 99} No Users

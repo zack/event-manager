@@ -40,6 +40,9 @@ class EventsController < ApplicationController
     @event = Event.find_by uuid: params['uuid']
 
     @options_for_rsvp_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }
+
+    ### DATA COPY-PASTED FOR MODERATORS IN #RSVP ###
+
     @existing_rsvp_values =
         Hash[User.all.collect {
           |u| [u.id, Rsvp.find_by(event_id: @event, user_id: u)&.response || false]
@@ -68,6 +71,8 @@ class EventsController < ApplicationController
       Rsvp.where(event_id: @event, user_id: u).count == 0
     end
 
+    ### END DATA COPY-PASTED FOR MODERATORS IN #RSVP ###
+
     if @event.deleted
       flash[:warning] = 'This event has been soft deleted.'
     end
@@ -77,15 +82,7 @@ class EventsController < ApplicationController
     @event = Event.find_by uuid: params['uuid']
     @address = Address.find(@event.address_id)
 
-    if @event.deleted
-      render :deleted
-      return
-    end
-
-    if @event.datetime < DateTime.now - 24.hours
-      render :past
-      return
-    end
+    check_past_or_deleted(@event)
 
     if @event.created_at != @event.updated_at
       flash[:notice] = @event.updated_at.strftime('This event has been updated. It was last updated on %b %d at %I:%M%p')
@@ -122,12 +119,52 @@ class EventsController < ApplicationController
     end
   end
 
+  def check_past_or_deleted(event)
+    if event.deleted
+      render :deleted
+      return
+    end
+
+    if event.datetime < DateTime.now - 24.hours
+      render :past
+    end
+  end
+
   def rsvp
     @event = Event.find_by uuid: params[:uuid]
+    check_past_or_deleted(@event)
     @user = User.find_by uuid: params[:user_uuid]
     @address = Address.find(@event.address_id)
     @options_for_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }
     @existing_rsvp_value = Rsvp.find_by(event_id: @event, user_id: @user)&.response || false
+
+    ### DATA FOR MODERATORS, COPY-PASTED FROM ADMIN ###
+    @existing_rsvp_values =
+        Hash[User.all.collect {
+          |u| [u.id, Rsvp.find_by(event_id: @event, user_id: u)&.response || false]
+        }]
+
+    subscribed_users = User
+      .includes(:subscription_lists)
+      .where(subscription_lists: { id: @event.subscription_list_id })
+
+    confirmed, @unconfirmed = subscribed_users.partition do |s|
+      s.email_confirmed && s.admin_confirmed
+    end
+
+    # split all eligible users into
+    # * already invited (and possibly responded)
+    # * not invited
+    @invited, @not_invited = confirmed.partition do |s|
+      Syndication.where(event_id: @event, user_id: s).count > 0
+    end
+
+    # but we don't want users that have already responded in this array
+    @invited = @invited.filter do |u|
+      Rsvp.where(event_id: @event, user_id: u).count == 0
+    end
+
+    ### END DATA FOR MODERATORS, COPY-PASTED FROM ADMIN ###
 
     if @event.deleted
       flash[:warning] = 'This event has been cancelled! Sorry!'

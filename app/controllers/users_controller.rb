@@ -66,7 +66,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find_by uuid: params['user']['uuid']
     is_admin = !!(params['user']['admin'] == 'true' && session[:admin])
-    admin_confirm_required = is_admin && params['require_email_confirmation'] == '1'
+    admin_confirm_required = is_admin && params['user']['email_confirmed'] == '0' && @user['email_confirmed']
     non_admin_confirm_required = params['user']['email_address'] != @user['email_address'] && !is_admin
 
     if @user.update(user_params)
@@ -193,9 +193,11 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(
         :email_address,
+        :email_confirmed,
         :first_name,
         :invitation_type,
-        :last_name
+        :last_name,
+        :moderator
       )
     end
 end

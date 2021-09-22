@@ -5,3 +5,6 @@
     %strong RSVP:
     = select_tag 'RSVP', options_for_select(@options_for_select, @existing_rsvp_value), :onchange => 'this.form.submit()'
     = hidden_field(:user, :uuid, :value => @user.uuid)
+
+- if @user.moderator
+  = render partial: 'event_moderator_information', locals: { even: @event }

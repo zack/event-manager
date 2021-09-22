@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_17_154922) do
+ActiveRecord::Schema.define(version: 2021_09_22_164941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 2021_09_17_154922) do
     t.string "email_confirmation_code"
     t.boolean "user_confirmed"
     t.integer "invitation_type", null: false
+    t.boolean "moderator"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end

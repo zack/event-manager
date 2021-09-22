@@ -2,6 +2,10 @@
 
 %h2 #{@user.name()} (#{@user.admin_confirmed ? bool_to_unicode(@user.admin_confirmed) : link_to("Confirm?", confirm_user_path(@user.uuid))})
 
+- if @user.is_moderator
+  .mod-badge
+    %p Moderator
+
 %div
   %strong Email Address:
   = "#{@user.email_address} (#{bool_to_unicode(@user.email_confirmed)})"

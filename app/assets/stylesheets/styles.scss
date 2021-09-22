@@ -260,3 +260,17 @@ table {
   padding-top: 12px;
   font-size: 10px;
 }
+
+.mod-badge {
+  background-color: #5ABF5A;
+  border: 2px solid green;
+  font-weight: 900;
+  border-radius: 3px;
+  color: white;
+  line-height: 0;
+  height: 30px;
+  padding: 0 7px 0 7px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  width: min-content;
+}

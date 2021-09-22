@@ -28,6 +28,10 @@ class User < ApplicationRecord
     INVITATION_TYPE_EMAIL_AND_GCAL => 'Email & Gcal Invite'
   }
 
+  def is_moderator
+    moderator === true
+  end
+
   def name
     "#{first_name} #{last_name}"
   end

@@ -31,8 +31,14 @@
 
     - if admin
       .option
-        =check_box_tag :require_email_confirmation
-        =f.label "Require email confirmation"
+        =check_box :user, :email_confirmed
+        =f.label "User's email address is confirmed"
+      %br
+
+    - if admin
+      .option
+        =check_box :user, :moderator
+        =f.label "User is moderator"
       %br
 
     = f.hidden_field :admin, :value => admin
