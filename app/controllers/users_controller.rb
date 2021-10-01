@@ -15,6 +15,8 @@ class UsersController < ApplicationController
     @subscriptions = Subscription.where(user_id: @user).map do |s|
       SubscriptionList.find(s.subscription_list_id).name
     end
+    @rsvps = Rsvp.where(user_id: @user)
+    @events = Event.where(datetime: @user.created_at..)
   end
 
   def edit

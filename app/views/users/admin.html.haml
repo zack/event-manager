@@ -18,6 +18,15 @@
     - @subscriptions.each do |s|
       %li
         = s
+%div
+  %strong Activity:
+  %ul
+    %li
+      Account age: #{DateTime.now.year * 12 + DateTime.now.month - (@user.created_at.year * 12 + @user.created_at.month)} months
+    %li
+      Responses: #{@rsvps.count / @events.count}% (#{@rsvps.count}/#{@events.count})
+    %li
+      Attendance: #{@rsvps.where('response > ?', 1).count / @events.count}% (#{@rsvps.where('response > ?', 1).count}/#{@events.count})
 
 .form
   .actions
