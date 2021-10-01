@@ -26,7 +26,7 @@
     %li
       Responses: #{(@rsvps.count * 1.0 / @events.count * 100).round}% (#{@rsvps.count}/#{@events.count})
     %li
-      Attendance: #{@rsvps.where(response: 1..).count / @events.count}% (#{@rsvps.where('response > ?', 1).count}/#{@events.count})
+      Attendance: #{(@rsvps.where(response: 1..).count * 1.0 / @events.count * 100).round}% (#{@rsvps.where(response: 1..).count}/#{@events.count})
 
 .form
   .actions
