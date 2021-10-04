@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_164941) do
+ActiveRecord::Schema.define(version: 2021_10_04_151656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 2021_09_22_164941) do
     t.datetime "updated_at", null: false
     t.string "uuid", null: false
     t.boolean "deleted"
-    t.string "gcal_event_id"
     t.datetime "datetime_end"
     t.bigint "address_id", null: false
     t.index ["address_id"], name: "index_events_on_address_id"

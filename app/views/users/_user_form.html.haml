@@ -29,6 +29,8 @@
       = f.label :email_address
       = f.text_field :email_address
 
+    = f.hidden_field :invitation_type, :value => 1
+
     - if admin
       .option
         =check_box :user, :email_confirmed

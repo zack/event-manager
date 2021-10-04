@@ -46,7 +46,6 @@ users can decide which lists to be on.
     - [x] A user can subscribe from one or all subscriptions
     - [x] A user can unsubscribe from one or all subscriptions
   - [x] Add option for user to recover their UUID by submitting their email address
-  - [x] A user can select to receive emails, gcal invites, or neither, for their events
 * Event interaction
   - [x] A user can RSVP yes/no to an event
   - [x] A user can RSVP with a +1/2 to an event
@@ -69,7 +68,6 @@ users can decide which lists to be on.
     - [x] The event is attached to a specific mailing list
   - [x] An admin can initiate invitations to an event
     - [x] The event generates plaintext emails for everyone who has selected that option
-    - [ ] The event generates gcal invites for everyone who has selected that option
   - [x] An admin can delete an event
     - [x] A placeholder page is set up indicating the event was deleted
     - [x] All invited users are notified that the event was deleted
