@@ -39,7 +39,7 @@ class EventsController < ApplicationController
   def admin
     @event = Event.find_by uuid: params['uuid']
 
-    @options_for_rsvp_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }
+    @options_for_rsvp_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }.insert(0, "")
 
     ### DATA COPY-PASTED FOR MODERATORS IN #RSVP ###
 
