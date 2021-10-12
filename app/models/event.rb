@@ -41,7 +41,7 @@ class Event < ApplicationRecord
     # want this behavior, you can change the method to 'PUBLISH'. Email clients
     # will add an "Add this event to your calendar" button instead of
     # "Yes/No/Maybe" RSVP buttons
-    cal.ip_method = 'REQUEST'
+    cal.ip_method = 'PUBLISH'
     cal.to_ical
   end
 
