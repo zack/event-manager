@@ -135,7 +135,7 @@ class EventsController < ApplicationController
     check_past_or_deleted(@event)
     @user = User.find_by uuid: params[:user_uuid]
     @address = Address.find(@event.address_id)
-    @options_for_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }
+    @options_for_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }.insert(0, '')
     @existing_rsvp_value = Rsvp.find_by(event_id: @event, user_id: @user)&.response || false
 
     ### DATA FOR MODERATORS, COPY-PASTED FROM ADMIN ###
