@@ -11,8 +11,6 @@
       - if editable
         %th.edit Edit
       %th Clone
-      - if deleted
-        %th Deleted
 
   %tbody
     - events.each do |e|
@@ -40,6 +38,3 @@
             = link_to 'Edit', { controller: 'events', action: 'edit', uuid: e.uuid }
         %td.center
           = link_to 'Clone', { controller: 'events', action: 'clone', uuid: e.uuid }, method: :post
-        -if deleted
-          %td.center
-            = bool_to_unicode_clean(e.deleted)

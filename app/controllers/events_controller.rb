@@ -6,7 +6,8 @@ class EventsController < ApplicationController
   def index
     @events = Event.all.order(datetime: :desc)
     @upcoming_events = @events.select { |e| (e.datetime > DateTime.now) && (not e.deleted) }
-    @past_and_deleted_events = @events.select { |e| (e.datetime < DateTime.now) || e.deleted }
+    @deleted_events = @events.select { |e| e.deleted }
+    @past_events = @events.select { |e| (e.datetime < DateTime.now) && !e.deleted }
   end
 
   def new

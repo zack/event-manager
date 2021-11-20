@@ -3,11 +3,14 @@
 %p
   = link_to 'New Event', { controller: 'events', action: 'new' }
 
-- if @upcoming_events
+- if @upcoming_events.length > 0
   %h2 Upcoming Events
-  = render partial: 'event_table', locals: { events: @upcoming_events, editable: true, deleted: false }
+  = render partial: 'event_table', locals: { events: @upcoming_events, editable: true }
 
-- if @past_and_deleted_events
-  %h2 Past and Deleted Events
-  = render partial: 'event_table', locals: { events: @past_and_deleted_events, editable: false, deleted: true }
+- if @past_events.length > 0
+  %h2 Past Events
+  = render partial: 'event_table', locals: { events: @past_events, editable: false }
 
+- if @deleted_events.length > 0
+  %h2 Deleted Events
+  = render partial: 'event_table', locals: { events: @deleted_events, editable: false }

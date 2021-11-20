@@ -15,8 +15,13 @@ class UsersController < ApplicationController
     @subscriptions = Subscription.where(user_id: @user).map do |s|
       SubscriptionList.find(s.subscription_list_id).name
     end
+
+    # These numbers won't be perfect, but what in life is?
     @rsvps = Rsvp.where(user_id: @user)
-    @events = Event.where(datetime: @user.created_at..)
+    @events = Event
+      .where(datetime: @user.created_at..)
+      .where('deleted IS NOT TRUE')
+      .where(subscription_list_id: @user.subscription_lists.map{|l| l.id})
   end
 
   def edit
