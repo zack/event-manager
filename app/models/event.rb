@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   belongs_to :subscription_list
 
   has_many :users, through: :syndications
@@ -24,6 +26,15 @@ class Event < ApplicationRecord
   end
 
   def create_ics(attendee)
+    rsvp_url = event_rsvp_path(uuid, attendee.uuid)
+
+    ics_description =
+    <<~EOS
+      RSVP Here: https://#{ENV.fetch('HOST')}#{rsvp_url}
+
+      #{description}
+    EOS
+
     cal = Icalendar::Calendar.new
     cal.event do |e|
       e.dtstart     = datetime.utc.strftime('%Y%m%dT%H%M%SZ')
@@ -32,7 +43,7 @@ class Event < ApplicationRecord
       e.summary     = subscription_list.name
       e.location    = Address.find(address_id).formatted_full_one_line
       e.organizer   = "mailto:#{ENV.fetch('EVENT_ORGANIZER_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}"
-      e.description = description
+      e.description = ics_description
     end
 
     # Using 'REQUEST' means that when the recipient selects a response it will
