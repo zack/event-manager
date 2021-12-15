@@ -59,6 +59,7 @@ users can decide which lists to be on.
   - [x] An admin can see a list of all users and their confirmation statuses
   - [x] An admin can admin-confirm a user
   - [x] An admin can delete a user
+  - [X] Show user stats to admin
   - [ ] Optionally email admin when new users sign up
     - [ ] Hook this up to preferences
 * Event administration
@@ -77,11 +78,13 @@ users can decide which lists to be on.
     - [x] A notice is placed on the page indicitating that the event was modified
   - [x] An admin can clone an existing past or future event
   - [ ] Suppress flashes indicating that events have been edited for unsyndicated events
+  - [X] Persist login for 30 days
+  - [X] An event is associated with an address model
 * Mailing list administration
   - [x] The admin can initiate an email to all members of the global mailing list
   - [x] The admin can initiate an email to all members of a subscription list
   - [x] The admin can edit, add, or remove subscription lists
   - [ ] Add preferences for the admin
 * List Administration
-  - [ ] Update the list admin page to show stats for list, plus an edit and delete button
-  - [ ] Give each list its own independent administration page
+  - [X] Update the list admin page to show stats for list, plus an edit and delete button
+  - [X] Give each list its own independent administration page

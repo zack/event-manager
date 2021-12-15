@@ -37,17 +37,26 @@ class AdminController < ApplicationController
   def login
     if session[:admin]
       redirect_to :admin_index
+    elsif cookies['remember_me'] && (BCrypt::Password.new(cookies['remember_me']) == ENV.fetch('ADMIN_PASSWORD'))
+      session[:admin] = Time.now.to_i
+      flash.discard
+      redirect_to :admin_index
     end
   end
 
   def logout
     session[:admin] = nil
+    cookies.delete  :remember_me
     flash[:success] = 'You have successfully logged out'
     redirect_to :admin_login
   end
 
   def process_login
     if params[:password] === ENV.fetch('ADMIN_PASSWORD')
+
+      value = BCrypt::Password.create(ENV.fetch('ADMIN_PASSWORD'))
+      cookies['remember_me'] = { value: value, expires: 30.days.from_now }
+
       session[:admin] = Time.now.to_i
       flash[:success] = 'You have successfully logged in'
       redirect_to :admin_index

@@ -8,6 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 
+gem 'bcrypt', '~> 3.1'
 gem 'exception_notification', '~> 4.4'
 gem 'flatpickr_rails', '~> 1.1'
 gem 'haml-rails', '~> 2.0'
