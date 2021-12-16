@@ -9,6 +9,7 @@
       %th Email Address
       %th #{"\u{1F4E7}".encode('utf-8')}
       %th #{"\u{1F6E1}".encode('utf-8')}
+      %th #{"\u{1F489}".encode('utf-8')}
 
   %tbody
     - @users.each do |user|
@@ -21,3 +22,5 @@
           = bool_to_unicode(user.email_confirmed)
         %td.center
           = bool_to_unicode(user.admin_confirmed)
+        %td.center
+          = ternary_to_unicode(user.vaccination_status)

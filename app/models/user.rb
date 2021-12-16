@@ -1,8 +1,13 @@
 class User < ApplicationRecord
   UUID_REGEX = /\A[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}\Z/
+
   INVITATION_TYPE_EMAIL = 1
   INVITATION_TYPE_TEXT = 2
   INVITATION_TYPE_EMAIL_AND_TEXT = 3
+
+  VACCINATION_STATUS_NONE = 0
+  VACCINATION_STATUS_SOME = 1
+  VACCINATION_STATUS_FULL = 2
 
   before_save :downcase_email_address
 

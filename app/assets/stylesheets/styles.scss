@@ -18,14 +18,14 @@ ul {
   border-radius: 4px;
   padding: 3px;
 
-  &.success {
-    border: 2px solid #2e9800;
-    background-color: #E7FFEA;
-  }
-
   &.notice {
     border: 2px solid #e7a300;
     background-color: #FFF8C7;
+  }
+
+  &.success {
+    border: 2px solid #2e9800;
+    background-color: #E7FFEA;
   }
 
   &.warning {

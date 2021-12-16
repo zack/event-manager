@@ -7,6 +7,12 @@
     %p Moderator
 
 %div
+  = form_tag(submit_vaccination_status_path) do |f|
+    %strong Vaccination Status:
+    = select_tag 'vaccination_status', options_for_select(@options_for_select, @existing_vacc_status_value), :onchange => 'this.form.submit()'
+    = hidden_field(:user, :uuid, :value => @user.uuid)
+
+%div
   %strong Email Address:
   = "#{@user.email_address} (#{bool_to_unicode(@user.email_confirmed)})"
   - if not @user.email_confirmed

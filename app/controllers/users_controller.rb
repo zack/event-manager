@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_admin_login, only: [
-    :index, :admin, :edit, :admin_delete, :admin_destroy, :confirm_user
+    :index, :admin, :edit, :admin_delete, :admin_destroy, :confirm_user, :submit_vaccination_status
   ]
 
   include Rails.application.routes.url_helpers
@@ -15,6 +15,13 @@ class UsersController < ApplicationController
     @subscriptions = Subscription.where(user_id: @user).map do |s|
       SubscriptionList.find(s.subscription_list_id).name
     end
+
+    @existing_vacc_status_value = @user.vaccination_status
+    @options_for_select = {
+      'None' => User::VACCINATION_STATUS_NONE,
+      'Some' => User::VACCINATION_STATUS_SOME,
+      'Full' => User::VACCINATION_STATUS_FULL
+      }
 
     # These numbers won't be perfect, but what in life is?
     @rsvps = Rsvp.where(user_id: @user)
@@ -44,6 +51,7 @@ class UsersController < ApplicationController
     @user.update(email_confirmed: false)
     @user.update(user_confirmed: false)
     @user.update(admin_confirmed: false)
+    @user.update(vaccination_status: 0)
     @user.update(email_confirmation_code: SecureRandom.hex)
 
     if @user.save
@@ -193,6 +201,13 @@ class UsersController < ApplicationController
     end
     flash[:success] = 'Sent!'
     redirect_to action: :show, uuid: @user.uuid
+  end
+
+  def submit_vaccination_status
+    user = User.find_by uuid: params[:uuid]
+    user.update(vaccination_status: params[:vaccination_status])
+    flash[:success] = "User's vaccination status successfully updated"
+    redirect_to action: :admin, uuid: params[:uuid]
   end
 
   private
