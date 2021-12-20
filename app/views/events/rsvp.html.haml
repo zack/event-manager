@@ -1,5 +1,10 @@
 = render partial: 'event_public_information', locals: { event: @event }
 
+- if @user.vaccination_status < 2
+  .notice.warning.narrow
+    <strong>We do not have your full vaccination on file.</strong>
+    Please bring or submit proof of full (boosted) vaccination in order to attend this event.
+
 %p
   = form_tag(submit_event_rsvp_path) do |f|
     %strong RSVP:

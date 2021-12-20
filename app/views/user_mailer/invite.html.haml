@@ -2,6 +2,13 @@
   %div
     Hello! You have been invited to an event!
 
+  - if @user.vaccination_status < 2
+    <br>
+    <strong style="color: red;">We do not have your full vaccination on file.</strong>
+    <br>
+    Please bring or submit proof of full (boosted) vaccination in order to attend this event.
+    <br>
+
   %div
     %p
       %strong

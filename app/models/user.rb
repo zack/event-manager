@@ -41,6 +41,27 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def vaccination_status_to_word
+    case vaccination_status
+    when VACCINATION_STATUS_FULL
+      'Full'
+    when VACCINATION_STATUS_SOME
+      'Some'
+    else
+      'None'
+    end
+  end
+
+
+  def vaccination_status_to_class
+    case vaccination_status
+    when VACCINATION_STATUS_FULL
+      'full_vaccination'
+    else
+      'needs_vaccination'
+    end
+  end
+
   def downcase_email_address
     if self.email_address
       self.email_address.downcase!

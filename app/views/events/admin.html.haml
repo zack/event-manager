@@ -68,6 +68,7 @@
       %td Name
       %td Email Address
       %td Invited
+      %th #{"\u{1F489}".encode('utf-8')}
       %td{colspan: 2} Response
     - rsvps.each do |r|
       - user = User.find(r.user_id)
@@ -78,6 +79,8 @@
           = user.email_address
         %td
           = Syndication.where(event_id: @event.id, user_id: user.id).first.created_at.strftime('%Y-%m-%d %l:%M %p')
+        %td.center{class: ["center", user.vaccination_status_to_class]}
+          = ternary_to_unicode(user.vaccination_status)
         %td.center{colspan: 2}
           = form_tag(submit_event_rsvp_path) do |f|
             = select_tag 'RSVP', options_for_select(@options_for_rsvp_select, @existing_rsvp_values[r.user_id]), :onchange => 'this.form.submit()'
@@ -94,6 +97,7 @@
       %td Name
       %td Email Address
       %td Invited
+      %th #{"\u{1F489}".encode('utf-8')}
       %td Set Response
       %td Resend
     - @invited.each do |user|
@@ -104,6 +108,8 @@
           = user.email_address
         %td
           = Syndication.where(event_id: @event.id, user_id: user.id).first.created_at.strftime('%Y-%m-%d %l:%M %p')
+        %td.center{class: ["center", user.vaccination_status_to_class]}
+          = ternary_to_unicode(user.vaccination_status)
         %td.center
           = form_tag(submit_event_rsvp_path) do |f|
             = select_tag 'RSVP', options_for_select(@options_for_rsvp_select), :onchange => 'this.form.submit()'
