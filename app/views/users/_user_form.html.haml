@@ -9,7 +9,7 @@
       Please check your inbox for a confirmation email.
       = link_to 'Resend?', { controller: 'users', action: 'resend_confirmation', uuid: @user.uuid }
 
-  - if user.uuid && user.vaccination_status < 2
+  - if user.uuid && user.vaccination_status != 2
     .notice.warning
       <strong>We do not have your full vaccination on file.</strong>
       Please submit proof of full (boosted) vaccination in order to attend another event.

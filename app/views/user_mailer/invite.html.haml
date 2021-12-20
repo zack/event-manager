@@ -2,7 +2,7 @@
   %div
     Hello! You have been invited to an event!
 
-  - if @user.vaccination_status < 2
+  - if @user.vaccination_status != 2
     <br>
     <strong style="color: red;">We do not have your full vaccination on file.</strong>
     <br>
