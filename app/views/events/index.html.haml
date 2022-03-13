@@ -5,7 +5,7 @@
 
 - if @upcoming_events.length > 0
   %h2 Upcoming Events
-  = render partial: 'event_table', locals: { events: @upcoming_events, editable: true }
+  = render partial: 'event_table', locals: { events: @upcoming_events.reverse(), editable: true }
 
 - if @past_events.length > 0
   %h2 Past Events
