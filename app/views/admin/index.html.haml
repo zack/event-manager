@@ -1,1 +1,5 @@
 = render partial: 'admin_toolbar'
+
+- if @events.length > 0
+  %h2 Upcoming Events
+  = render partial: 'events/event_table', locals: { events: @events, editable: false, simple: true }

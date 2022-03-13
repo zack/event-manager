@@ -2,39 +2,47 @@
   %thead
     %tr
       %th Date
-      %th Time
+      - if !simple
+        %th Time
       %th List
       %th Description
-      %th Address
+      - if !simple
+        %th Address
       %th RSVP
-      %th Show
+      - if !simple
+        %th Show
       - if editable
         %th.edit Edit
-      %th Clone
+      - if !simple
+        %th Clone
 
   %tbody
     - events.each do |e|
       %tr
         %td
           = e.datetime.strftime('%Y-%m-%d')
-        %td
-          = e.datetime.strftime('%l:%M %p')
+        - if !simple
+          %td
+            = e.datetime.strftime('%l:%M %p')
         %td
           = SubscriptionList.find(e.subscription_list_id).name
         %td.wide
           %span.wide-outer-span
             %span.wide-inner-span
               = e.description
-        %td.wide
-          - if e.address_id
-            = Address.find(e.address_id).address_line_1
+        - if !simple
+          %td.wide
+            - if e.address_id
+              = Address.find(e.address_id).address_line_1
         %td.center
           %span{"title" => "Confirmed: #{e.attendees}, Maybe: #{e.maybes}"}
             #{e.attendees}(#{e.maybes})#{e.capacity && ("/#{ e.capacity}")}
-        %td.center
-          = link_to 'Show', { controller: 'events', action: 'admin', uuid: e.uuid }
+        - if !simple
+          %td.center
+            = link_to 'Show', { controller: 'events', action: 'admin', uuid: e.uuid }
         - if editable
           %td.edit
             = link_to 'Edit', { controller: 'events', action: 'edit', uuid: e.uuid }
-        %td.center
-          = link_to 'Clone', { controller: 'events', action: 'clone', uuid: e.uuid }, method: :post
+        - if !simple
+          %td.center
+            = link_to 'Clone', { controller: 'events', action: 'clone', uuid: e.uuid }, method: :post
