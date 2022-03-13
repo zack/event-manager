@@ -286,3 +286,11 @@ table {
   font-size: 13px;
   width: min-content;
 }
+
+@media(max-width: 1100px) {
+  * {
+    .admin-panel {
+      font-size: 32px;
+    }
+  }
+}

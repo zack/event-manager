@@ -1,8 +1,9 @@
-%h1 Admin Panel
+.admin-panel
+  %h1 Admin Panel
 
-= link_to "Users", { controller: 'users', action: 'index' }
-= link_to "Events", { controller: 'events', action: 'index' }
-= link_to "Lists", { controller: 'subscription_lists', action: 'index'}
-= link_to "Addresses", { controller: 'addresses', action: 'index'}
-= link_to "Ad Hoc Email", { controller: 'admin', action: 'compose_email'}
-= link_to "Logout", { controller: 'admin', action: 'logout'}
+  = link_to "Users", { controller: 'users', action: 'index' }
+  = link_to "Events", { controller: 'events', action: 'index' }
+  = link_to "Lists", { controller: 'subscription_lists', action: 'index'}
+  = link_to "Addresses", { controller: 'addresses', action: 'index'}
+  = link_to "Ad Hoc Email", { controller: 'admin', action: 'compose_email'}
+  = link_to "Logout", { controller: 'admin', action: 'logout'}
