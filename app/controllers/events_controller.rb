@@ -52,6 +52,7 @@ class EventsController < ApplicationController
     subscribed_users = User
       .includes(:subscription_lists)
       .where(subscription_lists: { id: @event.subscription_list_id })
+      .sort_by { |u| u.first_name }
 
     # split users into those that are:
     # * eligible for invites (confirmed)

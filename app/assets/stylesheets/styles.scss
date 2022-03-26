@@ -158,6 +158,18 @@ table {
     &.not-email {
       background-color: #FFFFAA;
     }
+
+    &.rsvp {
+      &.No {
+        background-color: #ff9595;
+      }
+      &.Maybe {
+        background: #ffff86;
+      }
+      &.Yes {
+        background: #afeaaf;
+      }
+    }
   }
 
   td, th {
