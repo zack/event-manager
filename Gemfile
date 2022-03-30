@@ -17,7 +17,7 @@ gem 'jbuilder', '~> 2.11'
 gem 'mailgun-ruby', '~> 1.2'
 gem 'nokogiri', '~> 1.12'
 gem 'pg', '~> 1.2'
-gem 'puma', '~> 5.4'
+gem 'puma', '~> 5.6'
 gem 'rails', '~> 6.1'
 gem 'rubocop', '~> 1.21', require: false
 gem 'rubocop-rails', '~> 2.12'
