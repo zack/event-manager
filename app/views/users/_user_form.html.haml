@@ -27,9 +27,10 @@
           %li
             =err
 
-    .option.text.disabled
-      = f.label :vaccination_status
-      = f.text_field :vaccination_status_to_word, disabled: true
+    - if user.uuid
+      .option.text.disabled
+        = f.label :vaccination_status
+        = f.text_field :vaccination_status_to_word, disabled: true
 
     .option.text
       = f.label :first_name

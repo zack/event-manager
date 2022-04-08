@@ -5,6 +5,19 @@ class UserMailer < ApplicationMailer
     mail to: @user.email_address, subject: "#{ENV.fetch("MAILING_LIST_NAME")}: #{subject}"
   end
 
+  def new_user_email(user)
+    @user = user
+    @subscription_names = Subscription.where(user_id: @user).map do |s|
+      SubscriptionList.find(s.subscription_list_id).name
+    end
+    mail to: "#{ENV.fetch('EMAIL_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}", subject: "#{ENV.fetch('MAILING_LIST_NAME')} New User Registered"
+  end
+
+  def destroyed_user_email(user_name)
+    @user_name = user_name
+    mail to: "#{ENV.fetch('EMAIL_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}", subject: "#{ENV.fetch('MAILING_LIST_NAME')} User Deleted"
+  end
+
   def confirmation_email(user)
     @user = user
     @subscription_names = Subscription.where(user_id: @user).map do |s|

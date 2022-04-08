@@ -64,6 +64,7 @@ class UsersController < ApplicationController
       end
 
       send_user_confirmation_email(@user)
+      send_admin_new_user_email(@user)
 
       (redirect_to action: :show, uuid: @user.uuid)
     else
@@ -125,11 +126,15 @@ class UsersController < ApplicationController
     Subscription.where(user_id: @user).destroy_all
     Syndication.where(user_id: @user).destroy_all
     Rsvp.where(user_id: @user).destroy_all
+
+    user_name = @user.name
+
     @user.destroy
 
     if admin
       redirect_to :users
     else
+      send_admin_destroyed_user_email(user_name)
       redirect_to :deleted_user
     end
   end
@@ -186,6 +191,14 @@ class UsersController < ApplicationController
       UserMailer.recover_account(@user).deliver_now
     end
     render :recover_account_confirmation
+  end
+
+  def send_admin_new_user_email(user)
+    UserMailer.new_user_email(user).deliver_now
+  end
+
+  def send_admin_destroyed_user_email(user_name)
+    UserMailer.destroyed_user_email(user_name).deliver_now
   end
 
   def send_user_confirmation_email(user)

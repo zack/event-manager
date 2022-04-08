@@ -1,0 +1,10 @@
+A new user has requested registration for #{ENV.fetch('MAILING_LIST_NAME')}!
+= "\r\n"
+Name: #{@user.name}
+Mailing lists:
+- @subscription_names.each do |s|
+  = "-> #{s}".html_safe
+= "\r\n"
+
+You can confirm their registration here:
+= url_for controller: 'users', action: 'admin', uuid: @user.uuid
