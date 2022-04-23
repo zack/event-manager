@@ -20,6 +20,11 @@
   %strong Description:
   = event.description
 
+- if event.capacity
+  %p
+    %strong Capacity:
+    = "#{event.capacity}"
+
 %p
   %strong Guests:
   = "#{event.attendees} Confirmed"

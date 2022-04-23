@@ -185,10 +185,17 @@ class EventsController < ApplicationController
       'user_id' => user.id
     )
 
+    rsvp_count = [params[:RSVP].to_i || 0, 0].max
+    if params[:RSVP] == '0'
+      # If the response was "maybe" treat it as a "yes"
+      rsvp_count = 1
+    end
+
+
     if params[:RSVP] == nil
       rsvp.delete
       (redirect_to action: :rsvp, user_uuid: params[:user][:uuid])
-    else
+    elsif event.attendees + rsvp_count <= event.capacity
       rsvp.update(response: params[:RSVP])
       if session[:admin] && params[:admin] && params[:admin][:true] == 'true'
         flash[:success] = "#{user.name} RSVP updated to: #{rsvp.get_rsvp_as_string}"
@@ -197,6 +204,9 @@ class EventsController < ApplicationController
         flash[:success] = 'RSVP received. Thank you!'
         redirect_to action: :rsvp, user_uuid: params[:user][:uuid]
       end
+    else
+      flash[:warning] = 'Sorry, this RSVP would put the event over capacity.'
+      redirect_to action: :rsvp, user_uuid: params[:user][:uuid]
     end
   end
 

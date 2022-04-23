@@ -1,3 +1,7 @@
+- if @event.capacity == @event.attendees
+  .notice.warning.narrow
+    <strong>This event is at capacity.</strong>
+
 - if @user.vaccination_status != 2
   .notice.warning.narrow
     <strong>We do not have your full vaccination on file.</strong>
