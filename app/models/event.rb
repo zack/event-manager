@@ -3,6 +3,8 @@ class Event < ApplicationRecord
 
   belongs_to :subscription_list
 
+  has_one :address
+
   has_many :users, through: :syndications
   has_many :rsvps
 
@@ -11,7 +13,6 @@ class Event < ApplicationRecord
   validates :datetime, presence: true, uniqueness: true
   validates :datetime_end, presence: true
   validates :description, presence: true
-  validates :address_id, presence: true
 
   def attendees
     Rsvp.where(event_id: id).where('response > ?', 0).pluck(:response).reduce(:+) || 0

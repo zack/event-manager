@@ -60,8 +60,7 @@ class AddressesController < ApplicationController
     @address.delete
     events = Event.where({ address_id: address_id })
     events.each do |e|
-      e.address_id = nil
-      e.save
+      e.update(address_id: nil)
     end
     flash[:success] = "Successfully deleted: #{@address.address_line_1}!"
     redirect_to action: :index

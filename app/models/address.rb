@@ -4,6 +4,8 @@ class Address < ApplicationRecord
   validates_presence_of :state
   validates_presence_of :zip
 
+  belongs_to :event
+
   def formatted_full_one_line
     if address_line_2 && address_line_2.length > 0
       "#{address_line_1}, #{address_line_2}, #{city}, #{state} #{zip}"
