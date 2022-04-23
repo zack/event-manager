@@ -195,7 +195,7 @@ class EventsController < ApplicationController
     if params[:RSVP] == nil
       rsvp.delete
       (redirect_to action: :rsvp, user_uuid: params[:user][:uuid])
-    elsif event.attendees + rsvp_count <= event.capacity
+    elsif event.capacity == nil || event.attendees + rsvp_count <= event.capacity
       rsvp.update(response: params[:RSVP])
       if session[:admin] && params[:admin] && params[:admin][:true] == 'true'
         flash[:success] = "#{user.name} RSVP updated to: #{rsvp.get_rsvp_as_string}"
