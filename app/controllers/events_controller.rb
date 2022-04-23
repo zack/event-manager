@@ -98,7 +98,7 @@ class EventsController < ApplicationController
   def update
     @event = Event.find_by uuid: params['event']['uuid']
 
-    old_event = @event.clone
+    old_event = @event.attributes
     @event.assign_attributes(event_params)
     event_changed = @event.changed?
 
