@@ -2,7 +2,7 @@ class AdminController < ApplicationController
   before_action :require_admin_login, except: [:login, :process_login]
 
   def index
-    @events = Event.where('datetime > ?', DateTime.now).order(datetime: :asc)
+    @events = Event.where('datetime_end > ?', DateTime.now).order(datetime: :asc)
   end
 
   def test_exception
