@@ -71,7 +71,6 @@
       %td{colspan: 2} Response
     - rsvps.each do |r|
       - user = User.find(r.user_id)
-      // ZACK START HERE
       %tr{class: ['rsvp', Rsvp::RESPONSE_STRINGS_BY_VALUE[@existing_rsvp_values[r.user_id]]]}
         %td
           = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }

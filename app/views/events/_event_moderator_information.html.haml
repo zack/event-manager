@@ -1,6 +1,6 @@
 -# Sorry about this huge, gross table.
 %table
-  - rsvps = Rsvp.where(event_id: @event.id).sort_by { |r| 0 - r.response }
+  - rsvps = Rsvp.where(event_id: @event.id).sort_by { |r| r.user.first_name }
   %tr.section-header
     %td{colspan: 99} Responsed
   - if rsvps.count > 0
@@ -10,6 +10,7 @@
     - rsvps.each do |r|
       - user = User.find(r.user_id)
       %tr
+      %tr{class: ['rsvp', Rsvp::RESPONSE_STRINGS_BY_VALUE[@existing_rsvp_values[r.user_id]]]}
         %td
           = user.name
         %td
