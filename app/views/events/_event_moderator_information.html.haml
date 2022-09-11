@@ -9,7 +9,6 @@
       %td Response
     - rsvps.each do |r|
       - user = User.find(r.user_id)
-      %tr
       %tr{class: ['rsvp', Rsvp::RESPONSE_STRINGS_BY_VALUE[@existing_rsvp_values[r.user_id]]]}
         %td
           = user.name
