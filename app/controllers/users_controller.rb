@@ -128,13 +128,14 @@ class UsersController < ApplicationController
     Rsvp.where(user_id: @user).destroy_all
 
     user_name = @user.name
+    user_email = @user.email_address
 
     @user.destroy
 
     if admin
       redirect_to :users
     else
-      send_admin_destroyed_user_email(user_name)
+      send_admin_destroyed_user_email(user_name, user_email)
       redirect_to :deleted_user
     end
   end
@@ -197,8 +198,8 @@ class UsersController < ApplicationController
     UserMailer.new_user_email(user).deliver_now
   end
 
-  def send_admin_destroyed_user_email(user_name)
-    UserMailer.destroyed_user_email(user_name).deliver_now
+  def send_admin_destroyed_user_email(user_name, user_email)
+    UserMailer.destroyed_user_email(user_name, user_email).deliver_now
   end
 
   def send_user_confirmation_email(user)

@@ -1,0 +1,72 @@
+%div{style: "font-family: monospace;"}
+  %div
+    Hello! An event you have previously been invited to has been updated.
+
+  %br
+    %strong
+      Here's the NEW info:
+  %div
+    %p
+      %strong
+        When:
+      #{@new_event.datetime.strftime("%A, %B, #{@new_event.datetime.day.ordinalize} at %-l:%M%p")}
+    %p
+      %strong
+        Where:
+      %a{href: Address.find(@new_event['address_id']).google_maps_link}
+        #{Address.find(@new_event['address_id']).formatted_full_one_line}
+    %p
+      %strong
+        What:
+      = @new_event['description'].gsub("\n", "<br />").html_safe
+    -if @new_event.capacity
+      %p
+        %strong
+          Capacity:
+        #{@new_event.capacity}
+    -else
+      %p
+        %strong
+          Capacity:
+        #{"<no capacity limit set>"}
+
+  %br
+    %strong
+      Here's the OLD info:
+  %div
+    %p
+      %strong
+        When:
+      #{@old_event['datetime'].strftime("%A, %B, #{@old_event['datetime'].day.ordinalize} at %-l:%M%p")}
+    %p
+      %strong
+        Where:
+      %a{href: Address.find(@old_event['address_id']).google_maps_link}
+        #{Address.find(@old_event['address_id']).formatted_full_one_line}
+    %p
+      %strong
+        What:
+      = @old_event['description'].gsub("\n", "<br />").html_safe
+    -if @old_event['capacity']
+      %p
+        %strong
+          Capacity:
+        #{@old_event['capacity']}
+    -else
+      %p
+        %strong
+          Capacity:
+        #{"<no capacity limit set>"}
+
+  %br
+
+  %div
+    \-----------------------------------------
+
+  %br
+
+  %div
+    You can access your account settings #{link_to "here", { controller: 'users', action: 'show', uuid: @user.uuid}}.
+
+  %div
+    If you would like to delete your account and all associated history records, please click #{link_to "here", { controller: 'users', action: 'delete', uuid: @user.uuid}}.

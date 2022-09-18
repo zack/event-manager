@@ -13,8 +13,14 @@ class UserMailer < ApplicationMailer
     mail to: "#{ENV.fetch('EMAIL_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}", subject: "#{ENV.fetch('MAILING_LIST_NAME')} New User Registered"
   end
 
-  def destroyed_user_email(user_name)
+  def deleted_user_email(user)
+    @user = user
+    mail to: "#{ENV.fetch('EMAIL_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}", subject: "#{ENV.fetch('MAILING_LIST_NAME')} User Self-Deleted"
+  end
+
+  def destroyed_user_email(user_name, user_email)
     @user_name = user_name
+    @user_email = user_email
     mail to: "#{ENV.fetch('EMAIL_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}", subject: "#{ENV.fetch('MAILING_LIST_NAME')} User Deleted"
   end
 

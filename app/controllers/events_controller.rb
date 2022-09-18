@@ -115,7 +115,7 @@ class EventsController < ApplicationController
       else
         flash[:notice] = 'No changes detected.'
       end
-      redirect_to action: :index
+      redirect_to action: :edit
     else
       render :edit
     end

@@ -18,7 +18,8 @@
       %p
         %strong
           Where:
-        #{@address.formatted_full_one_line}
+        %a{href: @address.google_maps_link}
+          #{@address.formatted_full_one_line}
         - if @address.special_instructions && @address.special_instructions.length > 0
           %p
             %strong
@@ -27,7 +28,8 @@
     %p
       %strong
         What:
-      #{@event.description}
+      %div
+        = @event.description.gsub("\n", "<br />").html_safe
     %p
       %strong
         RSVP:

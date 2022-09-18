@@ -37,7 +37,7 @@
 
 %div
   %strong Description:
-  = @event.description
+  = simple_format @event.description, nil, wrapper_tag: 'div'
 
 %div
   %strong Total Event Guests:

@@ -9,16 +9,18 @@
 - if @address
   %p
     %strong Address:
-    = @address.formatted_full_one_line
+    %a{href: @address.google_maps_link}
+      #{@address.formatted_full_one_line}
 
   - if @address.special_instructions && @address.special_instructions.length > 0
     %p
       %strong Address Instructions:
       = @address.special_instructions
 
-%p
+%div
   %strong Description:
-  = event.description
+  %div
+    = event.description.gsub("\n", "<br />").html_safe
 
 - if event.capacity
   %p
