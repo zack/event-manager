@@ -162,7 +162,7 @@ class EventsController < ApplicationController
     end
 
     # but we don't want users that have already responded in this array
-    @invited = @invited.sort_by{|u| u.first_name}.filter do |u|
+    @invited = @invited.sort_by { |u| u.first_name }.filter do |u|
       Rsvp.where(event_id: @event, user_id: u).count == 0
     end
 

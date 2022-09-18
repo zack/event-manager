@@ -9,7 +9,7 @@ class SubscriptionListsController < ApplicationController
 
   def show
     @list = SubscriptionList.find_by id: params['id']
-    @users = User.includes(:subscription_lists).where(subscription_lists: { id: params['id'] }).sort_by{ |u| u.first_name }
+    @users = User.includes(:subscription_lists).where(subscription_lists: { id: params['id'] }).sort_by { |u| u.first_name }
   end
 
   def new
