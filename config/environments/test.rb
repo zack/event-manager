@@ -37,6 +37,11 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  # These were added to fix exceptions when running db:migrate for the test
+  # env after updating to rails 7
+  config.active_record.legacy_connection_handling = false
+  config.cache_classes = false
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
