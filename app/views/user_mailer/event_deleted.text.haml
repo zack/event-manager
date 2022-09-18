@@ -4,6 +4,7 @@ Hello! An event you have previously been invited to has been cancelled.
 
 When: #{@event.datetime.strftime("%A, %B, #{@event.datetime.day.ordinalize} at %-l:%M%p")}
 What: #{@event.description}
+Why: #{@reason}
 
 = "\r\n"
 

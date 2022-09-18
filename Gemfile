@@ -35,15 +35,14 @@ group :test, :development do
   gem 'mini_racer', "~> 0.6"
   gem 'rspec-rails', "~> 5.1"
   gem 'rspec_junit_formatter', "~> 0.5"
-  gem 'rubocop-rspec', "~> 2.12"
-  gem 'shoulda-matchers', "~> 5.1"
+  gem 'rubocop-rspec', "~> 2.13"
+  gem 'shoulda-matchers', "~> 5.2"
 end
 
 group :development do
   gem 'listen', "~> 3.7"
   gem 'pry', "~> 0.14"
-  gem 'spring', "~> 2.1"
-  gem 'spring-watcher-listen', "~> 2.0"
+  gem 'spring', "~> 3.1"
   gem 'web-console', "~> 4.2"
 end
 

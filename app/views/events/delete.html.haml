@@ -7,4 +7,10 @@
 
 = render partial: 'event_public_information', locals: { event: @event }
 
-= button_to 'Delete', { controller: 'events', action: 'soft_delete', uuid: @event.uuid }, {method: :delete, id: 'delete-confirm'}
+.form
+  = form_tag(soft_delete_event_path(@event.uuid), method: 'delete') do
+    .option.text.area
+      = label_tag :reason
+      = text_area_tag :reason
+    .actions
+      = submit_tag 'Delete'

@@ -59,9 +59,10 @@ class UserMailer < ApplicationMailer
     mail to: @user.email_address, subject: subject
   end
 
-  def event_deleted(user, event)
+  def event_deleted(user, event, reason)
     @user = user
     @event = event
+    @reason = reason
     @subscription_list_name = SubscriptionList.find(@event.subscription_list_id).name
     datetime = @event.datetime.strftime('%-m/%-d at %-l:%M%p')
     subject = "#{ENV.fetch('MAILING_LIST_NAME')}: Event deleted for #{@subscription_list_name} on #{datetime}"

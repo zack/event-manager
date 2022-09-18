@@ -220,8 +220,9 @@ class EventsController < ApplicationController
 
     @event = Event.find_by uuid: params['uuid']
     users = User.includes(:syndications).where(syndications: { event_id: @event })
+    reason = params['reason']
     users.each do |u|
-      UserMailer.event_deleted(u, @event).deliver_later
+      UserMailer.event_deleted(u, @event, reason).deliver_later
     end
 
     user_string = ActionController::Base.helpers.pluralize(users.count, 'user')
@@ -281,6 +282,7 @@ class EventsController < ApplicationController
         :datetime,
         :datetime_end,
         :description,
+        :reason,
         :subscription_list_id,
         :uuid
       )
