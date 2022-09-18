@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_23_190856) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_04_23_190856) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -29,12 +28,12 @@ ActiveRecord::Schema.define(version: 2022_04_23_190856) do
     t.bigint "subscription_list_id", null: false
     t.integer "capacity"
     t.text "description", null: false
-    t.datetime "datetime", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "datetime", precision: nil, null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "uuid", null: false
     t.boolean "deleted"
-    t.datetime "datetime_end"
+    t.datetime "datetime_end", precision: nil
     t.bigint "address_id"
     t.index ["address_id"], name: "index_events_on_address_id"
     t.index ["datetime"], name: "index_events_on_datetime", unique: true
@@ -45,8 +44,8 @@ ActiveRecord::Schema.define(version: 2022_04_23_190856) do
     t.bigint "event_id", null: false
     t.bigint "user_id", null: false
     t.integer "response"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["event_id"], name: "index_rsvps_on_event_id"
     t.index ["user_id"], name: "index_rsvps_on_user_id"
   end
@@ -54,15 +53,15 @@ ActiveRecord::Schema.define(version: 2022_04_23_190856) do
   create_table "subscription_lists", force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "subscriptions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "subscription_list_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["subscription_list_id"], name: "index_subscriptions_on_subscription_list_id"
     t.index ["user_id", "subscription_list_id"], name: "index_subscriptions_on_user_id_and_subscription_list_id", unique: true
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
@@ -71,8 +70,8 @@ ActiveRecord::Schema.define(version: 2022_04_23_190856) do
   create_table "syndications", force: :cascade do |t|
     t.bigint "event_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["event_id"], name: "index_syndications_on_event_id"
     t.index ["user_id"], name: "index_syndications_on_user_id"
   end
@@ -83,8 +82,8 @@ ActiveRecord::Schema.define(version: 2022_04_23_190856) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "uuid", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "admin_confirmed", null: false
     t.string "email_backup"
     t.string "email_confirmation_code"

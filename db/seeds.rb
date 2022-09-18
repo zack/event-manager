@@ -23,13 +23,16 @@ SubscriptionList.create(
 
 for i in 1..100
   User.seed do |s|
+    first_name = Faker::Name.first_name
+    last_name = Faker::Name.last_name
+
     email_confirmed = [true, false].sample
     s.admin_confirmed = [true, false].sample
-    s.email_address = Faker::Internet.email
+    s.email_address = "#{first_name}_#{last_name}@example.com"
     s.email_confirmed = email_confirmed
     s.user_confirmed = email_confirmed && [true, false].sample
-    s.first_name = Faker::Name.first_name
-    s.last_name = Faker::Name.last_name
+    s.first_name = first_name
+    s.last_name = last_name
     s.uuid = SecureRandom.uuid
     s.uuid = SecureRandom.uuid
     s.invitation_type = [1].sample# , 2, 3].sample
