@@ -1,0 +1,46 @@
+- simple = false if local_assigns[:simple].nil?
+
+%table.events
+  %thead
+    %tr
+      %th Date
+      - if !simple
+        %th Time
+      %th Description
+      - if !simple
+        %th Address
+      %th RSVPs
+      - if !simple
+        %th Show
+      - if editable
+        %th.edit Edit
+
+  %tbody
+    - events.each do |e|
+      %tr
+        %td
+          = e.datetime.strftime('%Y-%m-%d')
+        - if !simple
+          %td
+            = e.datetime.strftime('%l:%M %p')
+        %td.wide
+          %span.wide-outer-span
+            %span.wide-inner-span
+              = e.description
+        - if !simple
+          %td.wide
+            - if e.address_id
+              = Address.find(e.address_id).address_line_1
+        %td.center
+          %span{"title" => "Confirmed: #{e.attendees}"}
+            - attendees = "#{e.attendees}#{e.capacity && ("/#{ e.capacity}")}"
+            - if simple
+              = link_to "#{attendees}", { controller: 'special_events', action: 'admin', uuid: e.uuid }
+            - if !simple
+              #{attendees}
+        - if !simple
+          %td.center
+            = link_to 'Show', { controller: 'special_events', action: 'admin', uuid: e.uuid }
+        - if editable
+          %td.edit
+            = link_to 'Edit', { controller: 'special_events', action: 'edit', uuid: e.uuid }

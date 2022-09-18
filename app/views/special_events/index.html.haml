@@ -1,0 +1,16 @@
+= render partial: 'admin_toolbar'
+
+%p
+  = link_to 'New Special Event', { controller: 'special_events', action: 'new' }
+
+- if @upcoming_special_events.length > 0
+  %h2 Upcoming Special Events
+  = render partial: 'special_event_table', locals: { events: @upcoming_special_events.reverse(), editable: true }
+
+- if @past_special_events.length > 0
+  %h2 Past Special Events
+  = render partial: 'special_event_table', locals: { events: @past_special_events, editable: false }
+
+- if @deleted_special_events.length > 0
+  %h2 Deleted Special Events
+  = render partial: 'special_event_table', locals: { events: @deleted_special_events, editable: false }

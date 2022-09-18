@@ -1,0 +1,40 @@
+= javascript_include_tag 'special-event-form'
+
+#special_event_form.form
+  = form_for(special_event, url: submit_url) do |f|
+    - if @special_event.errors.any?
+      %ul#errors
+        - @special_event.errors.full_messages.each do |err|
+          %li
+            =err
+
+    .option.text
+      = f.label "Start"
+      = f.text_field :datetime
+
+    .option.text
+      = f.label "End"
+      = f.text_field :datetime_end
+
+    .option.text
+      = f.label :address
+      = f.select :address_id, options_for_select(Address.all.collect { |a| [a.formatted_full_one_line, a.id] }, @special_event.address_id || nil), { include_blank: true }
+
+    .option.text
+      = f.label :capacity
+      = f.text_field :capacity
+
+    .option.text.area
+      = f.label :description
+      = f.text_area :description
+
+    - if edit
+      =check_box_tag :suppress_email
+      =f.label "Supress update email"
+
+    - if special_event.uuid
+      = f.hidden_field :uuid, :value => special_event.uuid
+    .actions
+      = f.submit 'Submit'
+      - if special_event.uuid
+        = link_to 'Delete Special Event', { controller: 'special_events', action: 'delete', uuid: special_event.uuid }, id: 'delete'

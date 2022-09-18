@@ -45,6 +45,15 @@ Rails.application.routes.draw do
   get    '/event/:uuid/synidicate',          to: 'events#syndicate',                as: 'syndicate_event'
   get    '/event/:uuid/synidicate_preview',  to: 'events#syndicate_preview',        as: 'syndicate_event_preview'
 
+  get    '/special_events',                  to: 'special_events#index',            as: 'special_events'
+  post   '/special_event',                   to: 'special_events#create',           as: 'create_special_event'
+  get    '/special_event/new',               to: 'special_events#new',              as: 'new_special_event'
+  post   '/special_event/:uuid/rsvp',        to: 'special_events#submit_rsvp',      as: 'submit_special_event_rsvp'
+  get    '/special_event/:uuid/admin',       to: 'special_events#admin',            as: 'admin_special_event'
+  get    '/special_event/:uuid/edit',        to: 'special_events#edit',             as: 'edit_special_event'
+  get    '/special_event/:uuid/delete',      to: 'special_events#delete',           as: 'delete_special_event'
+  delete '/special_event/:uuid',             to: 'special_events#soft_delete',      as: 'soft_delete_special_event'
+
   get    '/addresses',                       to: 'addresses#index',                 as: 'addresses'
   post   '/address',                         to: 'addresses#create',                as: 'create_address'
   get    '/address/new',                     to: 'addresses#new',                   as: 'new_address'
