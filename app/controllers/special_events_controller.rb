@@ -30,6 +30,11 @@ class SpecialEventsController < ApplicationController
   def admin
     @special_event = SpecialEvent.find_by uuid: params['uuid']
     @invited = SpecialEventSyndication.where(special_event_id: @special_event)
+    bad_addresses = params['bad_addresses']
+    if bad_addresses
+      @bad_addresses = params['bad_addresses'].join
+      flash[:warning] = "Some of your addresses didn't pass validation. They've been left in the input box. Try again?"
+    end
 
     if @special_event.deleted
       flash[:warning] = 'This event has been soft deleted.'
@@ -38,6 +43,33 @@ class SpecialEventsController < ApplicationController
 
   def edit
     @special_event = SpecialEvent.find_by uuid: params['uuid']
+  end
+
+  def invite
+    @special_event = SpecialEvent.find_by uuid: params['uuid']
+    addresses = params['addresses'].lines
+    bad_addresses = syndicate(@special_event, addresses)
+    puts bad_addresses
+    redirect_to action: :admin, uuid: @special_event.uuid, bad_addresses: bad_addresses
+  end
+
+  def syndicate(special_event, addresses)
+    bad_addresses = []
+
+    addresses.each do |address|
+      special_event_syndication = SpecialEventSyndication.new
+      special_event_syndication.special_event = special_event
+      special_event_syndication.email_address = address.strip
+      special_event_syndication.rsvp = -2
+
+      if special_event_syndication.save
+        next
+      else
+        bad_addresses << address
+      end
+    end
+
+    bad_addresses
   end
 
   # def update
@@ -136,28 +168,28 @@ class SpecialEventsController < ApplicationController
 
   private
 
-    def get_users_for_event_syndication(event)
-      users = User
-        .includes(:subscription_lists)
-        .includes(:syndications)
-        .where(users: { email_confirmed: true })
-        .where(users: { admin_confirmed: true })
-        .where(subscription_lists: { id: @special_event.subscription_list_id })
+  def get_users_for_event_syndication(event)
+    users = User
+      .includes(:subscription_lists)
+      .includes(:syndications)
+      .where(users: { email_confirmed: true })
+      .where(users: { admin_confirmed: true })
+      .where(subscription_lists: { id: @special_event.subscription_list_id })
 
-      # there's probably a way to do this in the above query, but this works
-      @users = users.filter do |u|
-        Syndication.where(user_id: u, event_id: @special_event).count == 0
-      end
+    # there's probably a way to do this in the above query, but this works
+    @users = users.filter do |u|
+      Syndication.where(user_id: u, event_id: @special_event).count == 0
     end
+  end
 
-    def event_params
-      params.require(:special_event).permit(
-        :address_id,
-        :capacity,
-        :datetime,
-        :datetime_end,
-        :description,
-        :uuid
-      )
-    end
+  def event_params
+    params.require(:special_event).permit(
+      :address_id,
+      :capacity,
+      :datetime,
+      :datetime_end,
+      :description,
+      :uuid
+    )
+  end
 end
