@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   get    '/special_events',                  to: 'special_events#index',            as: 'special_events'
   post   '/special_event',                   to: 'special_events#create',           as: 'create_special_event'
   get    '/special_event/new',               to: 'special_events#new',              as: 'new_special_event'
+  post   '/special_event/:uuid/invite',      to: 'special_events#invite',           as: 'invite_special_event'
   post   '/special_event/:uuid/rsvp',        to: 'special_events#submit_rsvp',      as: 'submit_special_event_rsvp'
   get    '/special_event/:uuid/admin',       to: 'special_events#admin',            as: 'admin_special_event'
   get    '/special_event/:uuid/edit',        to: 'special_events#edit',             as: 'edit_special_event'

@@ -37,3 +37,13 @@
 %div
   %strong Total Event Maybes:
   = "#{pluralize(@special_event.maybes, 'Maybe')}"
+
+%div.special_events_form
+  %strong Invite Some Peeps:
+
+  = form_tag(invite_special_event_path, method: :post) do |f|
+    = text_area_tag :addresses, @bad_addresses
+    = submit_tag 'Invite'
+
+%div.special_events_form
+  %strong Invited Already:
