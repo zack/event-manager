@@ -33,12 +33,24 @@
     = sanitize(@special_event.description)
 
 %div
-  %strong Total Event Guests:
-  = "#{@special_event.attendees} Confirmed"
+  %strong Invited:
+  = "#{@guests.length}"
 
 %div
-  %strong Total Event Maybes:
-  = "#{pluralize(@special_event.maybes, 'Maybe')}"
+  %strong Coming:
+  = "#{@special_event.attendees}"
+
+%div
+  %strong Maybe:
+  = "#{@special_event.maybes}"
+
+%div
+  %strong Declined:
+  = "#{@special_event.declined}"
+
+%div
+  %strong Not Responded:
+  = "#{@special_event.unresponded}"
 
 %div.special_events_form
   %br

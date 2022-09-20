@@ -19,6 +19,14 @@ class SpecialEvent < ApplicationRecord
     SpecialEventGuest.where(special_event_id: id).where(rsvp: 0).count
   end
 
+  def declined
+    SpecialEventGuest.where(special_event_id: id).where(rsvp: -1).count
+  end
+
+  def unresponded
+    SpecialEventGuest.where(special_event_id: id).where(rsvp: nil).count
+  end
+
   def create_ics(guest)
     ics_description =
     <<~EOS

@@ -60,10 +60,10 @@ class SpecialEventsController < ApplicationController
           |u| [u.id, Rsvp.find_by(event_id: @event, user_id: u)&.response || false]
         }]
 
-    guests = SpecialEventGuest
+    @guests = SpecialEventGuest
       .where(special_event_id: @special_event)
       .sort_by { |g| g.email_address } || []
-    @uninvited, @invited = guests.partition do |g|
+    @uninvited, @invited = @guests.partition do |g|
       !g.invited
     end
 
