@@ -1,0 +1,8 @@
+= render partial: 'admin_toolbar'
+
+%p
+  = link_to 'Back', controller: 'special_events', action: 'index'
+
+%h1 Edit Special Event
+
+= render partial: 'special_event_form', locals: { special_event: @special_event, submit_url: update_special_event_path, edit: true }

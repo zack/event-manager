@@ -9,6 +9,7 @@ class SpecialEvent < ApplicationRecord
   validate :check_end_after_start
   validates :datetime, presence: true, uniqueness: true
   validates :datetime_end, presence: true
+  validates :name, presence: true
   validates :description, presence: true
 
   def attendees
@@ -19,13 +20,9 @@ class SpecialEvent < ApplicationRecord
     SpecialEventSyndication.where(special_event_id: id).where(rsvp: 0).count
   end
 
-  def create_ics(attendee)
-    rsvp_url = event_rsvp_path(uuid, attendee.uuid)
-
+  def create_ics(guest)
     ics_description =
     <<~EOS
-      RSVP Here: https://#{ENV.fetch('HOST')}#{rsvp_url}
-
       #{description}
     EOS
 
@@ -33,10 +30,10 @@ class SpecialEvent < ApplicationRecord
     cal.event do |e|
       e.dtstart     = datetime.utc.strftime('%Y%m%dT%H%M%SZ')
       e.dtend       = datetime_end.utc.strftime('%Y%m%dT%H%M%SZ')
-      e.attendee    = "mailto:#{attendee.email_address}"
-      e.summary     = subscription_list.name
+      e.attendee    = "mailto:#{guest.email_address}"
+      e.summary     = name
       e.location    = Address.find(address_id).formatted_full_one_line
-      e.organizer   = "mailto:#{ENV.fetch('EVENT_ORGANIZER_USER')}@#{ENV.fetch('EMAIL_DOMAIN')}"
+      e.organizer   = "mailto:#{ENV.fetch('SPECIAL_EMAIL_USER')}@#{ENV.fetch('SPECIAL_EMAIL_DOMAIN')}"
       e.description = ics_description
     end
 
@@ -46,7 +43,7 @@ class SpecialEvent < ApplicationRecord
     # want this behavior, you can change the method to 'PUBLISH'. Email clients
     # will add an "Add this event to your calendar" button instead of
     # "Yes/No/Maybe" RSVP buttons
-    cal.ip_method = 'PUBLISH'
+    cal.ip_method = 'REQUEST'
     cal.to_ical
   end
 
