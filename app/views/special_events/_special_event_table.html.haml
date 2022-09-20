@@ -33,7 +33,7 @@
               = Address.find(e.address_id).address_line_1
         %td.center
           %span{"title" => "Confirmed: #{e.attendees}"}
-            - attendees = "#{e.attendees}#{e.capacity && ("/#{ e.capacity}")}"
+            - attendees = "#{e.attendees}"
             - if simple
               = link_to "#{attendees}", { controller: 'special_events', action: 'admin', uuid: e.uuid }
             - if !simple
