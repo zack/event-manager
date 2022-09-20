@@ -29,11 +29,18 @@ class SpecialEventsController < ApplicationController
 
   def admin
     @special_event = SpecialEvent.find_by uuid: params['uuid']
-    @invited = SpecialEventSyndication.where(special_event_id: @special_event)
+
+    guests = SpecialEventSyndication
+      .where(special_event_id: @special_event)
+      .sort_by { |g| g.email_address } || []
+    @uninvited, @invited = guests.partition do |g|
+      !g.invited
+    end
+
     bad_addresses = params['bad_addresses']
     if bad_addresses
       @bad_addresses = params['bad_addresses'].join
-      flash[:warning] = "Some of your addresses didn't pass validation. They've been left in the input box. Try again?"
+      flash.now[:warning] = "Some of your addresses didn't pass validation. They've been left in the input box. Try again?"
     end
 
     if @special_event.deleted
@@ -45,7 +52,7 @@ class SpecialEventsController < ApplicationController
     @special_event = SpecialEvent.find_by uuid: params['uuid']
   end
 
-  def invite
+  def add_guests
     @special_event = SpecialEvent.find_by uuid: params['uuid']
     addresses = params['addresses'].lines
     bad_addresses = syndicate(@special_event, addresses)
@@ -58,9 +65,10 @@ class SpecialEventsController < ApplicationController
 
     addresses.each do |address|
       special_event_syndication = SpecialEventSyndication.new
-      special_event_syndication.special_event = special_event
       special_event_syndication.email_address = address.strip
+      special_event_syndication.invited = false
       special_event_syndication.rsvp = -2
+      special_event_syndication.special_event = special_event
 
       if special_event_syndication.save
         next
@@ -158,13 +166,14 @@ class SpecialEventsController < ApplicationController
   #   redirect_to action: :admin, uuid: @special_event.uuid
   # end
 
-  # def invite_user
-  #   @user = User.find(params['user_id'])
-  #   @special_event = SpecialEvent.find(params['event_id'])
-  #   UserMailer.invite(@user, @special_event).deliver_now
-  #   Syndication.create(event_id: @special_event.id, user_id: @user.id)
-  #   redirect_to action: :admin, uuid: @special_event.uuid
-  # end
+  def invite_guest
+    @guest = SpecialEventSyndication.find_by email_address: params[:email_address]
+    @special_event = SpecialEvent.find(params[:special_event_id])
+    # UserMailer.invite(@user, @special_event).deliver_now
+    @guest.invited = true
+    @guest.save
+    redirect_to action: :admin, uuid: @special_event.uuid
+  end
 
   private
 
