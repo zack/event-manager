@@ -55,7 +55,12 @@ class SpecialEventsController < ApplicationController
 
     @options_for_rsvp_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }.insert(0, '')
 
-    guests = SpecialEventSyndication
+    @existing_rsvp_values =
+        Hash[User.all.collect {
+          |u| [u.id, Rsvp.find_by(event_id: @event, user_id: u)&.response || false]
+        }]
+
+    guests = SpecialEventGuest
       .where(special_event_id: @special_event)
       .sort_by { |g| g.email_address } || []
     @uninvited, @invited = guests.partition do |g|
@@ -89,7 +94,7 @@ class SpecialEventsController < ApplicationController
     bad_addresses = []
 
     addresses.each do |address|
-      special_event_syndication = SpecialEventSyndication.new
+      special_event_syndication = SpecialEventGuest.new
       special_event_syndication.email_address = address.strip
       special_event_syndication.invited = false
       special_event_syndication.rsvp = -2
@@ -150,7 +155,7 @@ class SpecialEventsController < ApplicationController
     @special_event = SpecialEvent.find_by uuid: params['uuid']
     @special_event.update(deleted: true)
 
-    invitees = SpecialEventSyndication.where({ special_event_id: @special_event, invited: true })
+    invitees = SpecialEventGuest.where({ special_event_id: @special_event, invited: true })
     invitees.each do |i|
       UserMailer.special_event_deleted(i, @special_event).deliver_later
     end
@@ -162,7 +167,7 @@ class SpecialEventsController < ApplicationController
 
   def invite_guest
     @special_event = SpecialEvent.find(params[:special_event_id])
-    @guest = SpecialEventSyndication.find_by({
+    @guest = SpecialEventGuest.find_by({
       special_event_id: @special_event,
       email_address: params[:email_address],
     })
@@ -175,7 +180,7 @@ class SpecialEventsController < ApplicationController
 
   def invite_guests
     @special_event = SpecialEvent.find(params[:special_event_id])
-    @guests = SpecialEventSyndication.where({
+    @guests = SpecialEventGuest.where({
       invited: false,
       special_event_id: @special_event,
     })
@@ -195,7 +200,7 @@ class SpecialEventsController < ApplicationController
       rsvp_count = 1
     end
 
-    @guest = SpecialEventSyndication.find_by({
+    @guest = SpecialEventGuest.find_by({
       special_event_id: special_event,
       email_address: params[:guest][:email_address]
     })
@@ -223,7 +228,7 @@ class SpecialEventsController < ApplicationController
 
     # there's probably a way to do this in the above query, but this works
     @users = users.filter do |u|
-      Syndication.where(user_id: u, event_id: @special_event).count == 0
+      Guest.where(user_id: u, event_id: @special_event).count == 0
     end
   end
 
