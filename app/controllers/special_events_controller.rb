@@ -53,6 +53,8 @@ class SpecialEventsController < ApplicationController
   def admin
     @special_event = SpecialEvent.find_by uuid: params['uuid']
 
+    @options_for_rsvp_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }.insert(0, '')
+
     guests = SpecialEventSyndication
       .where(special_event_id: @special_event)
       .sort_by { |g| g.email_address } || []
@@ -140,15 +142,6 @@ class SpecialEventsController < ApplicationController
     end
   end
 
-  def submit_rsvp
-    special_event = SpecialEvent.find_by uuid: params[:uuid]
-    invitee = SpecialEventSyndication.find_by email_address: params[:email_address]
-    invitee.update(rsvp: params[:rsvp])
-
-    flash[:success] = 'RSVP Updated'
-    redirect_to action: :admin, special_event: params[:uuid]
-  end
-
   def delete
     @special_event = SpecialEvent.find_by uuid: params[:uuid]
   end
@@ -166,27 +159,6 @@ class SpecialEventsController < ApplicationController
     flash[:success] = "Special event successfully soft deleted! Notified #{invitee_string}."
     redirect_to action: :index
   end
-
-  # def syndicate_preview
-  #   @special_event = SpecialEvent.find_by uuid: params['uuid']
-  #   @address = Address.find(@special_event.address_id)
-  #   @users = get_users_for_event_syndication(@special_event)
-  # end
-
-  # def syndicate
-  #   @special_event = SpecialEvent.find_by uuid: params['uuid']
-  #   @users = get_users_for_event_syndication(@special_event)
-  #   @users.each do |u|
-  #     UserMailer.invite(u, @special_event).deliver_later
-  #     Syndication.create(
-  #       event_id: @special_event.id,
-  #       user_id: u.id
-  #     )
-  #   end
-
-  #   flash[:succes] = "Successfully invited #{@users.count} users!"
-  #   redirect_to action: :admin, uuid: @special_event.uuid
-  # end
 
   def invite_guest
     @special_event = SpecialEvent.find(params[:special_event_id])
@@ -215,6 +187,30 @@ class SpecialEventsController < ApplicationController
     redirect_to action: :admin, uuid: @special_event.uuid
   end
 
+  def submit_rsvp
+    special_event = SpecialEvent.find_by uuid: params[:uuid]
+    rsvp_count = [params[:RSVP].to_i || 0, 0].max
+    if params[:RSVP] == '0'
+      # If the response was "maybe" treat it as a "yes"
+      rsvp_count = 1
+    end
+
+    @guest = SpecialEventSyndication.find_by({
+      special_event_id: special_event,
+      email_address: params[:guest][:email_address]
+    })
+
+    if params[:RSVP] == nil
+      @guest.rsvp = -2
+      @guest.save
+    else
+      @guest.rsvp = params[:RSVP].to_i
+      @guest.save
+    end
+
+    redirect_to action: :admin, uuid: special_event.uuid
+  end
+
   private
 
   def get_users_for_event_syndication(event)
@@ -234,7 +230,6 @@ class SpecialEventsController < ApplicationController
   def event_params
     params.require(:special_event).permit(
       :address_id,
-      :capacity,
       :datetime,
       :datetime_end,
       :description,
