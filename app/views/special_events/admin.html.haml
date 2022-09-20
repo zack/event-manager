@@ -28,7 +28,9 @@
 
 %div
   %strong Description:
-  = simple_format @special_event.description, nil, wrapper_tag: 'div'
+  %br
+  %pre.special_event_description
+    = sanitize(@special_event.description)
 
 %div
   %strong Total Event Guests:
@@ -39,6 +41,7 @@
   = "#{pluralize(@special_event.maybes, 'Maybe')}"
 
 %div.special_events_form
+  %br
   %strong Add Guests:
 
   = form_tag(special_event_add_guests_path, method: :post) do |f|
@@ -47,6 +50,7 @@
 
 %div.special_events_form
   -if @uninvited.length > 0
+    %br
     %strong Not Yet Invited:
     %table
       %thead
@@ -60,8 +64,12 @@
             %td
               - if @special_event.datetime > DateTime.now
                 = button_to 'Invite', special_invite_guest_path, method: :get, params: { special_event_id: @special_event.id, email_address: guest.email_address}
+    - if @special_event.datetime > DateTime.now
+      %br
+      = button_to 'Invite Everyone!', special_invite_guests_path, method: :get, params: { special_event_id: @special_event.id }
 
   -if @invited.length > 0
+    %br
     %strong Invited:
     %table
       %thead

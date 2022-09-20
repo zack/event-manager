@@ -27,6 +27,29 @@ class SpecialEventsController < ApplicationController
     end
   end
 
+  def edit
+    @special_event = SpecialEvent.find_by uuid: params['uuid']
+  end
+
+  def update
+    @special_event = SpecialEvent.find_by uuid: params['special_event']['uuid']
+
+    old_event = @special_event.attributes
+    @special_event.assign_attributes(event_params)
+    event_changed = @special_event.changed?
+
+    if @special_event.save
+      if event_changed
+        flash[:success] = 'Event successfully updated!'
+      else
+        flash[:notice] = 'No changes detected.'
+      end
+      redirect_to action: :admin
+    else
+      render :edit
+    end
+  end
+
   def admin
     @special_event = SpecialEvent.find_by uuid: params['uuid']
 
@@ -134,14 +157,13 @@ class SpecialEventsController < ApplicationController
     @special_event = SpecialEvent.find_by uuid: params['uuid']
     @special_event.update(deleted: true)
 
-    invitees = SpecialEventSyndications.where({ event_id: @special_event })
-    reason = params['reason']
+    invitees = SpecialEventSyndication.where({ special_event_id: @special_event, invited: true })
     invitees.each do |i|
-      UserMailer.special_event_deleted(i, @special_event, reason).deliver_later
+      UserMailer.special_event_deleted(i, @special_event).deliver_later
     end
 
     invitee_string = ActionController::Base.helpers.pluralize(invitees.count, 'invitee')
-    flash[:success] = "Special event successfully soft deleted! Notified #{user_string}."
+    flash[:success] = "Special event successfully soft deleted! Notified #{invitee_string}."
     redirect_to action: :index
   end
 
@@ -167,11 +189,29 @@ class SpecialEventsController < ApplicationController
   # end
 
   def invite_guest
-    @guest = SpecialEventSyndication.find_by email_address: params[:email_address]
     @special_event = SpecialEvent.find(params[:special_event_id])
+    @guest = SpecialEventSyndication.find_by({
+      special_event_id: @special_event,
+      email_address: params[:email_address],
+    })
     # UserMailer.invite(@user, @special_event).deliver_now
+    UserMailer.invite_special(@guest, @special_event).deliver_now
     @guest.invited = true
     @guest.save
+    redirect_to action: :admin, uuid: @special_event.uuid
+  end
+
+  def invite_guests
+    @special_event = SpecialEvent.find(params[:special_event_id])
+    @guests = SpecialEventSyndication.where({
+      invited: false,
+      special_event_id: @special_event,
+    })
+    @guests.each do |guest|
+      UserMailer.invite_special(guest, @special_event).deliver_now
+      guest.invited = true
+      guest.save
+    end
     redirect_to action: :admin, uuid: @special_event.uuid
   end
 
@@ -198,6 +238,7 @@ class SpecialEventsController < ApplicationController
       :datetime,
       :datetime_end,
       :description,
+      :name,
       :uuid
     )
   end

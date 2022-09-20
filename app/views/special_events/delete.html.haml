@@ -1,0 +1,47 @@
+= render partial: 'admin_toolbar'
+
+%p
+  = link_to 'Back', controller: 'special_events', action: 'edit', uuid: @special_event.uuid
+
+%strong Delete Special Event?
+
+%div
+  %strong Date:
+  = @special_event.datetime.strftime("%A, %B #{@special_event.datetime.day.ordinalize}")
+
+%div
+  %strong Time:
+  = @special_event.datetime.strftime('%l:%M %p')
+
+%div
+  %strong End:
+  = @special_event.datetime_end.strftime('%l:%M %p')
+
+- if @address
+  %div
+    %strong Address:
+    = @address.formatted_full_one_line
+
+  %div
+    - if @address.special_instructions && @address.special_instructions.length > 0
+      %strong Special Instructions:
+      = @address.special_instructions
+
+%div
+  %strong Description:
+  %br
+  %pre.special_event_description
+    = sanitize(@special_event.description)
+
+%div
+  %strong Total Event Guests:
+  = "#{@special_event.attendees} Confirmed"
+
+%div
+  %strong Total Event Maybes:
+  = "#{pluralize(@special_event.maybes, 'Maybe')}"
+
+.form
+  = form_tag(soft_delete_special_event_path(@special_event.uuid), method: 'delete') do
+    .actions
+      = submit_tag 'Delete'

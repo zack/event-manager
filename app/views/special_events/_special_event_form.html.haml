@@ -9,6 +9,10 @@
             =err
 
     .option.text
+      = f.label "Name"
+      = f.text_field :name
+
+    .option.text
       = f.label "Start"
       = f.text_field :datetime
 
@@ -27,10 +31,6 @@
     .option.text.area
       = f.label :description
       = f.text_area :description
-
-    - if edit
-      =check_box_tag :suppress_email
-      =f.label "Supress update email"
 
     - if special_event.uuid
       = f.hidden_field :uuid, :value => special_event.uuid

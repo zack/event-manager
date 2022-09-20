@@ -6,7 +6,7 @@
       %th Date
       - if !simple
         %th Time
-      %th Description
+      %th Name
       - if !simple
         %th Address
       %th RSVPs
@@ -26,7 +26,7 @@
         %td.wide
           %span.wide-outer-span
             %span.wide-inner-span
-              = e.description
+              = e.name
         - if !simple
           %td.wide
             - if e.address_id
