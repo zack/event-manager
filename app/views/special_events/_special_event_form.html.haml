@@ -24,10 +24,6 @@
       = f.label :address
       = f.select :address_id, options_for_select(Address.all.collect { |a| [a.formatted_full_one_line, a.id] }, @special_event.address_id || nil), { include_blank: true }
 
-    .option.text
-      = f.label :capacity
-      = f.text_field :capacity
-
     .option.text.area
       = f.label :description
       = f.text_area :description
