@@ -39,11 +39,38 @@
   = "#{pluralize(@special_event.maybes, 'Maybe')}"
 
 %div.special_events_form
-  %strong Invite Some Peeps:
+  %strong Add Guests:
 
-  = form_tag(invite_special_event_path, method: :post) do |f|
+  = form_tag(special_event_add_guests_path, method: :post) do |f|
     = text_area_tag :addresses, @bad_addresses
-    = submit_tag 'Invite'
+    = submit_tag 'Add Guests'
 
 %div.special_events_form
-  %strong Invited Already:
+  -if @uninvited.length > 0
+    %strong Not Yet Invited:
+    %table
+      %thead
+        %th Email Address
+        %th Invite
+      %tbody
+        - @uninvited.each do |guest|
+          %tr
+            %td
+              = guest.email_address
+            %td
+              - if @special_event.datetime > DateTime.now
+                = button_to 'Invite', special_invite_guest_path, method: :get, params: { special_event_id: @special_event.id, email_address: guest.email_address}
+
+  -if @invited.length > 0
+    %strong Invited:
+    %table
+      %thead
+        %th Email Address
+        %th RSVP
+      %tbody
+        - @invited.each do |guest|
+          %tr
+            %td
+              = guest.email_address
+            %td
+              RSVP
