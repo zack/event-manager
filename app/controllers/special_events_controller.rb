@@ -218,28 +218,28 @@ class SpecialEventsController < ApplicationController
 
   private
 
-  def get_users_for_event_syndication(event)
-    users = User
-      .includes(:subscription_lists)
-      .includes(:syndications)
-      .where(users: { email_confirmed: true })
-      .where(users: { admin_confirmed: true })
-      .where(subscription_lists: { id: @special_event.subscription_list_id })
+    def get_users_for_event_syndication(event)
+      users = User
+        .includes(:subscription_lists)
+        .includes(:syndications)
+        .where(users: { email_confirmed: true })
+        .where(users: { admin_confirmed: true })
+        .where(subscription_lists: { id: @special_event.subscription_list_id })
 
-    # there's probably a way to do this in the above query, but this works
-    @users = users.filter do |u|
-      Guest.where(user_id: u, event_id: @special_event).count == 0
+      # there's probably a way to do this in the above query, but this works
+      @users = users.filter do |u|
+        Guest.where(user_id: u, event_id: @special_event).count == 0
+      end
     end
-  end
 
-  def event_params
-    params.require(:special_event).permit(
-      :address_id,
-      :datetime,
-      :datetime_end,
-      :description,
-      :name,
-      :uuid
-    )
-  end
+    def event_params
+      params.require(:special_event).permit(
+        :address_id,
+        :datetime,
+        :datetime_end,
+        :description,
+        :name,
+        :uuid
+      )
+    end
 end
