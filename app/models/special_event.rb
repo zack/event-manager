@@ -3,9 +3,8 @@ class SpecialEvent < ApplicationRecord
 
   has_one :address
 
-  has_many :special_event_syndications
+  has_many :special_event_guests
 
-  validate :check_attendance_below_limit
   validate :check_end_after_start
   validates :datetime, presence: true, uniqueness: true
   validates :datetime_end, presence: true
@@ -13,17 +12,17 @@ class SpecialEvent < ApplicationRecord
   validates :description, presence: true
 
   def attendees
-    SpecialEventSyndication.where(special_event_id: id).where('rsvp > ?', 0).pluck(:rsvp).reduce(:+) || 0
+    SpecialEventGuest.where(special_event_id: id).where('rsvp > ?', 0).pluck(:rsvp).reduce(:+) || 0
   end
 
   def maybes
-    SpecialEventSyndication.where(special_event_id: id).where(rsvp: 0).count
+    SpecialEventGuest.where(special_event_id: id).where(rsvp: 0).count
   end
 
   def create_ics(guest)
     ics_description =
     <<~EOS
-      #{description}
+      #{ActionView::Base.full_sanitizer.sanitize(description)}
     EOS
 
     cal = Icalendar::Calendar.new
@@ -48,12 +47,6 @@ class SpecialEvent < ApplicationRecord
   end
 
   private
-
-    def check_attendance_below_limit
-      if capacity && attendees >= capacity
-        errors.add(:capacity, 'has been reached!')
-      end
-    end
 
     def check_end_after_start
       if datetime_end < datetime

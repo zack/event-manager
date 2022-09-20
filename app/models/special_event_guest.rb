@@ -1,4 +1,4 @@
-class SpecialEventSyndication < ApplicationRecord
+class SpecialEventGuest < ApplicationRecord
   belongs_to :special_event
 
   RSVP_UNRESPONDED = -2

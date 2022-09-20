@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_20_003933) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_20_022103) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -50,19 +50,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_20_003933) do
     t.index ["user_id"], name: "index_rsvps_on_user_id"
   end
 
-  create_table "special_event_syndications", force: :cascade do |t|
+  create_table "special_event_guests", force: :cascade do |t|
     t.bigint "special_event_id", null: false
     t.string "email_address"
     t.integer "rsvp"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "invited", null: false
-    t.index ["special_event_id"], name: "index_special_event_syndications_on_special_event_id"
+    t.index ["special_event_id"], name: "index_special_event_guests_on_special_event_id"
   end
 
   create_table "special_events", force: :cascade do |t|
     t.string "uuid"
-    t.integer "capacity"
     t.bigint "address_id"
     t.text "description", null: false
     t.datetime "datetime", null: false

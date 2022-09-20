@@ -77,10 +77,10 @@
         %th RSVP
       %tbody
         - @invited.each do |guest|
-          %tr
+          %tr{class: ['rsvp', Rsvp::RESPONSE_STRINGS_BY_VALUE[guest.rsvp]]}
             %td
               = guest.email_address
             %td
               = form_tag(submit_special_event_rsvp_path) do |f|
-                = select_tag 'RSVP', options_for_select(@options_for_rsvp_select), :onchange => 'this.form.submit()'
+                = select_tag 'RSVP', options_for_select(@options_for_rsvp_select, guest.rsvp), :onchange => 'this.form.submit()'
                 = hidden_field(:guest, :email_address, :value => guest.email_address)
