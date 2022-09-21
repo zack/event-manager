@@ -12,11 +12,11 @@ class SpecialEvent < ApplicationRecord
   validates :description, presence: true
 
   def added
-    SpecialEventGuest.where({special_event_id: id}).count
+    SpecialEventGuest.where({ special_event_id: id }).count
   end
 
   def invited
-    SpecialEventGuest.where({special_event_id: id, invited: true }).count
+    SpecialEventGuest.where({ special_event_id: id, invited: true }).count
   end
 
   def coming
@@ -36,7 +36,7 @@ class SpecialEvent < ApplicationRecord
   end
 
   def unresponded
-    SpecialEventGuest.where({special_event_id: id, rsvp: -2, invited: true}).count
+    SpecialEventGuest.where({ special_event_id: id, rsvp: -2, invited: true }).count
   end
 
   def create_ics(guest)
