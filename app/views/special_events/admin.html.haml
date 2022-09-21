@@ -33,12 +33,20 @@
     = sanitize(@special_event.description)
 
 %div
+  %strong Added:
+  = "#{@special_event.added}"
+
+%div
   %strong Invited:
-  = "#{@guests.length}"
+  = "#{@special_event.invited}"
 
 %div
   %strong Coming:
-  = "#{@special_event.attendees}"
+  = "#{@special_event.coming}"
+
+%div
+  %strong Plus Ones:
+  = "#{@special_event.plus_ones}"
 
 %div
   %strong Maybe:
