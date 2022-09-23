@@ -23,6 +23,10 @@ class SpecialEvent < ApplicationRecord
     SpecialEventGuest.where(special_event_id: id).where('rsvp > ?', 0).pluck(:rsvp).reduce(:+) || 0
   end
 
+  def invited_coming
+    SpecialEventGuest.where(special_event_id: id).where('rsvp > ?', 0).count
+  end
+
   def plus_ones
     coming - SpecialEventGuest.where(special_event_id: id).where('rsvp > ?', 0).count
   end

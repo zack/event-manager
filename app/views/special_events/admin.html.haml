@@ -41,11 +41,15 @@
   = "#{@special_event.invited}"
 
 %div
-  %strong Coming:
+  %strong Total Coming:
   = "#{@special_event.coming}"
 
 %div
-  %strong Plus Ones:
+  %strong Invitees Coming:
+  = "#{@special_event.invited_coming}"
+
+%div
+  %strong Plus Ones Coming:
   = "#{@special_event.plus_ones}"
 
 %div

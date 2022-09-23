@@ -32,12 +32,12 @@
             - if e.address_id
               = Address.find(e.address_id).address_line_1
         %td.center
-          %span{"title" => "Confirmed: #{e.attendees}"}
-            - attendees = "#{e.attendees}"
+          %span{"title" => "Confirmed: #{e.coming}"}
+            - coming = "#{e.coming}"
             - if simple
-              = link_to "#{attendees}", { controller: 'special_events', action: 'admin', uuid: e.uuid }
+              = link_to "#{coming}", { controller: 'special_events', action: 'admin', uuid: e.uuid }
             - if !simple
-              #{attendees}
+              #{coming}
         - if !simple
           %td.center
             = link_to 'Show', { controller: 'special_events', action: 'admin', uuid: e.uuid }
