@@ -42,6 +42,12 @@
 
   %br
 
+  - if ENV.fetch('DISCORD_SERVER_LINK').length > 0
+    %div
+      Join us on discord
+      %a{href: ENV.fetch('DISCORD_SERVER_LINK')}
+        = "here"
+
   %div
     You can access your account settings #{link_to "here", { controller: 'users', action: 'show', uuid: @user.uuid}}.
 

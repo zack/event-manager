@@ -31,3 +31,11 @@
     If you did not sign up then you can click this link to delete all record of your address:
     %a{href: url_for(controller: 'users', action: 'delete', uuid: @user.uuid)}
       = url_for controller: 'users', action: 'delete', uuid: @user.uuid
+
+  %br
+
+  - if ENV.fetch('DISCORD_SERVER_LINK').length > 0
+    %div
+      Would you like to join us on discord? If you do, please set your nickname to something recognizable.
+      %a{href: ENV.fetch('DISCORD_SERVER_LINK')}
+        = "Join here"

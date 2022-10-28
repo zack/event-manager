@@ -2,6 +2,7 @@ Bundler.require(*Rails.groups)
 if ['development', 'test'].include? ENV['RAILS_ENV']
   Dotenv.require_keys(
     'ADMIN_PASSWORD', # password to enter admin pages at /admin
+    'DISCORD_SERVER_LINK', # just leave it blank if you don't want it
     'EMAIL_DOMAIN', # email domain to use for outgoing emails, eg 'example.com'
     'EMAIL_USER', # email user to use for outgoing emails, eg 'admin'
     'SPECIAL_EMAIL_DOMAIN', # email domain to use for outgoing special event emails, eg 'example.com'
