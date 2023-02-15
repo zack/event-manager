@@ -28,6 +28,12 @@
     = "#{event.capacity}"
 
 %p
-  %strong Guests:
-  = "#{event.attendees} Confirmed Yes"
-  = ",#{event.maybes} Maybe"
+  %strong Responses:
+  - if event.attendees > 0
+    %br
+    %span
+      = "• Yes: #{event.attendees}"
+  - if event.maybes > 0
+    %br
+    %span
+      = "• Maybe: #{event.maybes}"
