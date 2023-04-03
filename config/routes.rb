@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   get    '/user/recover_account',            to: 'users#recover_account',           as: 'recover_account'
   post   '/user/recover_account',            to: 'users#recover_account_submit',    as: 'recover_account_submit'
   get    '/user/revert_email/:code',         to: 'users#revert_email',              as: 'revert_email'
-  post   '/user/vaccination/:uuid',          to: 'users#submit_vaccination_status', as: 'submit_vaccination_status'
   get    '/user/:uuid',                      to: 'users#show',                      as: 'user'
   get    '/user/:uuid/admin',                to: 'users#admin',                     as: 'admin_user'
   get    '/user/:uuid/edit',                 to: 'users#edit',                      as: 'edit_user'

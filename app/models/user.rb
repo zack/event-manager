@@ -5,10 +5,6 @@ class User < ApplicationRecord
   INVITATION_TYPE_TEXT = 2
   INVITATION_TYPE_EMAIL_AND_TEXT = 3
 
-  VACCINATION_STATUS_NONE = 0
-  VACCINATION_STATUS_SOME = 1
-  VACCINATION_STATUS_FULL = 2
-
   before_save :downcase_email_address
 
   has_many :subscriptions
@@ -39,27 +35,6 @@ class User < ApplicationRecord
 
   def name
     "#{first_name} #{last_name}"
-  end
-
-  def vaccination_status_to_word
-    case vaccination_status
-    when VACCINATION_STATUS_FULL
-      'Full'
-    when VACCINATION_STATUS_SOME
-      'Some'
-    else
-      'None'
-    end
-  end
-
-
-  def vaccination_status_to_class
-    case vaccination_status
-    when VACCINATION_STATUS_FULL
-      'full_vaccination'
-    else
-      'needs_vaccination'
-    end
   end
 
   def downcase_email_address

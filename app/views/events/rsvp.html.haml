@@ -2,23 +2,6 @@
   .notice.warning.narrow
     <strong>This event is at capacity.</strong>
 
-- if @user.vaccination_status != 2
-  .notice.warning.narrow
-    <strong>We do not have your full vaccination on file.</strong>
-    Please bring or submit proof of full (boosted) vaccination in order to attend this event.
-
-- if @existing_rsvp_value == 2
-  %br
-  .notice.narrow
-    <strong>Your guest must bring proof of full vaccination!</strong>
-    Please have your guest bring or submit proof of full (boosted) vaccination in order to attend this event.
-
-- if @existing_rsvp_value && @existing_rsvp_value > 2
-  %br
-  .notice.narrow
-    <strong>Your guests must bring proof of full vaccination!</strong>
-    Please have your guests bring  proof of full (boosted) vaccination in order to attend this event.
-
 = render partial: 'event_public_information', locals: { event: @event }
 
 %p

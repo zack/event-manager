@@ -9,28 +9,12 @@
       Please check your inbox for a confirmation email.
       = link_to 'Resend?', { controller: 'users', action: 'resend_confirmation', uuid: @user.uuid }
 
-  - if user.uuid && user.vaccination_status != 2
-    .notice.warning
-      <strong>We do not have your full vaccination on file.</strong>
-      Please submit proof of full (boosted) vaccination in order to attend another event.
-
-  - if user.vaccination_status == 2
-    .notice.success
-      <strong>We have your full vaccination on file.</strong>
-      Thank you.
-
-
   = form_for(user, url: submit_url) do |f|
     - if @user.errors.any?
       %ul#errors.notice.warning
         - @user.errors.full_messages.each do |err|
           %li
             =err
-
-    - if user.uuid
-      .option.text.disabled
-        = f.label :vaccination_status
-        = f.text_field :vaccination_status_to_word, disabled: true
 
     .option.text
       = f.label :first_name
