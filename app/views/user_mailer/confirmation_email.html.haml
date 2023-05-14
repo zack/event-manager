@@ -36,6 +36,5 @@
 
   - if ENV.fetch('DISCORD_SERVER_LINK').length > 0
     %div
-      Would you like to join us on discord? If you do, please set your nickname to something recognizable.
-      %a{href: ENV.fetch('DISCORD_SERVER_LINK')}
-        = "Join here"
+      %strong
+        Join us on our #{link_to "Discord server", ENV.fetch('DISCORD_SERVER_LINK') }! That's where we organize other stuff like park picnics, bbqs, niche movie nights, puzzle nights, hiking, and more!
