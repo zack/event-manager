@@ -110,32 +110,6 @@ class SpecialEventsController < ApplicationController
     bad_addresses
   end
 
-  # def update
-  #   @special_event = SpecialEvent.find_by uuid: params['event']['uuid']
-
-  #   old_event = @special_event.attributes
-  #   @special_event.assign_attributes(event_params)
-  #   event_changed = @special_event.changed?
-
-  #   if @special_event.save
-  #     if event_changed && params[:suppress_email] == '1'
-  #       flash[:success] = 'SpecialEvent successfully updated! Update email suppressed.'
-  #     elsif event_changed
-  #       users = User.includes(:syndications).where(syndications: { event_id: @special_event })
-  #       users.each do |u|
-  #         UserMailer.event_updated(u, @special_event, old_event).deliver_later
-  #       end
-  #       user_string = ActionController::Base.helpers.pluralize(users.count, 'user')
-  #       flash[:success] = "SpecialEvent successfully updated! Notified #{user_string}."
-  #     else
-  #       flash[:notice] = 'No changes detected.'
-  #     end
-  #     redirect_to action: :edit
-  #   else
-  #     render :edit
-  #   end
-  # end
-
   def check_past_or_deleted(special_event)
     if special_event.deleted
       render :deleted
@@ -157,7 +131,7 @@ class SpecialEventsController < ApplicationController
 
     invitees = SpecialEventGuest.where({ special_event_id: @special_event, invited: true })
     invitees.each do |i|
-      UserMailer.special_event_deleted(i, @special_event).deliver_later
+      UserMailer.special_event_deleted(i, @special_event).deliver_now
     end
 
     invitee_string = ActionController::Base.helpers.pluralize(invitees.count, 'invitee')

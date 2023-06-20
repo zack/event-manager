@@ -108,7 +108,7 @@ class EventsController < ApplicationController
       elsif event_changed
         users = User.includes(:syndications).where(syndications: { event_id: @event })
         users.each do |u|
-          UserMailer.event_updated(u, @event, old_event).deliver_later
+          UserMailer.event_updated(u, @event, old_event).deliver_now
         end
         user_string = ActionController::Base.helpers.pluralize(users.count, 'user')
         flash[:success] = "Event successfully updated! Notified #{user_string}."
@@ -222,7 +222,7 @@ class EventsController < ApplicationController
     users = User.includes(:syndications).where(syndications: { event_id: @event })
     reason = params['reason']
     users.each do |u|
-      UserMailer.event_deleted(u, @event, reason).deliver_later
+      UserMailer.event_deleted(u, @event, reason).deliver_now
     end
 
     user_string = ActionController::Base.helpers.pluralize(users.count, 'user')
@@ -240,7 +240,7 @@ class EventsController < ApplicationController
     @event = Event.find_by uuid: params['uuid']
     @users = get_users_for_event_syndication(@event)
     @users.each do |u|
-      UserMailer.invite(u, @event).deliver_later
+      UserMailer.invite(u, @event).deliver_now
       Syndication.create(
         event_id: @event.id,
         user_id: u.id
