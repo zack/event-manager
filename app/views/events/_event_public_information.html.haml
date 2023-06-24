@@ -27,13 +27,20 @@
     %strong Capacity:
     = "#{event.capacity}"
 
-%p
-  %strong Responses:
-  - if event.attendees > 0
-    %br
-    %span
-      = "• Yes: #{event.attendees}"
-  - if event.maybes > 0
-    %br
-    %span
-      = "• Maybe: #{event.maybes}"
+- if @attendees
+  %p
+    %strong Responses:
+    - @attendees.each do |attendee|
+      %div
+        = "  • #{attendee}"
+- else
+  %p
+    %strong Responses:
+    - if event.attendees > 0
+      %br
+      %span
+        = "• Yes: #{event.attendees}"
+    - if event.maybes > 0
+      %br
+      %span
+        = "• Maybe: #{event.maybes}"

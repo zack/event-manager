@@ -140,6 +140,24 @@ class EventsController < ApplicationController
     @options_for_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }.insert(0, '')
     @existing_rsvp_value = Rsvp.find_by(event_id: @event, user_id: @user)&.response || false
 
+    @attendees = Rsvp
+      .where(event_id: @event).where('response > ?', -1)
+      .map { |rsvp| { user: User.find(rsvp.user_id), response: rsvp.response } }
+
+    @attendees = @attendees.map do |u|
+      user = "#{u[:user].first_name} #{u[:user].last_name[0]}."
+
+      if u[:response] == 0
+        user = "#{user} (Maybe)"
+      elsif u[:response] > 1
+        user = "#{user} (+#{u[:response]})"
+      end
+
+      user
+    end
+
+    @attendees = @attendees.sort
+
     ### DATA FOR MODERATORS, COPY-PASTED FROM ADMIN ###
     @existing_rsvp_values =
         Hash[User.all.collect {
