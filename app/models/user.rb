@@ -19,6 +19,7 @@ class User < ApplicationRecord
   validates :email_address, presence: true,
                             uniqueness: { case_sensitive: false }
 
+  validate :phone_number_formatter
   validate :opt_out_of_email_only_if_phone_number_present
 
   def is_moderator
@@ -41,8 +42,15 @@ class User < ApplicationRecord
     end
   end
 
-  def simplify_phone_number
-    self.phone_number = self.phone_number.gsub(/\D/, '')
+  def phone_number_formatter
+    return if !self.phone_number || self.phone_number == ''
+
+    phone_number = self.phone_number.gsub(/\D/, '')
+    unless phone_number.match(/\A\d{10}\z/)
+      errors.add(:phone_number, 'is invalid')
+    else
+      self.phone_number = phone_number
+    end
   end
 
   def downcase_email_address

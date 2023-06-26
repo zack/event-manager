@@ -13,6 +13,10 @@
     (#{link_to("Force confirm?", confirm_email_path(@user, code: @user.email_confirmation_code, admin: true))})
 
 %div
+  %strong Phone Number:
+  = "#{@user.phone_number}"
+
+%div
   %strong Subscriptions:
   %ul
     - @subscriptions.each do |s|
