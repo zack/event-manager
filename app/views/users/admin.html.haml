@@ -11,6 +11,8 @@
   = "#{@user.email_address} (#{bool_to_unicode(@user.email_confirmed)})"
   - if not @user.email_confirmed
     (#{link_to("Force confirm?", confirm_email_path(@user, code: @user.email_confirmation_code, admin: true))})
+  - if @user.suppress_emails
+    (Opted Out)
 
 %div
   %strong Phone Number:
