@@ -1,26 +1,37 @@
 = render partial: 'admin_toolbar'
 
-%h2 All Users
+- if @unconfirmed_users
+  %h2 Unconfirmed Users
+
+  %table.users
+    %thead
+      %tr
+        %th Name
+        %th #{"\u{1F4E7}".encode('utf-8')}
+        %th #{"\u{1F512}".encode('utf-8')}
+
+    %tbody
+      - @unconfirmed_users.each do |user|
+        %tr{class: !user.admin_confirmed ? 'not-admin' : !user.email_confirmed ? 'not-email' : ''}
+          %td
+            = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
+          %td.center
+            = bool_to_unicode(user.email_confirmed)
+          %td.center
+            = bool_to_unicode(user.admin_confirmed)
+
+%h2 Confirmed Users
 
 %table.users
   %thead
     %tr
       %th Name
-      %th Email Address
-      %th #{"\u{1F4E7}".encode('utf-8')}
-      %th #{"\u{1F512}".encode('utf-8')}
-      %th #{"\u{1F4DE}".encode('utf-8')}
+      %th Notification Preferences
 
   %tbody
-    - @users.each do |user|
-      %tr{class: !user.admin_confirmed ? 'not-admin' : !user.email_confirmed ? 'not-email' : ''}
+    - @confirmed_users.each do |user|
+      %tr
         %td
-          = link_to user.name, { controller: 'users', action: 'admin', uuid: user.uuid }
-        %td
-          = user.email_address
+          = link_to user[:name], { controller: 'users', action: 'admin', uuid: user[:uuid] }
         %td.center
-          = bool_to_unicode(user.email_confirmed)
-        %td.center
-          = bool_to_unicode(user.admin_confirmed)
-        %td.center
-          = bool_to_unicode_clean(user.phone_number)
+          = user[:preferences]

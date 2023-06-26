@@ -6,12 +6,32 @@ class UsersController < ApplicationController
   include Rails.application.routes.url_helpers
 
   def index
-    @users = User.all.order(:first_name, :last_name)
+    @unconfirmed_users = User.where(email_confirmed: false).or(User.where(admin_confirmed: false)).order(:first_name, :last_name)
+    confirmed_users = User.where(email_confirmed: true).and(User.where(admin_confirmed:true)).order(:first_name, :last_name)
+    @confirmed_users = confirmed_users.map do |user|
+      {
+        uuid: user.uuid,
+        name: user.name,
+        preferences: get_user_preferences(user)
+      }
+    end
+  end
+
+  def get_user_preferences(user)
+    email = "\u{1F4E7}".encode('utf-8')
+    phone = "\u{1F4DE}".encode('utf-8')
+
+    if user.suppress_emails
+      phone
+    elsif user.phone_number
+      "#{email} / #{phone}"
+    else
+      email
+    end
   end
 
   def admin
     @user = User.find_by(uuid: params[:uuid])
-    @existing_invite_value = @user.invitation_type || false
     @subscriptions = Subscription.where(user_id: @user).map do |s|
       SubscriptionList.find(s.subscription_list_id).name
     end
@@ -26,7 +46,6 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find_by(uuid: params[:uuid])
-    @existing_invite_value = @user.invitation_type || false
     @subscriptions = Subscription.where(user_id: @user).map do |s|
       SubscriptionList.find(s.subscription_list_id).name
     end
@@ -34,7 +53,6 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    @existing_invite_value = @user.invitation_type || false
   end
 
   def create
@@ -66,7 +84,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by uuid: params['uuid']
-    @existing_invite_value = @user.invitation_type || false
   end
 
   def update
