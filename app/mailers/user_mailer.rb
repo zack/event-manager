@@ -45,14 +45,29 @@ class UserMailer < ApplicationMailer
   def invite(user, event)
     @user = user
     @event = event
-    if @event.address_id
-      @address = Address.find(@event.address_id)
+
+    # send an email
+    if user.email_address
+      if @event.address_id
+        @address = Address.find(@event.address_id)
+      end
+      @subscription_list_name = SubscriptionList.find(@event.subscription_list_id).name
+      datetime = @event.datetime.strftime('%-m/%-d at %-l:%M%p')
+      subject = "#{ENV.fetch('MAILING_LIST_NAME')}: Invitation for #{@subscription_list_name} on #{datetime}"
+      attachments['invite.ics'] = { mime_type: 'text/calendar', content: @event.create_ics(@user) }
+      mail to: @user.email_address, subject: subject
     end
-    @subscription_list_name = SubscriptionList.find(@event.subscription_list_id).name
-    datetime = @event.datetime.strftime('%-m/%-d at %-l:%M%p')
-    subject = "#{ENV.fetch('MAILING_LIST_NAME')}: Invitation for #{@subscription_list_name} on #{datetime}"
-    attachments['invite.ics'] = { mime_type: 'text/calendar', content: @event.create_ics(@user) }
-    mail to: @user.email_address, subject: subject
+
+    # send a text
+    if user.phone_number
+      client = Twilio::REST::Client.new
+      rsvp_url = url_for controller: 'events', action: 'rsvp', uuid: @event.uuid, user_uuid: user.uuid
+      client.messages.create(
+        from: ENV.fetch('TWILIO_PHONE_NUMBER'),
+        to: user.phone_number,
+        body: "Hey, you've been invited to a new Berkeley Events event. Check it out and RSVP here: #{rsvp_url}"
+      )
+    end
   end
 
   def invite_special(guest, special_event)

@@ -34,7 +34,6 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    @options_for_invite = User::INVITE_TYPE_BY_VALUE.map { |k, v| [v, k] }
     @existing_invite_value = @user.invitation_type || false
   end
 
@@ -67,7 +66,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by uuid: params['uuid']
-    @options_for_invite = User::INVITE_TYPE_BY_VALUE.map { |k, v| [v, k] }
     @existing_invite_value = @user.invitation_type || false
   end
 
@@ -218,7 +216,9 @@ class UsersController < ApplicationController
         :first_name,
         :invitation_type,
         :last_name,
-        :moderator
+        :moderator,
+        :phone_number,
+        :suppress_emails
       )
     end
 end

@@ -1,10 +1,6 @@
 class User < ApplicationRecord
   UUID_REGEX = /\A[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}\Z/
 
-  INVITATION_TYPE_EMAIL = 1
-  INVITATION_TYPE_TEXT = 2
-  INVITATION_TYPE_EMAIL_AND_TEXT = 3
-
   before_save :downcase_email_address
 
   has_many :subscriptions
@@ -23,11 +19,7 @@ class User < ApplicationRecord
   validates :email_address, presence: true,
                             uniqueness: { case_sensitive: false }
 
-  INVITE_TYPE_BY_VALUE = {
-    INVITATION_TYPE_EMAIL => 'Email',
-    INVITATION_TYPE_TEXT => 'Text Invite',
-    INVITATION_TYPE_EMAIL_AND_TEXT => 'Email & Text Invite'
-  }
+  validate :opt_out_of_email_only_if_phone_number_present
 
   def is_moderator
     moderator === true
@@ -35,6 +27,22 @@ class User < ApplicationRecord
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def opt_out_of_email_only_if_phone_number_present
+    puts 'here'
+    if self.suppress_emails
+      puts 'here'
+      unless self.phone_number && self.phone_number != ''
+        errors.add(:suppress_emails, 'only allowed in the presence of a phone number')
+      else
+        puts 'nope'
+      end
+    end
+  end
+
+  def simplify_phone_number
+    self.phone_number = self.phone_number.gsub(/\D/, '')
   end
 
   def downcase_email_address

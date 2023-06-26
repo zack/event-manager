@@ -7,7 +7,6 @@ git_source(:github) do |repo_name|
   'https://github.com/#{repo_name}.git'
 end
 
-
 gem 'bcrypt', '~> 3.1'
 gem 'exception_notification', '~> 4.5'
 gem 'flatpickr_rails', '~> 1.1'
@@ -23,6 +22,7 @@ gem 'rubocop', '~> 1.36', require: false
 gem 'rubocop-rails', '~> 2.16'
 gem 'sass-rails', '~> 6.0'
 gem 'seed-fu', '~> 2.3'
+gem 'twilio-ruby', '~> 6.1'
 gem 'uglifier', '~> 4.2'
 gem 'validates_email_format_of', '~> 1.7'
 

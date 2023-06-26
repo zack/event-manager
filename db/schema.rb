@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_03_141845) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_26_144204) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -38,6 +38,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_141845) do
     t.index ["address_id"], name: "index_events_on_address_id"
     t.index ["datetime"], name: "index_events_on_datetime", unique: true
     t.index ["subscription_list_id"], name: "index_events_on_subscription_list_id"
+  end
+
+  create_table "phone_numbers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_phone_numbers_on_user_id"
   end
 
   create_table "rsvps", force: :cascade do |t|
@@ -113,6 +121,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_141845) do
     t.boolean "user_confirmed"
     t.integer "invitation_type", null: false
     t.boolean "moderator"
+    t.string "phone_number"
+    t.boolean "suppress_emails"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end

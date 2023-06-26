@@ -28,6 +28,15 @@
       = f.label :email_address
       = f.text_field :email_address
 
+    .option.text
+      = f.label :phone_number
+      = f.text_field :phone_number
+
+    .option
+      =check_box :user, :suppress_emails
+      =f.label "Opt out of invitation emails (only text)"
+    %br
+
     = f.hidden_field :invitation_type, :value => 1
 
     - if admin
