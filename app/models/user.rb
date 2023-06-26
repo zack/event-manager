@@ -31,13 +31,9 @@ class User < ApplicationRecord
   end
 
   def opt_out_of_email_only_if_phone_number_present
-    puts 'here'
     if self.suppress_emails
-      puts 'here'
       unless self.phone_number && self.phone_number != ''
         errors.add(:suppress_emails, 'only allowed in the presence of a phone number')
-      else
-        puts 'nope'
       end
     end
   end
