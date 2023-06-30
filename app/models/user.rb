@@ -39,7 +39,11 @@ class User < ApplicationRecord
   end
 
   def phone_number_formatter
-    return if !self.phone_number || self.phone_number == ''
+    return if !self.phone_number
+
+    if self.phone_number == ''
+      self.phone_number = nil
+    end
 
     phone_number = self.phone_number.gsub(/\D/, '')
     unless phone_number.match(/\A\d{10}\z/)
