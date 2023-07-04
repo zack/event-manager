@@ -150,7 +150,7 @@ class EventsController < ApplicationController
       if u[:response] == 0
         user = "#{user} (Maybe)"
       elsif u[:response] > 1
-        user = "#{user} (+#{u[:response]})"
+        user = "#{user} (+#{u[:response] - 1})"
       end
 
       user
