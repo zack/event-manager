@@ -133,9 +133,10 @@ class EventsController < ApplicationController
   end
 
   def rsvp
-    @event = Event.find_by uuid: params[:uuid]
+    syndication = Syndication.find_by(identifier: params[:identifier])
+    @event = syndication.event
+    @user = syndication.user
     check_past_or_deleted(@event)
-    @user = User.find_by uuid: params[:user_uuid]
     @address = Address.find(@event.address_id)
     @options_for_select = Rsvp::RESPONSE_STRINGS_BY_VALUE.map { |k, v| [v, k] }.insert(0, '')
     @existing_rsvp_value = Rsvp.find_by(event_id: @event, user_id: @user)&.response || false
@@ -198,6 +199,7 @@ class EventsController < ApplicationController
   def submit_rsvp
     event = Event.find_by uuid: params[:uuid]
     user = User.find_by uuid: params[:user][:uuid]
+    identifier = Syndication.find_by(user: user, event: event).identifier
     rsvp = Rsvp.find_or_create_by(
       'event_id' => event.id,
       'user_id' => user.id
@@ -212,7 +214,7 @@ class EventsController < ApplicationController
 
     if params[:RSVP] == nil
       rsvp.delete
-      (redirect_to action: :rsvp, user_uuid: params[:user][:uuid])
+      redirect_to action: :rsvp, identifier: identifier
     elsif event.capacity == nil || event.attendees + rsvp_count <= event.capacity
       rsvp.update(response: params[:RSVP])
       if session[:admin] && params[:admin] && params[:admin][:true] == 'true'
@@ -220,7 +222,7 @@ class EventsController < ApplicationController
         redirect_to action: :admin, event: params[:uuid]
       else
         flash[:success] = 'RSVP received. Thank you!'
-        redirect_to action: :rsvp, user_uuid: params[:user][:uuid]
+        redirect_to action: :rsvp, identifier: identifier
       end
     else
       flash[:warning] = 'Sorry, this RSVP would put the event over capacity.'
@@ -258,11 +260,11 @@ class EventsController < ApplicationController
     @event = Event.find_by uuid: params['uuid']
     @users = get_users_for_event_syndication(@event)
     @users.each do |u|
-      UserMailer.invite(u, @event).deliver_now
       Syndication.create(
         event_id: @event.id,
         user_id: u.id
       )
+      UserMailer.invite(u, @event).deliver_now
     end
 
     flash[:succes] = "Successfully invited #{@users.count} users!"
@@ -272,8 +274,8 @@ class EventsController < ApplicationController
   def invite_user
     @user = User.find(params['user_id'])
     @event = Event.find(params['event_id'])
-    UserMailer.invite(@user, @event).deliver_now
     Syndication.create(event_id: @event.id, user_id: @user.id)
+    UserMailer.invite(@user, @event).deliver_now
     redirect_to action: :admin, uuid: @event.uuid
   end
 

@@ -34,7 +34,6 @@ Rails.application.routes.draw do
   get    '/event/new',                       to: 'events#new',                      as: 'new_event'
   get    '/event/invite_user',               to: 'events#invite_user',              as: 'invite_user'
   get    '/event/:uuid',                     to: 'events#show',                     as: 'event'
-  get    '/event/:uuid/rsvp/:user_uuid',     to: 'events#rsvp',                     as: 'event_rsvp'
   post   '/event/:uuid/rsvp',                to: 'events#submit_rsvp',              as: 'submit_event_rsvp'
   get    '/event/:uuid/admin',               to: 'events#admin',                    as: 'admin_event'
   get    '/event/:uuid/edit',                to: 'events#edit',                     as: 'edit_event'
@@ -56,6 +55,8 @@ Rails.application.routes.draw do
   get    '/special_event/:uuid/delete',      to: 'special_events#delete',           as: 'delete_special_event'
   patch  '/special_event/:uuid',             to: 'special_events#update',           as: 'update_special_event'
   delete '/special_event/:uuid',             to: 'special_events#soft_delete',      as: 'soft_delete_special_event'
+
+  get    '/rsvp/:identifier',                to: 'events#rsvp',                     as: 'event_rsvp'
 
   get    '/addresses',                       to: 'addresses#index',                 as: 'addresses'
   post   '/address',                         to: 'addresses#create',                as: 'create_address'

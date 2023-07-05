@@ -26,12 +26,10 @@ class Event < ApplicationRecord
     Rsvp.where(event_id: id).where('response = ?', -1).count || 0
   end
 
-  def create_ics(attendee)
-    rsvp_url = event_rsvp_path(uuid, attendee.uuid)
-
+  def create_ics(attendee, rsvp_url)
     ics_description =
     <<~EOS
-      RSVP Here: https://#{ENV.fetch('HOST')}#{rsvp_url}
+      RSVP Here: #{rsvp_url}
 
       #{description}
     EOS
