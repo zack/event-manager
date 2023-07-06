@@ -132,6 +132,13 @@ class EventsController < ApplicationController
     end
   end
 
+  def rsvp_old
+    event = Event.find_by uuid: params[:uuid]
+    user = User.find_by uuid: params[:user_uuid]
+    syndication_identifier = Syndication.find_by(event: event, user: user).identifier
+    redirect_to action: :rsvp, identifier: syndication_identifier
+  end
+
   def rsvp
     syndication = Syndication.find_by(identifier: params[:identifier])
     @event = syndication.event

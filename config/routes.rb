@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get    '/event/new',                       to: 'events#new',                      as: 'new_event'
   get    '/event/invite_user',               to: 'events#invite_user',              as: 'invite_user'
   get    '/event/:uuid',                     to: 'events#show',                     as: 'event'
+  get    '/event/:uuid/rsvp/:user_uuid',     to: 'events#rsvp_old',                 as: 'event_rsvp_old'
   post   '/event/:uuid/rsvp',                to: 'events#submit_rsvp',              as: 'submit_event_rsvp'
   get    '/event/:uuid/admin',               to: 'events#admin',                    as: 'admin_event'
   get    '/event/:uuid/edit',                to: 'events#edit',                     as: 'edit_event'
