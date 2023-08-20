@@ -61,13 +61,19 @@ class UserMailer < ApplicationMailer
     end
 
     # send a text
-    if user.phone_number
-      client = Twilio::REST::Client.new
-      client.messages.create(
-        from: ENV.fetch('TWILIO_PHONE_NUMBER'),
-        to: user.phone_number,
-        body: "Hey, you've been invited to a new Berkeley Events event. Check it out and RSVP here: #{@rsvp_url}"
-      )
+    begin
+      if user.phone_number
+        client = Twilio::REST::Client.new
+        client.messages.create(
+          from: ENV.fetch('TWILIO_PHONE_NUMBER'),
+          to: user.phone_number,
+          body: "Hey, you've been invited to a new Berkeley Events event. Check it out and RSVP here: #{@rsvp_url}"
+        )
+      end
+    rescue Twilio::REST::RestError => e
+      flash[:error] = "Encountered an error. Deleting phone number #{user.phone_number} for #{user.name}"
+      user.phone_number = nil
+      user.save
     end
   end
 
