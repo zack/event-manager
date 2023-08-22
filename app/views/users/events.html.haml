@@ -1,0 +1,50 @@
+%h1 Events for #{@user.name} (#{@user.email_address})
+
+%h2 Upcoming Events
+
+%table.events
+  %thead
+    %tr
+      %th Date
+      %th List
+      %th Description
+      %th RSVP
+
+  %tbody
+    - @future_syndications.each do |s|
+      %tr
+        %td
+          = s.event.datetime.strftime('%Y-%m-%d')
+        %td
+          = SubscriptionList.find(s.event.subscription_list_id).name
+        %td.wide
+          %span.wide-outer-span
+            %span.wide-inner-span
+              = s.event.description
+        %td.center
+          - rsvp = Rsvp.find_by(event_id: s.event.id, user_id: @user.id)&.get_rsvp_as_string || 'Here'
+          = link_to rsvp, controller: 'events', action: 'rsvp', identifier: s.identifier
+
+%h2 Past Events
+
+%table.events
+  %thead
+    %tr
+      %th Date
+      %th List
+      %th Description
+      %th RSVP
+
+  %tbody
+    - @past_syndications.each do |s|
+      %tr
+        %td
+          = s.event.datetime.strftime('%Y-%m-%d')
+        %td
+          = SubscriptionList.find(s.event.subscription_list_id).name
+        %td.wide
+          %span.wide-outer-span
+            %span.wide-inner-span
+              = s.event.description
+        %td.center
+          = Rsvp.find_by(event_id: s.event.id, user_id: @user.id)&.get_rsvp_as_string || '-'

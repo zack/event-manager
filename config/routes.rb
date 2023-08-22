@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get    '/user/:uuid',                      to: 'users#show',                      as: 'user'
   get    '/user/:uuid/admin',                to: 'users#admin',                     as: 'admin_user'
   get    '/user/:uuid/edit',                 to: 'users#edit',                      as: 'edit_user'
+  get    '/user/:uuid/events',               to: 'users#events',                    as: 'user_events'
   get    '/user/:uuid/confirm',              to: 'users#confirm_user',              as: 'confirm_user'
   patch  '/user/:uuid',                      to: 'users#update',                    as: 'update_user'
   get    '/user/:uuid/delete',               to: 'users#delete',                    as: 'delete_user'

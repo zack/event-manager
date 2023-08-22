@@ -124,6 +124,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def events
+    user_uuid = params['uuid']
+    @user = User.find_by({uuid: user_uuid})
+    user_id = @user.id
+
+    syndications = Syndication.where({user_id: @user.id})
+
+    @future_syndications, @past_syndications = syndications.partition do |s|
+      s.event.datetime_end > DateTime.now
+    end
+  end
+
   def delete
     @user = User.find_by uuid: params['uuid']
     destroy(@user)
