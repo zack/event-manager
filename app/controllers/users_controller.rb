@@ -131,9 +131,12 @@ class UsersController < ApplicationController
 
     syndications = Syndication.where({user_id: @user.id})
 
-    @future_syndications, @past_syndications = syndications.partition do |s|
-      s.event.datetime_end > DateTime.now
+    fs, ps = syndications.partition do |s|
+      s.event.datetime > DateTime.now
     end
+
+    @future_syndications = fs.sort_by { |s| s.event.datetime }.reverse
+    @past_syndications = ps.sort_by { |s| s.event.datetime }.reverse
   end
 
   def delete
