@@ -30,6 +30,15 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def delete_phone_number_and_opt_into_emails
+    self.suppress_emails = false
+    self.phone_number = nil
+
+    UserMailer.phone_number_reverted(self).deliver_now
+
+    self.save
+  end
+
   def opt_out_of_email_only_if_phone_number_present
     if self.suppress_emails
       unless self.phone_number && self.phone_number != ''
@@ -43,6 +52,7 @@ class User < ApplicationRecord
 
     if self.phone_number == ''
       self.phone_number = nil
+      return
     end
 
     phone_number = self.phone_number.gsub(/\D/, '')

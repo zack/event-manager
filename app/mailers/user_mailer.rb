@@ -42,11 +42,30 @@ class UserMailer < ApplicationMailer
     mail to: @user.email_address, subject: "#{ENV.fetch('MAILING_LIST_NAME')} Account Recovery"
   end
 
+  def phone_number_reverted(user)
+    @user = user
+    mail to: @user.email_address, subject: 'Something went wrong with your phone number'
+  end
+
   def invite(user, event)
     @user = user
     @event = event
     syndication_identifier = Syndication.find_by(user: user, event: @event).identifier
     @rsvp_url = url_for controller: 'events', action: 'rsvp', identifier: syndication_identifier
+
+    # send a text before email in case we need to turn emails back on
+    begin
+      if user.phone_number
+        client = Twilio::REST::Client.new
+        client.messages.create(
+          from: ENV.fetch('TWILIO_PHONE_NUMBER'),
+          to: user.phone_number,
+          body: "Hey, you've been invited to a new Berkeley Events event. Check it out and RSVP here: #{@rsvp_url}. Reply 'stop' to opt out."
+        )
+      end
+    rescue Twilio::REST::RestError => e
+      user.delete_phone_number_and_opt_into_emails
+    end
 
     # send an email
     if user.email_address && !user.suppress_emails
@@ -58,22 +77,6 @@ class UserMailer < ApplicationMailer
       subject = "#{ENV.fetch('MAILING_LIST_NAME')}: Invitation for #{@subscription_list_name} on #{datetime}"
       attachments['invite.ics'] = { mime_type: 'text/calendar', content: @event.create_ics(@user, @rsvp_url) }
       mail to: @user.email_address, subject: subject
-    end
-
-    # send a text
-    begin
-      if user.phone_number
-        client = Twilio::REST::Client.new
-        client.messages.create(
-          from: ENV.fetch('TWILIO_PHONE_NUMBER'),
-          to: user.phone_number,
-          body: "Hey, you've been invited to a new Berkeley Events event. Check it out and RSVP here: #{@rsvp_url}"
-        )
-      end
-    rescue Twilio::REST::RestError => e
-      flash[:error] = "Encountered an error. Deleting phone number #{user.phone_number} for #{user.name}"
-      user.phone_number = nil
-      user.save
     end
   end
 
