@@ -127,11 +127,11 @@ class UsersController < ApplicationController
   def events
     user_uuid = params['uuid']
     @user = User.find_by({uuid: user_uuid})
-    user_id = @user.id
 
     syndications = Syndication.where({user_id: @user.id})
+    syndications_with_events = syndications.filter{|s| s.event != nil}
 
-    fs, ps = syndications.partition do |s|
+    fs, ps = syndications_with_events.partition do |s|
       s.event.datetime > DateTime.now
     end
 
