@@ -52,6 +52,7 @@ class UserMailer < ApplicationMailer
     @event = event
     syndication_identifier = Syndication.find_by(user: user, event: @event).identifier
     @rsvp_url = url_for controller: 'events', action: 'rsvp', identifier: syndication_identifier
+    @subscription_list_name = SubscriptionList.find(@event.subscription_list_id).name
 
     # send a text before email in case we need to turn emails back on
     begin
@@ -60,7 +61,7 @@ class UserMailer < ApplicationMailer
         client.messages.create(
           from: ENV.fetch('TWILIO_PHONE_NUMBER'),
           to: user.phone_number,
-          body: "Hey, you've been invited to a new Berkeley Events event. Check it out and RSVP here: #{@rsvp_url}. Reply 'stop' to opt out."
+          body: "Hey, you've been invited to a new Berkeley Events event for '#{@subscription_list_name}'. Check it out and RSVP here: #{@rsvp_url}. Reply 'stop' to opt out."
         )
       end
     rescue Twilio::REST::RestError => e
@@ -72,7 +73,6 @@ class UserMailer < ApplicationMailer
       if @event.address_id
         @address = Address.find(@event.address_id)
       end
-      @subscription_list_name = SubscriptionList.find(@event.subscription_list_id).name
       datetime = @event.datetime.strftime('%-m/%-d at %-l:%M%p')
       subject = "#{ENV.fetch('MAILING_LIST_NAME')}: Invitation for #{@subscription_list_name} on #{datetime}"
       attachments['invite.ics'] = { mime_type: 'text/calendar', content: @event.create_ics(@user, @rsvp_url) }
