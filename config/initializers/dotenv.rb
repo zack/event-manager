@@ -1,5 +1,5 @@
 Bundler.require(*Rails.groups)
-if ['development', 'test'].include? ENV['RAILS_ENV']
+if ['development', 'test'].include?(ENV['RAILS_ENV']) && Rails.root.join('.env').exist?
   Dotenv.require_keys(
     'ADMIN_PASSWORD', # password to enter admin pages at /admin
     'DISCORD_SERVER_LINK', # just leave it blank if you don't want it
