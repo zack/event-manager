@@ -21,7 +21,7 @@ module EventsManagement
   Rails.application.config.middleware.use ExceptionNotification::Rack,
     email: {
       email_prefix: '[EXCEPTION] ',
-      sender_address: "notifier <notifier@#{ENV.fetch('EMAIL_DOMAIN')}>",
-      exception_recipients: ENV.fetch('EXCEPTIONS_EMAIL_ADDRESS'),
+      sender_address: "notifier <notifier@#{ENV.fetch('EMAIL_DOMAIN', 'example.com')}>",
+      exception_recipients: ENV.fetch('EXCEPTIONS_EMAIL_ADDRESS', nil),
     }
 end
