@@ -59,6 +59,10 @@ COPY . .
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 
+# Warm the bootsnap cache so every container starts with it pre-compiled
+# instead of building it fresh on first boot.
+RUN SECRET_KEY_BASE=DUMMY ./bin/rails runner 'nil'
+
 
 # Final stage for app image
 FROM base

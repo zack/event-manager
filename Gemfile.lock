@@ -71,6 +71,8 @@ GEM
     ast (2.4.2)
     bcrypt (3.1.18)
     bindex (0.8.1)
+    bootsnap (1.24.6)
+      msgpack (~> 1.2)
     builder (3.2.4)
     capybara (3.37.1)
       addressable
@@ -164,6 +166,7 @@ GEM
     mini_racer (0.6.3)
       libv8-node (~> 16.10.0.0)
     minitest (5.16.3)
+    msgpack (1.8.4)
     net-imap (0.2.3)
       digest
       net-protocol
@@ -335,6 +338,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1)
+  bootsnap (~> 1.18)
   capybara (~> 3.37)
   dockerfile-rails (>= 1.7)
   dotenv-rails (~> 2.8)
